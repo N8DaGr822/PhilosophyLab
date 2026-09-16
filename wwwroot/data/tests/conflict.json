@@ -1,0 +1,286 @@
+{
+  "id": "conflict",
+  "version": 1,
+  "lab": "behavior",
+  "title": "Conflict",
+  "category": "Leadership",
+  "icon": "⚡",
+  "summary": "Arguments over facts, feelings, authority, and ethics.",
+  "intro": "Disagreements come in different kinds. Watch whether you handle them the same way.",
+  "minutesEstimate": 5,
+  "questions": [
+    {
+      "id": "evidence",
+      "type": "choice",
+      "prompt": "Two teammates argue about a solution. One clearly has stronger evidence.",
+      "options": [
+        {
+          "id": "side",
+          "label": "Say openly which case is stronger",
+          "effects": {
+            "conflict": 0.5,
+            "evidence": 1
+          }
+        },
+        {
+          "id": "test",
+          "label": "Suggest testing both",
+          "effects": {
+            "evidence": 1,
+            "direction": -0.3
+          }
+        },
+        {
+          "id": "stay-out",
+          "label": "Let them sort it out",
+          "effects": {
+            "conflict": -1
+          }
+        },
+        {
+          "id": "compromise",
+          "label": "Push for a middle ground",
+          "effects": {
+            "conflict": -0.5,
+            "evidence": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "personal",
+      "type": "choice",
+      "prompt": "The same two are now getting defensive and personal.",
+      "contexts": [
+        "emotion"
+      ],
+      "options": [
+        {
+          "id": "stop",
+          "label": "Stop it right there",
+          "effects": {
+            "conflict": 1,
+            "direction": 0.5
+          }
+        },
+        {
+          "id": "aside",
+          "label": "Pull each of them aside",
+          "effects": {
+            "conflict": 0.5
+          }
+        },
+        {
+          "id": "cool",
+          "label": "Let it cool off on its own",
+          "effects": {
+            "conflict": -1
+          }
+        },
+        {
+          "id": "mediate",
+          "label": "Sit them down to talk it through",
+          "effects": {
+            "conflict": 0.3,
+            "direction": -0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "manager",
+      "type": "choice",
+      "prompt": "Your manager backs the approach you think is wrong.",
+      "askWhy": true,
+      "contexts": [
+        "authority"
+      ],
+      "options": [
+        {
+          "id": "argue",
+          "label": "Argue it out in the meeting",
+          "effects": {
+            "conflict": 1
+          }
+        },
+        {
+          "id": "data",
+          "label": "Raise it privately, with data",
+          "effects": {
+            "conflict": 0.5,
+            "evidence": 1
+          }
+        },
+        {
+          "id": "along",
+          "label": "Go along with it",
+          "effects": {
+            "conflict": -1
+          }
+        },
+        {
+          "id": "document",
+          "label": "Go along, but write down my concerns",
+          "effects": {
+            "conflict": -0.5,
+            "evidence": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "dishonest",
+      "type": "choice",
+      "prompt": "Your team could hit the deadline by telling the client a feature is finished when it isn't.",
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "refuse",
+          "label": "Refuse and say so",
+          "effects": {
+            "conflict": 1
+          }
+        },
+        {
+          "id": "quiet",
+          "label": "Stay honest in my own work but say nothing",
+          "effects": {
+            "conflict": -0.5
+          }
+        },
+        {
+          "id": "go-along",
+          "label": "Go along with it",
+          "effects": {
+            "conflict": -1
+          }
+        },
+        {
+          "id": "propose",
+          "label": "Propose telling the client the truth, with a plan",
+          "effects": {
+            "conflict": 0.5,
+            "evidence": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "credit",
+      "type": "choice",
+      "prompt": "In a big meeting, a peer presents your idea as their own.",
+      "contexts": [
+        "public"
+      ],
+      "options": [
+        {
+          "id": "correct",
+          "label": "Correct it on the spot",
+          "effects": {
+            "conflict": 1
+          }
+        },
+        {
+          "id": "after",
+          "label": "Talk to them afterward",
+          "effects": {
+            "conflict": 0.3
+          }
+        },
+        {
+          "id": "let-go",
+          "label": "Let it go",
+          "effects": {
+            "conflict": -1
+          }
+        },
+        {
+          "id": "email",
+          "label": "Follow up with the group, showing the history",
+          "effects": {
+            "conflict": 0.5,
+            "evidence": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "speed",
+      "type": "scale",
+      "prompt": "When you disagree with someone, how soon do you say so?",
+      "min": 1,
+      "max": 7,
+      "minLabel": "I usually let it go",
+      "maxLabel": "Right away",
+      "effects": {
+        "conflict": 1
+      }
+    },
+    {
+      "id": "repeat",
+      "type": "choice",
+      "prompt": "A coworker keeps taking credit for your work. Letting it go has made it worse.",
+      "demands": {
+        "conflict": 1
+      },
+      "need": "a problem had already gotten worse from being ignored",
+      "options": [
+        {
+          "id": "address",
+          "label": "Address it directly with them",
+          "effects": {
+            "conflict": 1
+          }
+        },
+        {
+          "id": "again",
+          "label": "Let it go again",
+          "effects": {
+            "conflict": -1
+          }
+        },
+        {
+          "id": "vent",
+          "label": "Complain about it to others",
+          "effects": {
+            "conflict": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "grieving",
+      "type": "choice",
+      "prompt": "A coworker who just lost a parent snaps at you over something minor.",
+      "demands": {
+        "conflict": -1
+      },
+      "need": "someone was grieving and lashed out",
+      "options": [
+        {
+          "id": "call-out",
+          "label": "Tell them that wasn't okay",
+          "effects": {
+            "conflict": 1
+          }
+        },
+        {
+          "id": "kindness",
+          "label": "Let it go and be kind",
+          "effects": {
+            "conflict": -1
+          }
+        },
+        {
+          "id": "later",
+          "label": "Mention it gently in a few weeks",
+          "effects": {
+            "conflict": 0
+          }
+        }
+      ]
+    }
+  ]
+}

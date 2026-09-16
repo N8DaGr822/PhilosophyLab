@@ -1,0 +1,225 @@
+{
+  "id": "mentor",
+  "version": 1,
+  "lab": "behavior",
+  "title": "Mentor or manager",
+  "category": "Leadership",
+  "icon": "🌱",
+  "summary": "Coaching versus accountability, as a situation escalates.",
+  "intro": "One of your employees is struggling. The situation gets more serious with each question. This maps where support gives way to accountability — neither is better.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "first",
+      "type": "choice",
+      "prompt": "An employee has started missing deadlines.",
+      "options": [
+        {
+          "id": "expect",
+          "label": "“Here's what you need to accomplish.”",
+          "effects": {
+            "support": -1
+          }
+        },
+        {
+          "id": "why",
+          "label": "“Let's figure out why you're struggling.”",
+          "effects": {
+            "support": 1
+          }
+        },
+        {
+          "id": "both",
+          "label": "A bit of both",
+          "effects": {
+            "support": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "overwhelmed",
+      "type": "choice",
+      "prompt": "Two weeks later, they're still missing them. They say they're overwhelmed.",
+      "contexts": [
+        "novice"
+      ],
+      "options": [
+        {
+          "id": "reduce",
+          "label": "Reduce their load and coach them",
+          "effects": {
+            "support": 1
+          }
+        },
+        {
+          "id": "written",
+          "label": "Put clear expectations in writing",
+          "effects": {
+            "support": -1
+          }
+        },
+        {
+          "id": "both",
+          "label": "Adjust the load and set written expectations",
+          "effects": {
+            "support": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "client",
+      "type": "choice",
+      "prompt": "A client is now upset because of their delays.",
+      "askWhy": true,
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "shield",
+          "label": "Shield them and keep coaching",
+          "effects": {
+            "support": 1
+          }
+        },
+        {
+          "id": "plan",
+          "label": "Start a formal improvement plan",
+          "effects": {
+            "support": -1
+          }
+        },
+        {
+          "id": "reassign",
+          "label": "Move the client work to someone else",
+          "effects": {
+            "delegation": -1,
+            "support": -0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "crisis",
+      "type": "choice",
+      "prompt": "They tell you they're dealing with a family crisis.",
+      "contexts": [
+        "emotion"
+      ],
+      "options": [
+        {
+          "id": "flex",
+          "label": "Offer time off and flexibility",
+          "effects": {
+            "support": 1
+          }
+        },
+        {
+          "id": "firm",
+          "label": "Sympathize, but deadlines still stand",
+          "effects": {
+            "support": -1
+          }
+        },
+        {
+          "id": "temporary",
+          "label": "Adjust things temporarily, with a date to revisit",
+          "effects": {
+            "support": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "patience",
+      "type": "ladder",
+      "prompt": "How long do you keep coaching before accountability takes over?",
+      "scenario": "Pick the longest you'd go.",
+      "noneLabel": "Accountability from the start",
+      "effects": {
+        "support": 1
+      },
+      "options": [
+        {
+          "id": "one",
+          "label": "After one more missed deadline"
+        },
+        {
+          "id": "two",
+          "label": "After two or three more"
+        },
+        {
+          "id": "month",
+          "label": "About a month"
+        },
+        {
+          "id": "quarter",
+          "label": "About three months"
+        },
+        {
+          "id": "trying",
+          "label": "As long as they're genuinely trying"
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "type": "choice",
+      "prompt": "After six months of coaching, they know the expectations — and now they're skipping safety checks.",
+      "demands": {
+        "support": -1
+      },
+      "need": "coaching had run its course and safety was at stake",
+      "options": [
+        {
+          "id": "discipline",
+          "label": "Formal discipline",
+          "effects": {
+            "support": -1
+          }
+        },
+        {
+          "id": "coach",
+          "label": "More coaching",
+          "effects": {
+            "support": 1
+          }
+        },
+        {
+          "id": "move",
+          "label": "Move them to a role without safety duties",
+          "effects": {
+            "support": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "new-hire",
+      "type": "choice",
+      "prompt": "A new hire, three weeks in, makes a beginner's mistake.",
+      "demands": {
+        "support": 1
+      },
+      "need": "a new person needed coaching, not consequences",
+      "options": [
+        {
+          "id": "coach",
+          "label": "Walk them through what went wrong",
+          "effects": {
+            "support": 1
+          }
+        },
+        {
+          "id": "warn",
+          "label": "Give a written warning",
+          "effects": {
+            "support": -1
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+@page "/"
+@implements IDisposable
+@inject TestCatalog Catalog
+@inject DeviceStore Store
+
+<PageTitle>Thought Experiments</PageTitle>
+
+<LabTabs Path="" Current="@_lab" />
+
+@if (_lab == Labs.Behavior)
+{
+    <section class="hero">
+        <h1>What would you choose?</h1>
+        <p class="lede">
+            Situations about learning, teaching, leading, and handling conflict. They explore what you say you would choose
+            in specific circumstances — and when that changes — rather than what type of person you are.
+        </p>
+    </section>
+}
+else
+{
+    <section class="hero">
+        <h1>What would you actually do?</h1>
+        <p class="lede">
+            Short thought experiments about family, fairness, freedom, and what makes a life real.
+            Pick the ones that interest you. Your answers build a picture of how you reason — not a verdict.
+        </p>
+    </section>
+}
+
+@if (_tests is null)
+{
+    <p class="loading">Loading tests…</p>
+}
+else
+{
+    var pinned = _tests.Where(t => _person!.PinnedTests.Contains(t.Id)).ToList();
+
+    <section class="shelf" aria-labelledby="my-list">
+        <h2 id="my-list">@_person!.Possessive() list</h2>
+        @if (pinned.Count == 0)
+        {
+            <p class="empty">Add tests from either lab with <strong>Save to my list</strong> and they'll wait for you here.</p>
+        }
+        else
+        {
+            <ul class="test-list">
+                @foreach (var t in pinned)
+                {
+                    <TestRow Test="t" Latest="_latest.GetValueOrDefault(t.Id)" Pinned="true" ShowLab="true" />
+                }
+            </ul>
+        }
+    </section>
+
+    @foreach (var group in _tests.Where(t => t.Lab == _lab).GroupBy(t => t.Category))
+    {
+        <section class="shelf" aria-labelledby="@($"cat-{group.Key}")">
+            <h2 id="@($"cat-{group.Key}")">@group.Key</h2>
+            <ul class="test-list">
+                @foreach (var t in group)
+                {
+                    <TestRow Test="t" Latest="_latest.GetValueOrDefault(t.Id)" Pinned="_person!.PinnedTests.Contains(t.Id)" />
+                }
+            </ul>
+        </section>
+    }
+
+    @if (_lab == Labs.Behavior)
+    {
+        <section class="shelf">
+            <h2>Can you change?</h2>
+            <p>Once you've taken a few behavior tests, <a href="growth">Growth</a> gives you situations that call for the opposite of your usual style, and records which alternatives you choose.</p>
+        </section>
+    }
+}
+
+@code {
+    [SupplyParameterFromQuery(Name = "lab")] public string? LabQuery { get; set; }
+
+    private string _lab = Labs.Philosophy;
+    private IReadOnlyList<TestDefinition>? _tests;
+    private Person? _person;
+    private Dictionary<string, TestResult> _latest = [];
+
+    protected override void OnInitialized() => Store.Changed += OnStoreChanged;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _lab = LabTabs.Normalize(LabQuery);
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _person = await Store.GetActivePersonAsync();
+        _latest = (await Store.GetLatestResultsAsync(_person.Id)).ToDictionary(r => r.TestId);
+        _tests = await Catalog.GetTestsAsync();
+    }
+
+    private void OnStoreChanged() => InvokeAsync(async () => { await LoadAsync(); StateHasChanged(); });
+
+    public void Dispose() => Store.Changed -= OnStoreChanged;
+}

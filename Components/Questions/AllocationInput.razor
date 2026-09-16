@@ -1,0 +1,57 @@
+<div class="allocation">
+    <p class="allocation-remaining @(Remaining == 0 ? "is-done" : "")" aria-live="polite">
+        @if (Remaining == 0) { <text>All @Question.Points points placed.</text> }
+        else { <text>@Remaining of @Question.Points points left</text> }
+    </p>
+
+    @foreach (var o in Question.Options)
+    {
+        var value = Answer.Allocations.GetValueOrDefault(o.Id);
+        <div class="alloc-row">
+            <span class="alloc-label" id="@($"{Question.Id}-{o.Id}")">@o.Label</span>
+            <div class="alloc-bar" aria-hidden="true">
+                <span style="width:@(value * 100 / Math.Max(1, Question.Points))%"></span>
+            </div>
+            <div class="stepper" role="group" aria-labelledby="@($"{Question.Id}-{o.Id}")">
+                <button type="button" disabled="@(value == 0)" @onclick="() => Adjust(o.Id, -Question.Step)"
+                        aria-label="@($"Less for {o.Label}")">−</button>
+                <input type="number" inputmode="numeric" min="0" max="@Question.Points" step="@Question.Step"
+                       value="@value" @onchange="e => SetValue(o.Id, e.Value)"
+                       aria-label="@($"Points for {o.Label}")" />
+                <button type="button" disabled="@(Remaining == 0)" @onclick="() => Adjust(o.Id, Question.Step)"
+                        aria-label="@($"More for {o.Label}")">+</button>
+            </div>
+        </div>
+    }
+
+    <button type="button" class="link-button" @onclick="Reset">Clear all points</button>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Question Question { get; set; } = default!;
+    [Parameter, EditorRequired] public Answer Answer { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+
+    private int Remaining => Question.Points - Answer.Allocations.Values.Sum();
+
+    private Task Adjust(string id, int delta) =>
+        Set(id, Answer.Allocations.GetValueOrDefault(id) + delta);
+
+    private Task SetValue(string id, object? raw) =>
+        int.TryParse(raw?.ToString(), out var v) ? Set(id, v) : Set(id, 0);
+
+    /// <summary>Clamps so the total can never exceed the pool.</summary>
+    private Task Set(string id, int value)
+    {
+        int current = Answer.Allocations.GetValueOrDefault(id);
+        int max = current + Remaining;
+        Answer.Allocations[id] = Math.Clamp(value, 0, max);
+        return Changed.InvokeAsync();
+    }
+
+    private Task Reset()
+    {
+        Answer.Allocations.Clear();
+        return Changed.InvokeAsync();
+    }
+}

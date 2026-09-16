@@ -1,0 +1,195 @@
+@page "/saved"
+@implements IDisposable
+@inject DeviceStore Store
+@inject TestCatalog Catalog
+@inject IJSRuntime JS
+
+<PageTitle>Saved</PageTitle>
+
+<section class="hero hero--small">
+    <h1>Saved on this device</h1>
+    <p class="lede">Everything is stored in this browser. Clearing your browser data erases it, so export a backup if it matters to you.</p>
+</section>
+
+@if (_data is not null)
+{
+    @if (_message is not null) { <p class="notice" role="status">@_message</p> }
+    @if (Store.RecoveryJson is not null)
+    {
+        <section class="panel">
+            <h2>Recover unreadable storage</h2>
+            <p>Download the original data before resetting. Resetting removes the unreadable stored copy.</p>
+            <button class="button" @onclick="DownloadRecoveryAsync">Download original data</button>
+            <label><input type="checkbox" @bind="_confirmReset" /> I have downloaded the original and want to reset this site's storage.</label>
+            <button class="button button--quiet" disabled="@(!_confirmReset)" @onclick="() => RunAsync(Store.ResetDamagedStorageAsync)">Reset damaged storage</button>
+        </section>
+    }
+    <section id="people" class="panel" aria-labelledby="people-h">
+        <h2 id="people-h">People</h2>
+        <p class="hint">Each family member can keep their own answers and profile.</p>
+        <ul class="people">
+            @foreach (var p in _data.People)
+            {
+                var count = _data.Results.Count(r => r.ProfileId == p.Id);
+                <li>
+                    @if (_renamingId == p.Id)
+                    {
+                        <input @bind="_renameText" aria-label="New name" maxlength="40" />
+                        <button type="button" class="button" @onclick="() => RenameAsync(p.Id)">Save name</button>
+                        <button type="button" class="link-button" @onclick="() => _renamingId = null">Cancel</button>
+                    }
+                    else
+                    {
+                        <span class="person-name">@p.Name @(p.Id == _data.ActivePersonId ? "(answering now)" : "")</span>
+                        <span class="test-meta">@count @(count == 1 ? "result" : "results")</span>
+                        @if (p.Id != _data.ActivePersonId)
+                        {
+                            <button type="button" class="link-button" @onclick="() => RunAsync(() => Store.SwitchPersonAsync(p.Id))">Switch to @p.Name</button>
+                        }
+                        <button type="button" class="link-button" @onclick="() => StartRename(p)">Rename</button>
+                        @if (_confirmRemoveId == p.Id)
+                        {
+                            <span class="confirm">Remove @p.Name and @count results?
+                                <button type="button" class="link-button danger" @onclick="() => RemoveAsync(p.Id)">Remove</button>
+                                <button type="button" class="link-button" @onclick="() => _confirmRemoveId = null">Keep</button>
+                            </span>
+                        }
+                        else
+                        {
+                            <button type="button" class="link-button" @onclick="() => _confirmRemoveId = p.Id">Remove</button>
+                        }
+                    }
+                </li>
+            }
+        </ul>
+        <div class="inline-form">
+            <input @bind="_newName" @bind:event="oninput" placeholder="Name" aria-label="New person's name" maxlength="40" />
+            <button type="button" class="button" disabled="@string.IsNullOrWhiteSpace(_newName)" @onclick="AddAsync">Add person</button>
+        </div>
+    </section>
+
+    <section aria-labelledby="history-h">
+        <h2 id="history-h">@_person?.Possessive() results</h2>
+        @if (_results.Count == 0)
+        {
+            <p class="empty">Nothing saved yet. <a href="">Take a test</a> to see it here.</p>
+        }
+        else
+        {
+            <ul class="history">
+                @foreach (var r in _results)
+                {
+                    var t = _tests.FirstOrDefault(x => x.Id == r.TestId);
+                    <li>
+                        <a href="@($"results/{r.Id}")">@(t?.Icon) @(t?.Title ?? r.TestId)</a>
+                        <span class="test-meta">@r.CompletedAt.LocalDateTime.ToString("MMM d, yyyy h:mm tt")</span>
+                        <button type="button" class="link-button danger" @onclick="() => DeleteAsync(r.Id)">Delete</button>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+
+    <section class="panel" aria-labelledby="backup-h">
+        <h2 id="backup-h">Backup</h2>
+        <p class="hint">Export saves every person and result to a file. Import adds a backup to this device without replacing anything.</p>
+        <div class="inline-form">
+            <button type="button" class="button" @onclick="ExportAsync">Export backup</button>
+            <label class="button button--quiet file-button">
+                Import backup
+                <InputFile OnChange="ImportAsync" accept=".json,application/json" />
+            </label>
+        </div>
+        <p class="hint">Used an earlier version on this same site? Import its older storage explicitly. The original copy is kept.</p>
+        <button class="button button--quiet" @onclick="ImportLegacyAsync">Import older browser data</button>
+    </section>
+}
+
+@code {
+    private DeviceData? _data;
+    private Person? _person;
+    private List<TestResult> _results = [];
+    private IReadOnlyList<TestDefinition> _tests = [];
+    private string _newName = "";
+    private string? _renamingId;
+    private string _renameText = "";
+    private string? _confirmRemoveId;
+    private string? _message;
+    private bool _confirmReset;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Store.Changed += OnStoreChanged;
+        _tests = await Catalog.GetTestsAsync();
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        _data = await Store.GetAsync();
+        _person = await Store.GetActivePersonAsync();
+        _results = await Store.GetResultsAsync(_person.Id);
+    }
+
+    private void OnStoreChanged() => InvokeAsync(async () => { await LoadAsync(); StateHasChanged(); });
+
+    public void Dispose() => Store.Changed -= OnStoreChanged;
+
+    private async Task AddAsync()
+    {
+        await RunAsync(async () => { await Store.AddPersonAsync(_newName); });
+        _newName = "";
+    }
+
+    private void StartRename(Person p) { _renamingId = p.Id; _renameText = p.Name; }
+
+    private async Task RenameAsync(string id)
+    {
+        await RunAsync(() => Store.RenamePersonAsync(id, _renameText));
+        _renamingId = null;
+    }
+
+    private async Task RemoveAsync(string id)
+    {
+        _confirmRemoveId = null;
+        await RunAsync(() => Store.RemovePersonAsync(id));
+    }
+
+    private async Task RunAsync(Func<Task> action)
+    {
+        try { await action(); _message = "Change saved."; }
+        catch (Exception ex) when (ex is StorageException or FormatException) { _message = ex.Message; }
+    }
+
+    private async Task DeleteAsync(string id)
+    {
+        if (await JS.InvokeAsync<bool>("confirm", "Delete this saved result? Export a backup first if you need to keep it."))
+            await RunAsync(() => Store.DeleteResultAsync(id));
+    }
+
+    private async Task DownloadRecoveryAsync() =>
+        await JS.InvokeVoidAsync("philosophyFiles.download", "storage-recovery.json", Store.RecoveryJson);
+
+    private async Task ImportLegacyAsync() => await RunAsync(async () => { await Store.ImportLegacyAsync(); });
+
+    private async Task ExportAsync()
+    {
+        var json = await Store.ExportAsync();
+        await JS.InvokeVoidAsync("philosophyFiles.download", $"thought-experiments-{DateTime.Now:yyyy-MM-dd}.json", json);
+        _message = "Backup exported.";
+    }
+
+    private async Task ImportAsync(InputFileChangeEventArgs e)
+    {
+        try
+        {
+            using var reader = new StreamReader(e.File.OpenReadStream(maxAllowedSize: 5_000_000));
+            var added = await Store.ImportAsync(await reader.ReadToEndAsync());
+            _message = $"Backup imported. {added} new {(added == 1 ? "result" : "results")} added.";
+        }
+        catch (Exception ex) when (ex is FormatException or IOException or StorageException)
+        {
+            _message = $"Import failed: {ex.Message} Choose a .json file created with Export backup.";
+        }
+    }
+}

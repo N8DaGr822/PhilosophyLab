@@ -1,0 +1,26 @@
+<fieldset class="choices">
+    <legend class="visually-hidden">@Question.Prompt</legend>
+    @foreach (var o in Question.Options)
+    {
+        <label class="choice @(Answer.ChoiceId == o.Id ? "is-selected" : "")">
+            <input type="radio" name="@Question.Id" checked="@(Answer.ChoiceId == o.Id)"
+                   @onchange="() => Select(o.Id)" />
+            <span class="choice-text">
+                <span class="choice-label">@o.Label</span>
+                @if (o.Detail is not null) { <span class="choice-detail">@o.Detail</span> }
+            </span>
+        </label>
+    }
+</fieldset>
+
+@code {
+    [Parameter, EditorRequired] public Question Question { get; set; } = default!;
+    [Parameter, EditorRequired] public Answer Answer { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+
+    private Task Select(string id)
+    {
+        Answer.ChoiceId = id;
+        return Changed.InvokeAsync();
+    }
+}

@@ -1,0 +1,238 @@
+{
+  "id": "work",
+  "version": 1,
+  "lab": "behavior",
+  "title": "Priorities and ownership",
+  "category": "Work",
+  "icon": "⏳",
+  "summary": "Four hours, too many tasks, and work that isn't technically yours.",
+  "intro": "These situations are about what you pick up, what you put down, and where your responsibility ends.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "four-hours",
+      "type": "allocation",
+      "points": 8,
+      "step": 1,
+      "contexts": [
+        "pressure"
+      ],
+      "prompt": "You have four hours left today. Spend them in half-hour blocks.",
+      "options": [
+        {
+          "id": "easy",
+          "label": "An easy task — low importance",
+          "effects": {
+            "ownership": -0.5
+          }
+        },
+        {
+          "id": "emergency",
+          "label": "A client emergency — high importance, hard",
+          "effects": {
+            "ownership": 1,
+            "approach": 0.5
+          }
+        },
+        {
+          "id": "cleanup",
+          "label": "Cleanup — medium importance, easy",
+          "effects": {
+            "approach": -0.3
+          }
+        },
+        {
+          "id": "improvement",
+          "label": "A long-term improvement — high importance, very hard",
+          "effects": {
+            "approach": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "not-mine",
+      "type": "choice",
+      "prompt": "The client emergency turns out not to be your responsibility.",
+      "askWhy": true,
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "handle",
+          "label": "Handle it anyway",
+          "effects": {
+            "ownership": 1
+          }
+        },
+        {
+          "id": "alert",
+          "label": "Alert the owner and return to my work",
+          "effects": {
+            "ownership": -0.5
+          }
+        },
+        {
+          "id": "if-asked",
+          "label": "Help only if someone asks",
+          "effects": {
+            "ownership": -1
+          }
+        },
+        {
+          "id": "coordinate",
+          "label": "Make sure someone clearly owns it",
+          "effects": {
+            "ownership": 0.3,
+            "direction": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "late-night",
+      "type": "choice",
+      "prompt": "Your manager messages at 9 p.m. with a request that isn't urgent.",
+      "contexts": [
+        "authority"
+      ],
+      "options": [
+        {
+          "id": "now",
+          "label": "Reply and do it tonight",
+          "effects": {
+            "ownership": 1
+          }
+        },
+        {
+          "id": "ack",
+          "label": "Acknowledge it and do it tomorrow",
+          "effects": {
+            "ownership": 0
+          }
+        },
+        {
+          "id": "tomorrow",
+          "label": "Leave it until morning",
+          "effects": {
+            "ownership": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "blocked",
+      "type": "choice",
+      "prompt": "A teammate's part is late, and it's blocking yours.",
+      "options": [
+        {
+          "id": "myself",
+          "label": "Do their part myself",
+          "effects": {
+            "ownership": 1
+          }
+        },
+        {
+          "id": "talk",
+          "label": "Talk to them about it",
+          "effects": {
+            "conflict": 0.5
+          }
+        },
+        {
+          "id": "escalate",
+          "label": "Tell our manager",
+          "effects": {
+            "conflict": 0.3,
+            "ownership": -0.3
+          }
+        },
+        {
+          "id": "other",
+          "label": "Work on something else meanwhile",
+          "effects": {
+            "ownership": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "polish",
+      "type": "scale",
+      "prompt": "When a task is good enough, do you stop?",
+      "min": 1,
+      "max": 7,
+      "minLabel": "Yes, I move on",
+      "maxLabel": "I keep polishing",
+      "effects": {
+        "ownership": 0.5,
+        "approach": -0.5
+      }
+    },
+    {
+      "id": "sixty-hours",
+      "type": "choice",
+      "prompt": "You've worked 60-hour weeks for a month, and your family is feeling it. An optional new project is offered.",
+      "demands": {
+        "ownership": -1
+      },
+      "need": "taking on more would cost your health or family",
+      "options": [
+        {
+          "id": "take",
+          "label": "Take it",
+          "effects": {
+            "ownership": 1
+          }
+        },
+        {
+          "id": "smaller",
+          "label": "Take a smaller role",
+          "effects": {
+            "ownership": 0
+          }
+        },
+        {
+          "id": "decline",
+          "label": "Decline",
+          "effects": {
+            "ownership": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "corruption",
+      "type": "choice",
+      "prompt": "You notice a bug quietly corrupting customer records. Only you understand it.",
+      "demands": {
+        "ownership": 1
+      },
+      "need": "only you could stop a growing problem",
+      "options": [
+        {
+          "id": "now",
+          "label": "Fix or escalate it right now",
+          "effects": {
+            "ownership": 1
+          }
+        },
+        {
+          "id": "standup",
+          "label": "Mention it at the next team meeting",
+          "effects": {
+            "ownership": -0.3
+          }
+        },
+        {
+          "id": "not-mine",
+          "label": "Leave it — not my area",
+          "effects": {
+            "ownership": -1
+          }
+        }
+      ]
+    }
+  ]
+}

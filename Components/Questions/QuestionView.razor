@@ -1,0 +1,58 @@
+<article class="question">
+    <h2 class="question-prompt" tabindex="-1" @ref="_heading">@Question.Prompt</h2>
+    @if (Context is not null || Question.Scenario is not null)
+    {
+        <p class="question-scenario">@(Context ?? Question.Scenario)</p>
+    }
+
+    @switch (Question.Type)
+    {
+        case QuestionType.Choice:
+            <ChoiceInput Question="Question" Answer="Answer" Changed="Changed" />
+            break;
+        case QuestionType.Pick:
+            <PickInput Question="Question" Answer="Answer" Changed="Changed" />
+            break;
+        case QuestionType.Scale:
+            <ScaleInput Question="Question" Answer="Answer" Changed="Changed" />
+            break;
+        case QuestionType.Ladder:
+            <LadderInput Question="Question" Answer="Answer" Changed="Changed" />
+            break;
+        case QuestionType.Assign:
+            <AssignInput Question="Question" Answer="Answer" Changed="Changed" />
+            break;
+        case QuestionType.Allocation:
+            <AllocationInput Question="Question" Answer="Answer" Changed="Changed" />
+            break;
+    }
+
+    @if (Question.AskWhy)
+    {
+        <label class="why">
+            <span>Why? <span class="optional">Optional — only saved on this device.</span></span>
+            <textarea rows="2" value="@Answer.Reason"
+                      @onchange="e => Answer.Reason = e.Value?.ToString()"></textarea>
+        </label>
+    }
+</article>
+
+@code {
+    private ElementReference _heading;
+    private string? _focusedFor;
+
+    [Parameter, EditorRequired] public Question Question { get; set; } = default!;
+    [Parameter, EditorRequired] public Answer Answer { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+    [Parameter] public string? Context { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Move focus to each new question so keyboard and screen reader users follow along.
+        if (_focusedFor != Question.Id)
+        {
+            _focusedFor = Question.Id;
+            await _heading.FocusAsync();
+        }
+    }
+}

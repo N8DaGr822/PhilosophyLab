@@ -1,0 +1,65 @@
+{
+  "id": "privacy",
+  "version": 1,
+  "title": "Freedom and surveillance",
+  "category": "Society",
+  "icon": "👁️",
+  "summary": "Where your line sits between safety and privacy.",
+  "intro": "A government AI could make society much safer by watching everyone. The terms change with each question.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "general", "type": "scale", "min": 1, "max": 7,
+      "prompt": "Which society would you rather live in?",
+      "minLabel": "Maximum safety, extensive restrictions", "maxLabel": "Maximum freedom, significant risk",
+      "effects": { "liberty": 1 }
+    },
+    {
+      "id": "monitor-90", "type": "choice", "askWhy": true,
+      "prompt": "An AI monitors everything everyone does. Violent crime drops 90%.",
+      "options": [
+        { "id": "accept", "label": "Accept it", "effects": { "liberty": -1, "outcomes": 0.5 } },
+        { "id": "refuse", "label": "Refuse it", "effects": { "liberty": 1 } }
+      ]
+    },
+    {
+      "id": "monitor-10", "type": "choice",
+      "prompt": "Same system, but violent crime only drops 10%.",
+      "options": [
+        { "id": "accept", "label": "Accept it", "effects": { "liberty": -1 } },
+        { "id": "refuse", "label": "Refuse it", "effects": { "liberty": 0.5 } }
+      ]
+    },
+    {
+      "id": "criminals-only", "type": "choice",
+      "prompt": "Only people previously convicted of a crime are monitored.",
+      "options": [
+        { "id": "accept", "label": "Accept it", "effects": { "liberty": -0.5, "fairness": 0.5 } },
+        { "id": "refuse", "label": "Refuse it", "effects": { "liberty": 1 } }
+      ]
+    },
+    {
+      "id": "sealed", "type": "choice",
+      "prompt": "Everyone is monitored, but no human can see the data unless a violent crime is reported.",
+      "options": [
+        { "id": "accept", "label": "Accept it", "effects": { "liberty": -0.5 } },
+        { "id": "refuse", "label": "Refuse it", "effects": { "liberty": 1 } }
+      ]
+    },
+    {
+      "id": "predict", "type": "choice",
+      "prompt": "The AI predicts violent crimes with 95% accuracy. Police can detain people before they act.",
+      "scenario": "One in twenty people detained would never have done anything.",
+      "options": [
+        { "id": "accept", "label": "Allow detention", "effects": { "liberty": -1, "outcomes": 1 } },
+        { "id": "refuse", "label": "Don't allow it", "effects": { "liberty": 1, "outcomes": -0.5 } }
+      ]
+    },
+    {
+      "id": "anonymity", "type": "scale", "min": 1, "max": 7,
+      "prompt": "Online, should people be able to stay anonymous?",
+      "minLabel": "Everyone verified by ID", "maxLabel": "Anyone can be anonymous",
+      "effects": { "liberty": 1 }
+    }
+  ]
+}

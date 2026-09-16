@@ -1,0 +1,314 @@
+{
+  "id": "problem-solving",
+  "version": 1,
+  "lab": "behavior",
+  "title": "Problem solving",
+  "category": "Work",
+  "icon": "🧩",
+  "summary": "From clear problems to ones with no obvious answer.",
+  "intro": "The problems get harder to pin down as you go. Notice whether you plan, experiment, dig for evidence, or trust your instincts.",
+  "minutesEstimate": 5,
+  "questions": [
+    {
+      "id": "clear",
+      "type": "choice",
+      "prompt": "A report shows the wrong totals. The cause is somewhere in the formulas.",
+      "options": [
+        {
+          "id": "trace",
+          "label": "Trace the formulas step by step",
+          "effects": {
+            "approach": -1,
+            "evidence": 1
+          }
+        },
+        {
+          "id": "quick",
+          "label": "Try a few quick fixes",
+          "effects": {
+            "approach": 1
+          }
+        },
+        {
+          "id": "ask",
+          "label": "Ask whoever built it",
+          "effects": {
+            "direction": -0.3,
+            "evidence": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "slow",
+      "type": "choice",
+      "prompt": "Users say the app “feels slow.” That's all you know.",
+      "contexts": [
+        "ambiguity"
+      ],
+      "options": [
+        {
+          "id": "data",
+          "label": "Gather performance data first",
+          "effects": {
+            "evidence": 1,
+            "approach": -0.5
+          }
+        },
+        {
+          "id": "fixes",
+          "label": "Try a few likely fixes",
+          "effects": {
+            "approach": 1,
+            "evidence": -0.5
+          }
+        },
+        {
+          "id": "users",
+          "label": "Ask users for more detail",
+          "effects": {
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "hunch",
+          "label": "Go with my hunch",
+          "effects": {
+            "evidence": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "contradict",
+      "type": "choice",
+      "prompt": "Two reliable sources contradict each other.",
+      "contexts": [
+        "ambiguity"
+      ],
+      "options": [
+        {
+          "id": "dig",
+          "label": "Dig into both until I understand why",
+          "effects": {
+            "evidence": 1,
+            "approach": -0.5
+          }
+        },
+        {
+          "id": "test",
+          "label": "Test both and see",
+          "effects": {
+            "approach": 1,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "gut",
+          "label": "Go with my gut",
+          "effects": {
+            "evidence": -1
+          }
+        },
+        {
+          "id": "expert",
+          "label": "Ask an expert to decide",
+          "effects": {
+            "direction": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "no-answer",
+      "type": "choice",
+      "prompt": "There's no obvious solution at all.",
+      "askWhy": true,
+      "contexts": [
+        "ambiguity"
+      ],
+      "options": [
+        {
+          "id": "decompose",
+          "label": "Break it into smaller problems",
+          "effects": {
+            "approach": -1
+          }
+        },
+        {
+          "id": "prototype",
+          "label": "Build several rough prototypes",
+          "effects": {
+            "approach": 1
+          }
+        },
+        {
+          "id": "group",
+          "label": "Brainstorm with others",
+          "effects": {
+            "direction": -1
+          }
+        },
+        {
+          "id": "sleep",
+          "label": "Sleep on it and trust what comes",
+          "effects": {
+            "evidence": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "wrong-problem",
+      "type": "choice",
+      "prompt": "Halfway through, you realize you were solving the wrong problem.",
+      "contexts": [
+        "ambiguity"
+      ],
+      "options": [
+        {
+          "id": "reframe",
+          "label": "Stop and reframe it with the people who asked",
+          "effects": {
+            "approach": -0.5,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "finish",
+          "label": "Finish what was asked",
+          "effects": {
+            "approach": -1,
+            "conflict": -0.5
+          }
+        },
+        {
+          "id": "pivot",
+          "label": "Pivot on my own to the real problem",
+          "effects": {
+            "approach": 1,
+            "direction": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "shelter",
+      "type": "choice",
+      "prompt": "You build a shelter from a tarp, rope, five sticks, duct tape, and a garbage bag. It collapses.",
+      "options": [
+        {
+          "id": "modify",
+          "label": "Adjust the design",
+          "effects": {
+            "approach": -0.3
+          }
+        },
+        {
+          "id": "restart",
+          "label": "Start over with a new idea",
+          "effects": {
+            "approach": 1
+          }
+        },
+        {
+          "id": "ask",
+          "label": "Ask someone for help",
+          "effects": {
+            "direction": -0.5
+          }
+        },
+        {
+          "id": "research",
+          "label": "Look up how others do it",
+          "effects": {
+            "evidence": 1,
+            "approach": -0.5
+          }
+        },
+        {
+          "id": "blame",
+          "label": "The materials just aren't good enough",
+          "effects": {
+            "feedback": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "one-hour",
+      "type": "choice",
+      "prompt": "A broken process needs fixing within the hour.",
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "plan",
+          "label": "Diagnose carefully before touching anything",
+          "effects": {
+            "approach": -1,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "try",
+          "label": "Try the likeliest fixes fast",
+          "effects": {
+            "approach": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "bridge",
+      "type": "choice",
+      "prompt": "You're checking load calculations for a real footbridge.",
+      "demands": {
+        "approach": -1
+      },
+      "need": "a problem demanded careful, checked work",
+      "options": [
+        {
+          "id": "check",
+          "label": "Calculate carefully and double-check",
+          "effects": {
+            "approach": -1
+          }
+        },
+        {
+          "id": "iterate",
+          "label": "Estimate, then refine as I go",
+          "effects": {
+            "approach": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "party",
+      "type": "choice",
+      "prompt": "You're brainstorming a party theme with friends.",
+      "demands": {
+        "approach": 1
+      },
+      "need": "a situation rewarded playful experimentation",
+      "options": [
+        {
+          "id": "wild",
+          "label": "Throw out wild ideas",
+          "effects": {
+            "approach": 1
+          }
+        },
+        {
+          "id": "research",
+          "label": "Research themes systematically",
+          "effects": {
+            "approach": -1
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+*.user
+artifacts/
+.env
+.env.*
+!.env.example
+thought-experiments-*.json
+unsaved-answers.json
+storage-recovery.json
+TestResults/
+**/__pycache__/
+node_modules/

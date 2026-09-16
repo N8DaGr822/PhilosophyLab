@@ -1,0 +1,19 @@
+@using System.Globalization
+
+@if (Summary.Rate is double rate)
+{
+    <div class="adapt-meter">
+        <p class="observation">
+            You chose the suggested alternative in <strong>@Summary.AdaptedCount of @Summary.ChallengeCount</strong>
+            @(Summary.ChallengeCount == 1 ? "comparison" : "comparisons") against your earlier preferences.
+        </p>
+        <div class="adapt-track" role="img" aria-label="@($"Suggested alternative {Summary.AdaptedCount} of {Summary.ChallengeCount}")">
+            <span style="width:@((rate * 100).ToString("0", CultureInfo.InvariantCulture))%"></span>
+        </div>
+    <p class="hint">A scenario can compare several dimensions. This is agreement with an authored suggestion, not proof of success or adaptability.</p>
+    </div>
+}
+
+@code {
+    [Parameter, EditorRequired] public AdaptabilitySummary Summary { get; set; } = default!;
+}

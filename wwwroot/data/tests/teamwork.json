@@ -1,0 +1,289 @@
+{
+  "id": "teamwork",
+  "version": 1,
+  "lab": "behavior",
+  "title": "Team roles",
+  "category": "Leadership",
+  "icon": "🧭",
+  "summary": "What you would choose in different team situations.",
+  "intro": "You're part of a team. Nobody asks whether you're a leader — situations just keep happening.",
+  "minutesEstimate": 5,
+  "questions": [
+    {
+      "id": "48-hours",
+      "type": "choice",
+      "prompt": "Your team has 48 hours to finish a project. What do you do first?",
+      "scenario": "One person is taking charge. Another is quiet but knows the most. A third keeps generating ideas. A fourth steadily finishes tasks.",
+      "askWhy": true,
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "support-lead",
+          "label": "Back up the person who's taking charge",
+          "effects": {
+            "direction": -0.5
+          }
+        },
+        {
+          "id": "draw-out",
+          "label": "Draw out the quiet person who knows the most",
+          "effects": {
+            "direction": -0.3,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "take-charge",
+          "label": "Take charge and set the plan",
+          "effects": {
+            "direction": 1
+          }
+        },
+        {
+          "id": "deliver",
+          "label": "Grab tasks and start delivering",
+          "effects": {
+            "ownership": 0.5,
+            "direction": -0.3
+          }
+        },
+        {
+          "id": "narrow",
+          "label": "Help the ideas person narrow things down",
+          "effects": {
+            "direction": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "three-months",
+      "type": "choice",
+      "prompt": "A new project with three months and no clear lead.",
+      "options": [
+        {
+          "id": "lead",
+          "label": "Propose a plan and lead it",
+          "effects": {
+            "direction": 1
+          }
+        },
+        {
+          "id": "facilitate",
+          "label": "Run a kickoff where the group decides",
+          "effects": {
+            "direction": -1
+          }
+        },
+        {
+          "id": "wait",
+          "label": "Wait to see who steps up",
+          "effects": {
+            "direction": -0.5,
+            "conflict": -0.3
+          }
+        },
+        {
+          "id": "piece",
+          "label": "Take a well-defined piece and own it",
+          "effects": {
+            "direction": -0.3,
+            "ownership": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "bad-leader",
+      "type": "choice",
+      "prompt": "The person leading the project is making bad decisions.",
+      "contexts": [
+        "authority"
+      ],
+      "options": [
+        {
+          "id": "public",
+          "label": "Challenge them in front of the team",
+          "effects": {
+            "conflict": 1,
+            "direction": 0.5
+          }
+        },
+        {
+          "id": "private",
+          "label": "Talk to them privately",
+          "effects": {
+            "conflict": 0.5
+          }
+        },
+        {
+          "id": "control",
+          "label": "Take control of the project",
+          "effects": {
+            "direction": 1,
+            "conflict": 1
+          }
+        },
+        {
+          "id": "vote",
+          "label": "Suggest the team vote",
+          "effects": {
+            "direction": -1
+          }
+        },
+        {
+          "id": "evidence",
+          "label": "Gather evidence first",
+          "effects": {
+            "evidence": 1
+          }
+        },
+        {
+          "id": "around",
+          "label": "Quietly work around them",
+          "effects": {
+            "conflict": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "experts",
+      "type": "choice",
+      "prompt": "You're leading, but two people know the problem far better than you.",
+      "contexts": [
+        "experts"
+      ],
+      "options": [
+        {
+          "id": "hear-decide",
+          "label": "Hear them out, then decide",
+          "effects": {
+            "direction": 0.5,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "defer",
+          "label": "Let them make the call",
+          "effects": {
+            "direction": -1
+          }
+        },
+        {
+          "id": "decide",
+          "label": "Decide myself — I'm accountable",
+          "effects": {
+            "direction": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "outage",
+      "type": "choice",
+      "prompt": "A system outage is hitting customers and everyone is talking at once.",
+      "contexts": [
+        "danger",
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "command",
+          "label": "Take command and assign roles",
+          "effects": {
+            "direction": 1
+          }
+        },
+        {
+          "id": "huddle",
+          "label": "Get everyone to agree on a plan",
+          "effects": {
+            "direction": -1
+          }
+        },
+        {
+          "id": "fix",
+          "label": "Fix what I can myself",
+          "effects": {
+            "ownership": 1,
+            "direction": -0.3
+          }
+        },
+        {
+          "id": "find-lead",
+          "label": "Find out who's supposed to be in charge",
+          "effects": {
+            "direction": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "split",
+      "type": "choice",
+      "prompt": "The team is split between two reasonable directions. Morale matters more than speed.",
+      "demands": {
+        "direction": -1
+      },
+      "need": "a team needed a shared decision more than a fast one",
+      "options": [
+        {
+          "id": "decide",
+          "label": "Make the call",
+          "effects": {
+            "direction": 1
+          }
+        },
+        {
+          "id": "facilitate",
+          "label": "Help the group reach a shared decision",
+          "effects": {
+            "direction": -1
+          }
+        },
+        {
+          "id": "vote",
+          "label": "Put it to a vote",
+          "effects": {
+            "direction": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "alarm",
+      "type": "choice",
+      "prompt": "The fire alarm goes off. Your group starts debating whether it's real.",
+      "demands": {
+        "direction": 1
+      },
+      "need": "a safety situation needed someone to take charge",
+      "options": [
+        {
+          "id": "order",
+          "label": "Tell everyone to leave now",
+          "effects": {
+            "direction": 1
+          }
+        },
+        {
+          "id": "suggest",
+          "label": "Suggest we probably should go",
+          "effects": {
+            "direction": 0
+          }
+        },
+        {
+          "id": "wait",
+          "label": "See what everyone else does",
+          "effects": {
+            "direction": -1
+          }
+        }
+      ]
+    }
+  ]
+}

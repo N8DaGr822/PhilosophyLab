@@ -1,0 +1,42 @@
+@implements IDisposable
+@inject DeviceStore Store
+
+@if (_data is not null)
+{
+    <label class="person-switcher">
+        <span class="visually-hidden">Who's answering</span>
+        <select @key="_renderKey" value="@_data.ActivePersonId" @onchange="OnChange">
+            @foreach (var p in _data.People)
+            {
+                <option value="@p.Id">@p.Name</option>
+            }
+            <option value="@AddNew">Add a person…</option>
+        </select>
+    </label>
+}
+
+@code {
+    private const string AddNew = "__add";
+    private DeviceData? _data;
+    private int _renderKey;
+
+    [Inject] private NavigationManager Nav { get; set; } = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _data = await Store.GetAsync();
+        Store.Changed += OnStoreChanged;
+    }
+
+    private async Task OnChange(ChangeEventArgs e)
+    {
+        var id = e.Value?.ToString();
+        if (id == AddNew) { _renderKey++; Nav.NavigateTo("saved#people"); return; }
+        try { if (id is not null) await Store.SwitchPersonAsync(id); }
+        catch (StorageException) { _renderKey++; }
+    }
+
+    private void OnStoreChanged() => InvokeAsync(async () => { _data = await Store.GetAsync(); StateHasChanged(); });
+
+    public void Dispose() => Store.Changed -= OnStoreChanged;
+}

@@ -1,0 +1,280 @@
+{
+  "id": "feedback",
+  "version": 1,
+  "lab": "behavior",
+  "title": "Feedback",
+  "category": "Growth",
+  "icon": "🪞",
+  "summary": "How you respond when someone says your work isn't good enough.",
+  "intro": "Someone criticizes your work. The criticism changes each time — specific, vague, unfair, public.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "specific",
+      "type": "choice",
+      "prompt": "Someone points out three factual errors in your presentation.",
+      "options": [
+        {
+          "id": "fix",
+          "label": "Thank them and fix it",
+          "effects": {
+            "feedback": 1
+          }
+        },
+        {
+          "id": "check",
+          "label": "Check their claims first",
+          "effects": {
+            "evidence": 1,
+            "feedback": 0.3
+          }
+        },
+        {
+          "id": "explain",
+          "label": "Explain why they aren't really errors",
+          "effects": {
+            "feedback": -1
+          }
+        },
+        {
+          "id": "quiet",
+          "label": "Fix it quietly, a bit embarrassed",
+          "effects": {
+            "feedback": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "vague",
+      "type": "choice",
+      "prompt": "Someone says, “I just don't like it.”",
+      "options": [
+        {
+          "id": "ask",
+          "label": "Ask what specifically bothers them",
+          "effects": {
+            "feedback": 0.5,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "ignore",
+          "label": "Ignore it",
+          "effects": {
+            "feedback": -0.5
+          }
+        },
+        {
+          "id": "change",
+          "label": "Change it anyway",
+          "effects": {
+            "feedback": 0.5,
+            "evidence": -0.5
+          }
+        },
+        {
+          "id": "defend",
+          "label": "Defend the work",
+          "effects": {
+            "feedback": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "unfair",
+      "type": "choice",
+      "prompt": "Someone says you clearly put no effort in. You worked hard on it.",
+      "askWhy": true,
+      "contexts": [
+        "emotion"
+      ],
+      "options": [
+        {
+          "id": "defend",
+          "label": "Defend how hard I worked",
+          "effects": {
+            "feedback": -1,
+            "conflict": 0.5
+          }
+        },
+        {
+          "id": "why",
+          "label": "Ask what gave them that impression",
+          "effects": {
+            "feedback": 0.5,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "stew",
+          "label": "Say nothing and stew about it",
+          "effects": {
+            "feedback": -0.5,
+            "conflict": -1
+          }
+        },
+        {
+          "id": "improve",
+          "label": "Set the effort aside and ask how to improve it",
+          "effects": {
+            "feedback": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "boss-public",
+      "type": "choice",
+      "prompt": "Your boss criticizes your work in front of the team.",
+      "contexts": [
+        "public",
+        "authority"
+      ],
+      "options": [
+        {
+          "id": "respond",
+          "label": "Push back right there",
+          "effects": {
+            "feedback": -0.5,
+            "conflict": 1
+          }
+        },
+        {
+          "id": "later",
+          "label": "Accept it, then discuss it privately",
+          "effects": {
+            "feedback": 0.5,
+            "conflict": 0.3
+          }
+        },
+        {
+          "id": "silent",
+          "label": "Stay quiet and avoid them afterward",
+          "effects": {
+            "feedback": -0.5,
+            "conflict": -1
+          }
+        },
+        {
+          "id": "clarify",
+          "label": "Ask clarifying questions in the room",
+          "effects": {
+            "feedback": 1,
+            "evidence": 0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "junior",
+      "type": "choice",
+      "prompt": "A junior colleague points out a flaw in your plan.",
+      "contexts": [
+        "novice"
+      ],
+      "options": [
+        {
+          "id": "serious",
+          "label": "Take it seriously and look into it",
+          "effects": {
+            "feedback": 1,
+            "evidence": 0.5
+          }
+        },
+        {
+          "id": "explain",
+          "label": "Explain why it isn't really a flaw",
+          "effects": {
+            "feedback": -1
+          }
+        },
+        {
+          "id": "later",
+          "label": "Say thanks and maybe look later",
+          "effects": {
+            "feedback": -0.3
+          }
+        }
+      ]
+    },
+    {
+      "id": "personal",
+      "type": "scale",
+      "prompt": "When your work is criticized, how much does it feel like criticism of you?",
+      "min": 1,
+      "max": 7,
+      "minLabel": "Not at all",
+      "maxLabel": "Very much",
+      "effects": {
+        "feedback": -1
+      }
+    },
+    {
+      "id": "mentor",
+      "type": "choice",
+      "prompt": "Harsh feedback comes from the mentor you trust most.",
+      "demands": {
+        "feedback": 1
+      },
+      "need": "the criticism came from someone who had earned your trust",
+      "options": [
+        {
+          "id": "reflect",
+          "label": "Sit with it and reflect",
+          "effects": {
+            "feedback": 1
+          }
+        },
+        {
+          "id": "defend",
+          "label": "Defend my choices",
+          "effects": {
+            "feedback": -1
+          }
+        },
+        {
+          "id": "bad-day",
+          "label": "Assume they're having a bad day",
+          "effects": {
+            "feedback": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "troll",
+      "type": "choice",
+      "prompt": "A stranger online tears apart your project with claims that are clearly wrong.",
+      "demands": {
+        "feedback": -1
+      },
+      "need": "the criticism was plainly wrong",
+      "options": [
+        {
+          "id": "rework",
+          "label": "Rework the project to address it",
+          "effects": {
+            "feedback": 1
+          }
+        },
+        {
+          "id": "stay",
+          "label": "Keep going as planned",
+          "effects": {
+            "feedback": -1
+          }
+        },
+        {
+          "id": "reply",
+          "label": "Reply with the facts",
+          "effects": {
+            "feedback": -0.5,
+            "conflict": 0.5
+          }
+        }
+      ]
+    }
+  ]
+}

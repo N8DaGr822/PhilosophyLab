@@ -1,0 +1,13 @@
+@implements IDisposable
+@inject DeviceStore Store
+
+@if (Store.Warning is not null)
+{
+    <aside class="notice" role="alert">@Store.Warning <a href="saved">Backups and recovery</a></aside>
+}
+
+@code {
+    protected override void OnInitialized() => Store.Changed += Refresh;
+    private void Refresh() => InvokeAsync(StateHasChanged);
+    public void Dispose() => Store.Changed -= Refresh;
+}

@@ -1,0 +1,35 @@
+<div class="scale">
+    <input type="range" min="@Question.Min" max="@Question.Max" step="1"
+           value="@(Answer.ScaleValue ?? Middle)"
+           aria-label="@Question.Prompt"
+           aria-valuetext="@ValueText"
+           class="@(Answer.ScaleValue is null ? "is-unset" : "")"
+           @oninput="OnInput" />
+    <div class="scale-ends">
+        <span>@Question.MinLabel</span>
+        <span>@Question.MaxLabel</span>
+    </div>
+    @if (Answer.ScaleValue is null)
+    {
+        <button type="button" class="link-button" @onclick="() => Set(Middle)">I'm right in the middle</button>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Question Question { get; set; } = default!;
+    [Parameter, EditorRequired] public Answer Answer { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+
+    private int Middle => (Question.Min + Question.Max) / 2;
+
+    private string ValueText => Answer.ScaleValue is int v ? $"{v} of {Question.Max}" : "Not answered";
+
+    private Task OnInput(ChangeEventArgs e) =>
+        int.TryParse(e.Value?.ToString(), out var v) ? Set(v) : Task.CompletedTask;
+
+    private Task Set(int v)
+    {
+        Answer.ScaleValue = v;
+        return Changed.InvokeAsync();
+    }
+}

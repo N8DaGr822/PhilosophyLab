@@ -1,0 +1,466 @@
+{
+  "id": "challenge",
+  "version": 1,
+  "lab": "development",
+  "title": "Challenge set",
+  "category": "Growth",
+  "icon": "🔄",
+  "summary": "Situations picked to run against your usual style.",
+  "intro": "Every situation here calls for a particular approach. The set is chosen from your behavior results, so it leans toward situations where your usual style may not fit.",
+  "minutesEstimate": 4,
+  "dynamic": true,
+  "questions": [
+    {
+      "id": "ikea",
+      "type": "choice",
+      "prompt": "You're assembling a crib for your baby. The instructions are detailed.",
+      "demands": {
+        "learning": -1
+      },
+      "need": "a child's safety depended on following instructions",
+      "options": [
+        {
+          "id": "follow",
+          "label": "Follow the instructions step by step",
+          "effects": {
+            "learning": -1
+          }
+        },
+        {
+          "id": "wing",
+          "label": "Figure it out as I go",
+          "effects": {
+            "learning": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "new-city",
+      "type": "choice",
+      "prompt": "You have a free afternoon in a city you've never visited.",
+      "demands": {
+        "learning": 1
+      },
+      "need": "there was nothing to lose by exploring",
+      "options": [
+        {
+          "id": "wander",
+          "label": "Wander and see what I find",
+          "effects": {
+            "learning": 1,
+            "approach": 1
+          }
+        },
+        {
+          "id": "guide",
+          "label": "Follow a guidebook plan",
+          "effects": {
+            "learning": -1,
+            "approach": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "nurse",
+      "type": "choice",
+      "prompt": "You're training a nurse on medication dosing.",
+      "demands": {
+        "teaching": -1
+      },
+      "need": "a learner's mistake could hurt someone",
+      "options": [
+        {
+          "id": "explicit",
+          "label": "Explain the exact procedure and check it back",
+          "effects": {
+            "teaching": -1
+          }
+        },
+        {
+          "id": "discover",
+          "label": "Ask questions so they work it out",
+          "effects": {
+            "teaching": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "teen",
+      "type": "choice",
+      "prompt": "Your teenager asks you to just fix their essay's argument for them.",
+      "demands": {
+        "teaching": 1
+      },
+      "need": "someone needed to build their own thinking",
+      "options": [
+        {
+          "id": "fix",
+          "label": "Rewrite the argument for them",
+          "effects": {
+            "teaching": -1
+          }
+        },
+        {
+          "id": "ask",
+          "label": "Ask questions until they see the gap",
+          "effects": {
+            "teaching": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "family-trip",
+      "type": "choice",
+      "prompt": "Your family is planning a vacation. Everyone has opinions.",
+      "demands": {
+        "direction": -1
+      },
+      "need": "buy-in mattered more than speed",
+      "options": [
+        {
+          "id": "decide",
+          "label": "Decide and book it",
+          "effects": {
+            "direction": 1
+          }
+        },
+        {
+          "id": "together",
+          "label": "Plan it together, even if it takes longer",
+          "effects": {
+            "direction": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "accident",
+      "type": "choice",
+      "prompt": "You witness a car accident. Bystanders are frozen.",
+      "demands": {
+        "direction": 1
+      },
+      "need": "an emergency needed someone to take charge",
+      "options": [
+        {
+          "id": "direct",
+          "label": "Point at people and give each a job",
+          "effects": {
+            "direction": 1
+          }
+        },
+        {
+          "id": "ask",
+          "label": "Ask if anyone knows first aid and wait",
+          "effects": {
+            "direction": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "roommate",
+      "type": "choice",
+      "prompt": "Your roommate's habits have bothered you for months.",
+      "demands": {
+        "conflict": 1
+      },
+      "need": "an issue had been building for months",
+      "options": [
+        {
+          "id": "raise",
+          "label": "Bring it up calmly this week",
+          "effects": {
+            "conflict": 1
+          }
+        },
+        {
+          "id": "tolerate",
+          "label": "Keep putting up with it",
+          "effects": {
+            "conflict": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "wedding",
+      "type": "choice",
+      "prompt": "At a wedding, a relative makes a mildly annoying comment about you.",
+      "demands": {
+        "conflict": -1
+      },
+      "need": "the moment wasn't worth a fight",
+      "options": [
+        {
+          "id": "respond",
+          "label": "Call it out",
+          "effects": {
+            "conflict": 1
+          }
+        },
+        {
+          "id": "let-go",
+          "label": "Let it go for the day",
+          "effects": {
+            "conflict": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "recall",
+      "type": "choice",
+      "prompt": "Your gut says a product is fine, but a few customer reports suggest a safety defect.",
+      "demands": {
+        "evidence": 1
+      },
+      "need": "a hunch conflicted with warning signs",
+      "options": [
+        {
+          "id": "investigate",
+          "label": "Investigate before deciding",
+          "effects": {
+            "evidence": 1
+          }
+        },
+        {
+          "id": "trust",
+          "label": "Trust my read of the product",
+          "effects": {
+            "evidence": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "choking",
+      "type": "choice",
+      "prompt": "Someone at your table starts choking.",
+      "demands": {
+        "evidence": -1
+      },
+      "need": "there was no time to gather facts",
+      "options": [
+        {
+          "id": "act",
+          "label": "Act immediately",
+          "effects": {
+            "evidence": -1
+          }
+        },
+        {
+          "id": "assess",
+          "label": "Make sure of what's happening first",
+          "effects": {
+            "evidence": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "editor",
+      "type": "choice",
+      "prompt": "An editor you hired says your book's opening chapter drags.",
+      "demands": {
+        "feedback": 1
+      },
+      "need": "you had asked an expert for their judgment",
+      "options": [
+        {
+          "id": "revise",
+          "label": "Revise it",
+          "effects": {
+            "feedback": 1
+          }
+        },
+        {
+          "id": "keep",
+          "label": "Keep it as it is",
+          "effects": {
+            "feedback": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "in-law",
+      "type": "choice",
+      "prompt": "A relative criticizes how you raise your kids, based on a single visit.",
+      "demands": {
+        "feedback": -1
+      },
+      "need": "the criticism came from a thin view of the situation",
+      "options": [
+        {
+          "id": "reconsider",
+          "label": "Rethink my approach",
+          "effects": {
+            "feedback": 1
+          }
+        },
+        {
+          "id": "hold",
+          "label": "Hold to what I know works",
+          "effects": {
+            "feedback": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "burnout",
+      "type": "choice",
+      "prompt": "A colleague is drowning and asks if you can take a project. You're already past capacity.",
+      "demands": {
+        "ownership": -1
+      },
+      "need": "you were already past capacity",
+      "options": [
+        {
+          "id": "take",
+          "label": "Take it on",
+          "effects": {
+            "ownership": 1
+          }
+        },
+        {
+          "id": "decline",
+          "label": "Decline and help them find another option",
+          "effects": {
+            "ownership": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "leak",
+      "type": "choice",
+      "prompt": "You notice water leaking in the office. Facilities is someone else's job.",
+      "demands": {
+        "ownership": 1
+      },
+      "need": "a small problem would grow if no one acted",
+      "options": [
+        {
+          "id": "act",
+          "label": "Deal with it or call it in now",
+          "effects": {
+            "ownership": 1
+          }
+        },
+        {
+          "id": "leave",
+          "label": "Assume someone else will report it",
+          "effects": {
+            "ownership": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "volunteer",
+      "type": "choice",
+      "prompt": "A volunteer on your team keeps missing shifts. They're otherwise great.",
+      "demands": {
+        "support": 1
+      },
+      "need": "someone valuable was struggling",
+      "options": [
+        {
+          "id": "coach",
+          "label": "Ask what's going on and help",
+          "effects": {
+            "support": 1
+          }
+        },
+        {
+          "id": "replace",
+          "label": "Replace them",
+          "effects": {
+            "support": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "cheat",
+      "type": "choice",
+      "prompt": "A top performer on your team falsified a report.",
+      "demands": {
+        "support": -1
+      },
+      "need": "someone broke a clear rule",
+      "options": [
+        {
+          "id": "consequence",
+          "label": "Apply the consequences",
+          "effects": {
+            "support": -1
+          }
+        },
+        {
+          "id": "coach",
+          "label": "Coach them and move on",
+          "effects": {
+            "support": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "launch",
+      "type": "choice",
+      "prompt": "You're launching a new product with no playbook and a small test audience.",
+      "demands": {
+        "approach": 1
+      },
+      "need": "learning fast was cheaper than planning",
+      "options": [
+        {
+          "id": "try",
+          "label": "Ship small versions and learn",
+          "effects": {
+            "approach": 1
+          }
+        },
+        {
+          "id": "plan",
+          "label": "Plan every detail first",
+          "effects": {
+            "approach": -1
+          }
+        }
+      ]
+    },
+    {
+      "id": "apprentice",
+      "type": "choice",
+      "prompt": "Your business needs a successor within two years.",
+      "demands": {
+        "delegation": 1
+      },
+      "need": "someone needed to grow into your role",
+      "options": [
+        {
+          "id": "grow",
+          "label": "Start handing real decisions to a promising junior",
+          "effects": {
+            "delegation": 1
+          }
+        },
+        {
+          "id": "self",
+          "label": "Keep key decisions with me until I'm ready",
+          "effects": {
+            "delegation": -1
+          }
+        }
+      ]
+    }
+  ]
+}

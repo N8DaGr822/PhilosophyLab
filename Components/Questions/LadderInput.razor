@@ -1,0 +1,26 @@
+<fieldset class="ladder">
+    <legend class="visually-hidden">@Question.Prompt</legend>
+    @for (var i = Question.Options.Count - 1; i >= -1; i--)
+    {
+        var level = i;
+        var label = level < 0 ? Question.NoneLabel ?? "None of these" : Question.Options[level].Label;
+        var within = Answer.LadderLevel is int chosen && level >= 0 && level <= chosen;
+        <label class="rung @(Answer.LadderLevel == level ? "is-selected" : "") @(within ? "is-within" : "") @(level < 0 ? "rung--none" : "")">
+            <input type="radio" name="@Question.Id" checked="@(Answer.LadderLevel == level)"
+                   @onchange="() => Select(level)" />
+            <span>@label</span>
+        </label>
+    }
+</fieldset>
+
+@code {
+    [Parameter, EditorRequired] public Question Question { get; set; } = default!;
+    [Parameter, EditorRequired] public Answer Answer { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+
+    private Task Select(int level)
+    {
+        Answer.LadderLevel = level;
+        return Changed.InvokeAsync();
+    }
+}

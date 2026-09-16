@@ -1,0 +1,131 @@
+@page "/results/{ResultId}"
+@inject TestCatalog Catalog
+@inject DeviceStore Store
+@inject BehaviorAnalyzer Analyzer
+
+<PageTitle>@(_test?.Title ?? "Result")</PageTitle>
+
+@if (_loaded && (_result is null || _test is null))
+{
+    <h1>Result not found</h1>
+    @if (_result is not null)
+    {
+        <p>Original questions are unavailable. These raw answers are retained and excluded from current interpretation.</p>
+        <pre class="raw-answers">@System.Text.Json.JsonSerializer.Serialize(_result.Answers, AppJsonContext.Default.ListAnswer)</pre>
+    }
+    <p>It may have been deleted or its original question version is unavailable. <a href="saved">See saved results</a></p>
+}
+else if (_result is not null && _test is not null)
+{
+    <section class="result-head">
+        <p class="intro-icon" aria-hidden="true">@_test.Icon</p>
+        <h1>@_test.Title</h1>
+        <p class="test-meta">@Labs.Title(_test.Lab). @_personName, @_result.CompletedAt.LocalDateTime.ToString("MMMM d, yyyy 'at' h:mm tt")</p>
+        @if (_result.TestVersion != _test.Version)
+        {
+            <p class="notice">This test has changed since you took it. Some answers may no longer match the questions.</p>
+        }
+    </section>
+
+    @if (_test.Lab == Labs.Development)
+    {
+        <section class="panel" aria-labelledby="adapt">
+            <h2 id="adapt">Choices against your baseline</h2>
+            @if (_adapt is null || _adapt.Moments.Count == 0)
+            {
+                <p>Nothing to compare yet.</p>
+            }
+            else if (_adapt.ChallengeCount == 0)
+            {
+                <p class="observation">You selected the suggested approach in @_adapt.Moments.Count(m => m.Adapted) of @_adapt.Moments.Count comparisons.</p>
+                <p class="hint">None of these ran against your usual style yet — take more behavior tests so the app can tell what your usual style is.</p>
+            }
+            else
+            {
+                <AdaptMeter Summary="_adapt" />
+                @foreach (var m in _adapt.Challenges)
+                {
+                    <p class="adapt-line @(m.Adapted ? "is-adapted" : "")">
+                        @(m.Adapted ? "Selected suggested alternative" : "Other choice"): when @m.Observation.Question.Need
+                        (your usual lean is toward @m.Dimension.LeanFor(m.Baseline)).
+                    </p>
+                }
+            }
+            <p class="hint">See your progress over time on <a href="growth">Growth</a>.</p>
+        </section>
+    }
+    else
+    {
+        <section class="panel" aria-labelledby="leanings">
+            <h2 id="leanings">What these answers suggest</h2>
+            <p class="hint">These are scenario preferences, not personality labels or measures of ability.</p>
+            @if (_test.Lab == Labs.Philosophy) { foreach (var line in _observations) { <p class="observation">@line</p> } }
+            @foreach (var axis in _axes) { <AxisBar Dimension="axis.Dimension" Score="axis.Score" /> }
+            <p class="hint">Your <a href="@($"profile?lab={_test.Lab}")">profile</a> combines this with your other tests and points out where your answers pull against each other.</p>
+        </section>
+    }
+
+    <section aria-labelledby="answers">
+        <h2 id="answers">Your answers</h2>
+        <ol class="recap">
+            @foreach (var q in _test.Questions.Where(q => !_test.Dynamic || _result.For(q.Id) is not null))
+            {
+                var a = _result.For(q.Id);
+                <li>
+                    <p class="recap-q">@q.Prompt</p>
+                    @if (ScenarioSequence.Context(q, _result.Answers) is string context) { <p class="hint">@context</p> }
+                    <p class="recap-a">@AnswerFormatter.Describe(q, a)</p>
+                    @if (!string.IsNullOrWhiteSpace(a?.Reason))
+                    {
+                        <p class="recap-why">“@a.Reason”</p>
+                    }
+                </li>
+            }
+        </ol>
+    </section>
+
+    <div class="runner-nav">
+        <a class="button button--quiet" href="@(_test.Lab == Labs.Development ? "growth" : $"?lab={_test.Lab}")">
+            @(_test.Lab == Labs.Development ? "Back to Growth" : "All tests")
+        </a>
+        <a class="button" href="@($"test/{_test.Id}")">@(_test.Dynamic ? "Try a new set" : "Take it again")</a>
+    </div>
+}
+
+@code {
+    [Parameter] public string ResultId { get; set; } = "";
+
+    private TestResult? _result;
+    private TestDefinition? _test;
+    private bool _loaded;
+    private string _personName = "";
+    private List<AxisReading> _axes = [];
+    private List<string> _observations = [];
+    private AdaptabilitySummary? _adapt;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _result = await Store.GetResultAsync(ResultId);
+        if (_result is not null)
+        {
+            _test = ScenarioSequence.DefinitionFor(_result, await Catalog.GetTestAsync(_result.TestId));
+            var data = await Store.GetAsync();
+            _personName = data.People.FirstOrDefault(p => p.Id == _result.ProfileId)?.Name ?? "Unknown";
+
+            var dims = await Catalog.GetDimensionsAsync();
+            _axes = dims.Where(d => _result.Tallies.ContainsKey(d.Id))
+                        .Select(d => new AxisReading(d, _result.Tallies[d.Id].Score, _result.Tallies[d.Id].Weight))
+                        .ToList();
+            _observations = ProfileBuilder.Describe(_axes);
+
+            if (_test?.Lab == Labs.Development)
+            {
+                var latest = await Store.GetLatestResultsAsync(_result.ProfileId);
+                var baseline = _result.Baseline ?? BehaviorAnalyzer.Baseline(await Analyzer.ObserveAsync(latest));
+                _adapt = BehaviorAnalyzer.Adaptability(
+                    await Analyzer.ObserveAsync([_result]), baseline, dims.ToDictionary(d => d.Id));
+            }
+        }
+        _loaded = true;
+    }
+}

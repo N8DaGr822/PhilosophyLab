@@ -1,0 +1,199 @@
+@page "/profile"
+@implements IDisposable
+@inject DeviceStore Store
+@inject TestCatalog Catalog
+@inject ProfileBuilder Builder
+@inject BehaviorAnalyzer Analyzer
+
+<PageTitle>Profile</PageTitle>
+
+<LabTabs Path="profile" Current="@_lab" />
+
+@if (_person is null)
+{
+    <p class="loading">Building your profile…</p>
+}
+else
+{
+    <section class="hero hero--small">
+        <h1>@(_lab == Labs.Behavior ? _person.HowWorks() : _person.HowReasons())</h1>
+        <p class="lede">
+            Built from the latest run per test with compatible questions:
+            @_sources.Count of @_totalTests @(_lab == Labs.Behavior ? "behavior" : "beliefs") tests taken so far.
+        </p>
+    <p class="hint">Scenario choices are not observed behavior or validated ability measures. Older results without matching question versions are excluded. <a href="about">How interpretation works</a>.</p>
+    </section>
+
+    @if (_sources.Count == 0)
+    {
+        <p class="empty">No answers yet. <a href="@($"?lab={_lab}")">Choose a test</a> and your profile will start here.</p>
+    }
+    else if (_lab == Labs.Behavior && _behavior is not null)
+    {
+        @if (_behavior.Strengths.Count > 0)
+        {
+            <section class="panel" aria-labelledby="strong">
+                <h2 id="strong">Repeated preferences</h2>
+                <ul class="tendencies">
+                    @foreach (var s in _behavior.Strengths)
+                    {
+                        <li>
+                            <strong>@(s.Score >= 0 ? s.Dimension.HighStrength : s.Dimension.LowStrength)</strong>
+                            <span>Across @s.Weight scored responses without a suggested approach. This describes your choices here, not an ability or identity.</span>
+                        </li>
+                    }
+                </ul>
+            </section>
+        }
+        else
+        {
+            <section class="panel"><p class="observation">There is not enough repeated evidence for a clear preference yet. Mixed answers do not by themselves demonstrate adaptability.</p></section>
+        }
+
+        @if (_behavior.Situational.Count > 0)
+        {
+            <section aria-labelledby="situational">
+                <h2 id="situational">Differences across contexts</h2>
+                @foreach (var s in _behavior.Situational)
+                {
+                    <div class="situational">
+                        <p>@TextFormat.Sentence(s.Shift) when:</p>
+                        <ul>
+                            @foreach (var w in s.Whens) { <li>@w</li> }
+                        </ul>
+                    </div>
+                }
+            </section>
+        }
+
+        <section class="panel" aria-labelledby="adaptability">
+            <h2 id="adaptability">Trying suggested alternatives</h2>
+            @if (_behavior.Adaptability.ChallengeCount == 0)
+            {
+                <p>Not compared yet. We need repeated preferences and a scenario with a different suggested approach. Take more tests, or try a <a href="growth">challenge set</a>.</p>
+            }
+            else
+            {
+                <AdaptMeter Summary="_behavior.Adaptability" />
+                @if (_behavior.BlindSpots.Count > 0)
+                {
+                    <h3>Questions to reflect on</h3>
+                    @foreach (var b in _behavior.BlindSpots) { <p>@b</p> }
+                }
+                <p class="hint"><a href="growth">Go to Growth</a> to practice against your usual style.</p>
+            }
+        </section>
+
+        <section aria-labelledby="evidence">
+            <h2 id="evidence">Choices behind the summary</h2>
+            <p class="hint">Counts show how often you chose an approach when it was offered. Approaches can overlap; they are not personality types. Small samples are tentative.</p>
+            @foreach (var evidence in _behavior.Strategies)
+            {
+                <details class="panel">
+                    <summary>@evidence.Strategy: @evidence.Chosen of @evidence.Opportunities opportunities</summary>
+                    <ul>
+                        @foreach (var example in evidence.Examples)
+                        {
+                            <li><a href="@($"results/{example.ResultId}")">@example.TestTitle</a>: @example.Question
+                                <p>Chose: @example.Answer</p>
+                                @if (example.Context is not null) { <p class="hint">@example.Context</p> }
+                            </li>
+                        }
+                    </ul>
+                </details>
+            }
+        </section>
+        <TensionList Tensions="_tensions" />
+
+        <section class="panel" aria-labelledby="axes">
+            <h2 id="axes">Preferences in these scenarios</h2>
+            <p class="hint">From situations that didn't call for any particular approach.</p>
+            @foreach (var axis in _behavior.Axes) { <AxisBar Dimension="axis.Dimension" Score="axis.Score" /> }
+        </section>
+    }
+    else if (_beliefs is not null)
+    {
+        <section class="panel" aria-labelledby="summary">
+            <h2 id="summary">In plain words</h2>
+            @foreach (var line in _beliefs.Observations) { <p class="observation">@line</p> }
+        </section>
+
+        <TensionList Tensions="_beliefs.Tensions" />
+
+        <section class="panel" aria-labelledby="axes">
+            <h2 id="axes">Your axes</h2>
+            @foreach (var axis in _beliefs.Axes) { <AxisBar Dimension="axis.Dimension" Score="axis.Score" /> }
+            <p class="hint">An axis is more reliable the more tests touch it. Ones with few answers can swing a lot.</p>
+        </section>
+    }
+
+    @if (_sources.Count > 0)
+    {
+        <section aria-labelledby="based-on">
+            <h2 id="based-on">Based on</h2>
+            <ul class="plain-list">
+                @foreach (var (result, test) in _sources)
+                {
+                    <li>
+                        <a href="@($"results/{result.Id}")">@test.Icon @test.Title</a>
+                        <span class="test-meta">— @result.CompletedAt.LocalDateTime.ToString("MMM d, yyyy")</span>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+}
+
+@code {
+    [SupplyParameterFromQuery(Name = "lab")] public string? LabQuery { get; set; }
+
+    private string _lab = Labs.Philosophy;
+    private Person? _person;
+    private int _totalTests;
+    private List<(TestResult, TestDefinition)> _sources = [];
+    private PhilosophicalProfile? _beliefs;
+    private BehaviorProfile? _behavior;
+    private List<Tension> _tensions = [];
+
+    protected override void OnInitialized() => Store.Changed += OnStoreChanged;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _lab = LabTabs.Normalize(LabQuery);
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        var person = await Store.GetActivePersonAsync();
+        var all = await Catalog.GetTestsAsync();
+        var labTests = all.Where(t => t.Lab == _lab).ToList();
+        _totalTests = labTests.Count;
+
+        // Only results for tests that still exist in the catalog.
+        var latest = (await Store.GetLatestResultsAsync(person.Id))
+            .Where(r => ScenarioSequence.DefinitionFor(r, all.FirstOrDefault(t => t.Id == r.TestId)) is not null)
+            .ToList();
+
+        _sources = latest
+            .Select(r => (r, labTests.FirstOrDefault(t => t.Id == r.TestId)))
+            .Where(x => x.Item2 is not null)
+            .Select(x => (x.r, x.Item2!))
+            .ToList();
+
+        if (_lab == Labs.Behavior)
+        {
+            _behavior = await Analyzer.BuildAsync(latest);
+            _tensions = await Builder.TensionsAsync(latest, Labs.Behavior);
+        }
+        else
+        {
+            _beliefs = await Builder.BuildAsync(latest);
+        }
+        _person = person;
+    }
+
+    private void OnStoreChanged() => InvokeAsync(async () => { await LoadAsync(); StateHasChanged(); });
+
+    public void Dispose() => Store.Changed -= OnStoreChanged;
+}

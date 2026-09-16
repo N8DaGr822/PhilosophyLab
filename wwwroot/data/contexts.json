@@ -1,0 +1,34 @@
+[
+  {
+    "id": "pressure",
+    "when": "time is short"
+  },
+  {
+    "id": "danger",
+    "when": "mistakes are costly or dangerous"
+  },
+  {
+    "id": "novice",
+    "when": "someone is new or struggling"
+  },
+  {
+    "id": "experts",
+    "when": "others know more than you"
+  },
+  {
+    "id": "ambiguity",
+    "when": "the problem is unclear"
+  },
+  {
+    "id": "authority",
+    "when": "someone above you is involved"
+  },
+  {
+    "id": "public",
+    "when": "others are watching"
+  },
+  {
+    "id": "emotion",
+    "when": "people are upset"
+  }
+]

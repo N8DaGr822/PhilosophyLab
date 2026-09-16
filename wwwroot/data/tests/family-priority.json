@@ -1,0 +1,66 @@
+{
+  "id": "family-priority",
+  "version": 1,
+  "title": "Family priority",
+  "category": "Relationships",
+  "icon": "❤️",
+  "summary": "Rank the people in your life, then see whether your choices agree.",
+  "intro": "First you'll say how much priority each group gets. Then a few situations will test that ranking.",
+  "minutesEstimate": 5,
+  "questions": [
+    {
+      "id": "circle", "type": "allocation", "points": 100, "step": 5,
+      "prompt": "You have 100 priority points. How do you divide them?",
+      "scenario": "Think about who gets your time, money, and energy when you can't give to everyone.",
+      "options": [
+        { "id": "spouse", "label": "Spouse or partner", "effects": { "partiality": 1 } },
+        { "id": "children", "label": "Children", "effects": { "partiality": 1 } },
+        { "id": "parents", "label": "Parents", "effects": { "partiality": 1 } },
+        { "id": "siblings", "label": "Siblings", "effects": { "partiality": 1 } },
+        { "id": "extended", "label": "Extended family", "effects": { "partiality": 0.5 } },
+        { "id": "friends", "label": "Close friends", "effects": { "partiality": 0.5 } },
+        { "id": "acquaintances", "label": "Acquaintances", "effects": { "partiality": -0.5 } },
+        { "id": "strangers", "label": "Strangers", "effects": { "partiality": -1 } },
+        { "id": "self", "label": "Yourself", "effects": { "sacrifice": -1 } }
+      ]
+    },
+    {
+      "id": "weekend", "type": "choice", "askWhy": true,
+      "prompt": "You have one free weekend. Who gets it?",
+      "scenario": "Your spouse badly needs time together. Your child has an important event. Your parents need help moving. Your best friend is going through a breakup.",
+      "options": [
+        { "id": "spouse", "label": "My spouse", "effects": {} },
+        { "id": "child", "label": "My child's event", "effects": {} },
+        { "id": "parents", "label": "Helping my parents move", "effects": {} },
+        { "id": "friend", "label": "My best friend", "effects": { "partiality": -0.3 } },
+        { "id": "split", "label": "A little for everyone", "detail": "Nobody gets what they really need.", "effects": { "partiality": -0.3 } }
+      ]
+    },
+    {
+      "id": "stranger-emergency", "type": "choice",
+      "prompt": "On your way to your child's recital, you see a stranger collapse. No one else is around.",
+      "scenario": "If you stop and wait with them, you'll miss the whole recital. Your child will be looking for you.",
+      "options": [
+        { "id": "stop", "label": "Stop and stay until help arrives", "effects": { "partiality": -1 } },
+        { "id": "call", "label": "Call 911 and keep driving", "effects": { "partiality": 0.3 } },
+        { "id": "drive", "label": "Keep driving — someone else will find them", "effects": { "partiality": 1 } }
+      ]
+    },
+    {
+      "id": "inheritance", "type": "choice",
+      "prompt": "You're writing your will. You have $50,000 to leave.",
+      "scenario": "Your children are doing fine. A charity could use the money to prevent about ten childhood deaths.",
+      "options": [
+        { "id": "children", "label": "All of it to my children", "effects": { "partiality": 1 } },
+        { "id": "half", "label": "Half and half", "effects": { "partiality": 0 } },
+        { "id": "charity", "label": "All of it to the charity", "effects": { "partiality": -1 } }
+      ]
+    },
+    {
+      "id": "self-care", "type": "scale", "min": 1, "max": 7,
+      "prompt": "When your needs conflict with your family's, how often do you put yourself first?",
+      "minLabel": "Almost never", "maxLabel": "Usually",
+      "effects": { "sacrifice": -1 }
+    }
+  ]
+}

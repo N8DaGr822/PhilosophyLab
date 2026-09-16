@@ -1,0 +1,164 @@
+@page "/test/{TestId}"
+@inject TestCatalog Catalog
+@inject DeviceStore Store
+@inject NavigationManager Nav
+@inject ChallengePlanner Planner
+@inject BehaviorAnalyzer Analyzer
+@inject IJSRuntime JS
+@using System.Globalization
+
+<PageTitle>@(_test?.Title ?? "Test")</PageTitle>
+
+@if (_loaded && _test is null)
+{
+    <h1>Test not found</h1>
+    <p><a href="">Back to all tests</a></p>
+}
+else if (_test is not null)
+{
+    <div class="runner">
+        <div class="runner-head">
+            <a href="" class="link-button">Leave test</a>
+            @if (_index >= 0)
+            {
+                <span class="runner-count">Question @(_index + 1) of @_test.Questions.Count</span>
+            }
+        </div>
+        <div class="progress" aria-hidden="true">
+            <span style="width:@(ProgressPercent.ToString("0", CultureInfo.InvariantCulture))%"></span>
+        </div>
+
+        @if (_index < 0)
+        {
+            <section class="intro">
+                <p class="intro-icon" aria-hidden="true">@_test.Icon</p>
+                <h1>@_test.Title</h1>
+                <p class="question-scenario">@_test.Intro</p>
+                @if (_test.Dynamic)
+                {
+                    <p class="notice">
+                        @(_personalized
+                            ? "These situations were picked because they call for something different from how you usually work."
+                            : "Take a few behavior tests first and this set will be picked to challenge your usual style. For now, here's a general mix.")
+                    </p>
+                }
+                <p class="test-meta">@_test.Questions.Count questions, about @_test.MinutesEstimate minutes. Answering for @_personName.</p>
+                <button type="button" class="button button--big" @onclick="() => _index = 0">Begin</button>
+            </section>
+        }
+        else
+        {
+            var q = _test.Questions[_index];
+            <p class="hint">Answering for @_personName. Switching the person in the header does not transfer this attempt.</p>
+            <QuestionView @key="q.Id" Question="q" Answer="AnswerFor(q)" Changed="StateHasChanged" Context="@ScenarioSequence.Context(q, _answers.Values)" />
+            @if (_saveError is not null)
+            {
+                <p class="notice" role="alert">@_saveError</p>
+                <button class="button button--quiet" @onclick="ExportAttemptAsync">Export these answers</button>
+            }
+
+            <div class="runner-nav">
+                <button type="button" class="button button--quiet" @onclick="Back">Back</button>
+                @if (_index < _test.Questions.Count - 1)
+                {
+                    <button type="button" class="button" disabled="@(!Scoring.IsAnswered(q, AnswerFor(q)))" @onclick="Next">Next</button>
+                }
+                else
+                {
+                    <button type="button" class="button" disabled="@(!Scoring.IsAnswered(q, AnswerFor(q)) || _saving)" @onclick="FinishAsync">Save my answers</button>
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+    [Parameter] public string TestId { get; set; } = "";
+
+    private TestDefinition? _test;
+    private bool _loaded;
+    private bool _saving;
+    private bool _personalized;
+    private int _index = -1;
+    private string _personName = "";
+    private Person _owner = new();
+    private string? _saveError;
+    private TestResult? _pendingResult;
+    private Dictionary<string, DimensionTally> _baseline = [];
+    private readonly Dictionary<string, Answer> _answers = [];
+    private readonly Dictionary<string, string> _advanced = [];
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _owner = await Store.GetActivePersonAsync();
+        _test = await Catalog.GetTestAsync(TestId);
+        if (_test is { Dynamic: true })
+        {
+            var plan = await Planner.BuildAsync(_test, _owner.Id);
+            _test = plan.Test;
+            _personalized = plan.Personalized;
+        }
+        _personName = _owner.Name;
+        _baseline = BehaviorAnalyzer.Baseline(await Analyzer.ObserveAsync(await Store.GetLatestResultsAsync(_owner.Id)));
+        _saving = false;
+        _saveError = null;
+        _pendingResult = null;
+        _answers.Clear();
+        _advanced.Clear();
+        _index = -1;
+        _loaded = true;
+    }
+
+    private double ProgressPercent => _test is null || _index < 0 ? 0 : 100.0 * _index / _test.Questions.Count;
+
+    private Answer AnswerFor(Question q) =>
+        _answers.TryGetValue(q.Id, out var a) ? a : _answers[q.Id] = new Answer { QuestionId = q.Id };
+
+    private void Next()
+    {
+        var current = _test!.Questions[_index];
+        var signature = System.Text.Json.JsonSerializer.Serialize(new List<Answer> { AnswerFor(current) }, AppJsonContext.Default.ListAnswer);
+        if (_advanced.TryGetValue(current.Id, out var old) && old != signature && _test.Questions.Any(q => q.Variants.Count > 0))
+        {
+            foreach (var q in _test.Questions.Skip(_index + 1)) { _answers.Remove(q.Id); _advanced.Remove(q.Id); }
+        }
+        _advanced[current.Id] = signature;
+        _index++;
+    }
+
+    private void Back() => _index--;
+
+    private async Task FinishAsync()
+    {
+        if (_saving) return;
+        _saving = true;
+        var answers = _test!.Questions.Select(AnswerFor).ToList();
+        var result = new TestResult
+        {
+            Id = _pendingResult?.Id ?? Guid.NewGuid().ToString("N"),
+            ProfileId = _owner.Id,
+            Definition = _test,
+            Baseline = _baseline,
+            TestId = _test.Id,
+            TestVersion = _test.Version,
+            Answers = answers,
+            Tallies = Scoring.Score(_test, answers),
+        };
+        _pendingResult = result;
+        try
+        {
+            await Store.SaveResultAsync(result);
+            Nav.NavigateTo($"results/{result.Id}");
+        }
+        catch (Exception ex) when (ex is StorageException or FormatException) { _saveError = ex.Message; }
+        finally { _saving = false; }
+    }
+
+    private async Task ExportAttemptAsync()
+    {
+        if (_pendingResult is null) return;
+        var backup = new DeviceData { People = [_owner], ActivePersonId = _owner.Id, Results = [_pendingResult] };
+        var json = System.Text.Json.JsonSerializer.Serialize(backup, AppJsonContext.Default.DeviceData);
+        await JS.InvokeVoidAsync("philosophyFiles.download", "unsaved-answers.json", json);
+    }
+}

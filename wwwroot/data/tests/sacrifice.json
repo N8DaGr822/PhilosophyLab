@@ -1,0 +1,288 @@
+{
+  "id": "sacrifice",
+  "version": 1,
+  "title": "Sacrifice curve",
+  "category": "Relationships",
+  "icon": "🤲",
+  "summary": "How much would you give up, and for whom?",
+  "intro": "Each question asks how far you'd go to save someone. If a relationship doesn't apply to you, imagine it does. Your answers become a curve, not a single score.",
+  "minutesEstimate": 3,
+  "questions": [
+    {
+      "id": "child",
+      "type": "ladder",
+      "prompt": "What's the most you would give up to save your child's life?",
+      "noneLabel": "Nothing on this list",
+      "effects": {
+        "sacrifice": 1
+      },
+      "options": [
+        {
+          "id": "100",
+          "label": "$100"
+        },
+        {
+          "id": "1k",
+          "label": "$1,000"
+        },
+        {
+          "id": "vacation",
+          "label": "Your dream vacation"
+        },
+        {
+          "id": "career",
+          "label": "Your career"
+        },
+        {
+          "id": "house",
+          "label": "Your house"
+        },
+        {
+          "id": "health",
+          "label": "Your long-term health"
+        },
+        {
+          "id": "life",
+          "label": "Your life"
+        }
+      ]
+    },
+    {
+      "id": "spouse",
+      "type": "ladder",
+      "prompt": "What's the most you would give up to save your spouse's life?",
+      "noneLabel": "Nothing on this list",
+      "effects": {
+        "sacrifice": 1
+      },
+      "options": [
+        {
+          "id": "100",
+          "label": "$100"
+        },
+        {
+          "id": "1k",
+          "label": "$1,000"
+        },
+        {
+          "id": "vacation",
+          "label": "Your dream vacation"
+        },
+        {
+          "id": "career",
+          "label": "Your career"
+        },
+        {
+          "id": "house",
+          "label": "Your house"
+        },
+        {
+          "id": "health",
+          "label": "Your long-term health"
+        },
+        {
+          "id": "life",
+          "label": "Your life"
+        }
+      ]
+    },
+    {
+      "id": "parent",
+      "type": "ladder",
+      "prompt": "What's the most you would give up to save a parent's life?",
+      "noneLabel": "Nothing on this list",
+      "effects": {
+        "sacrifice": 1
+      },
+      "options": [
+        {
+          "id": "100",
+          "label": "$100"
+        },
+        {
+          "id": "1k",
+          "label": "$1,000"
+        },
+        {
+          "id": "vacation",
+          "label": "Your dream vacation"
+        },
+        {
+          "id": "career",
+          "label": "Your career"
+        },
+        {
+          "id": "house",
+          "label": "Your house"
+        },
+        {
+          "id": "health",
+          "label": "Your long-term health"
+        },
+        {
+          "id": "life",
+          "label": "Your life"
+        }
+      ]
+    },
+    {
+      "id": "sibling",
+      "type": "ladder",
+      "prompt": "What's the most you would give up to save a sibling's life?",
+      "noneLabel": "Nothing on this list",
+      "effects": {
+        "sacrifice": 1
+      },
+      "options": [
+        {
+          "id": "100",
+          "label": "$100"
+        },
+        {
+          "id": "1k",
+          "label": "$1,000"
+        },
+        {
+          "id": "vacation",
+          "label": "Your dream vacation"
+        },
+        {
+          "id": "career",
+          "label": "Your career"
+        },
+        {
+          "id": "house",
+          "label": "Your house"
+        },
+        {
+          "id": "health",
+          "label": "Your long-term health"
+        },
+        {
+          "id": "life",
+          "label": "Your life"
+        }
+      ]
+    },
+    {
+      "id": "friend",
+      "type": "ladder",
+      "prompt": "What's the most you would give up to save your best friend's life?",
+      "noneLabel": "Nothing on this list",
+      "effects": {
+        "sacrifice": 1
+      },
+      "options": [
+        {
+          "id": "100",
+          "label": "$100"
+        },
+        {
+          "id": "1k",
+          "label": "$1,000"
+        },
+        {
+          "id": "vacation",
+          "label": "Your dream vacation"
+        },
+        {
+          "id": "career",
+          "label": "Your career"
+        },
+        {
+          "id": "house",
+          "label": "Your house"
+        },
+        {
+          "id": "health",
+          "label": "Your long-term health"
+        },
+        {
+          "id": "life",
+          "label": "Your life"
+        }
+      ]
+    },
+    {
+      "id": "stranger",
+      "type": "ladder",
+      "prompt": "What's the most you would give up to save a stranger's life?",
+      "noneLabel": "Nothing on this list",
+      "effects": {
+        "sacrifice": 1,
+        "partiality": -0.5
+      },
+      "options": [
+        {
+          "id": "100",
+          "label": "$100"
+        },
+        {
+          "id": "1k",
+          "label": "$1,000"
+        },
+        {
+          "id": "vacation",
+          "label": "Your dream vacation"
+        },
+        {
+          "id": "career",
+          "label": "Your career"
+        },
+        {
+          "id": "house",
+          "label": "Your house"
+        },
+        {
+          "id": "health",
+          "label": "Your long-term health"
+        },
+        {
+          "id": "life",
+          "label": "Your life"
+        }
+      ],
+      "scenario": "Someone you'll never meet again."
+    },
+    {
+      "id": "five-strangers",
+      "type": "ladder",
+      "prompt": "What's the most you would give up to save five strangers' lives?",
+      "noneLabel": "Nothing on this list",
+      "effects": {
+        "sacrifice": 1,
+        "partiality": -1
+      },
+      "options": [
+        {
+          "id": "100",
+          "label": "$100"
+        },
+        {
+          "id": "1k",
+          "label": "$1,000"
+        },
+        {
+          "id": "vacation",
+          "label": "Your dream vacation"
+        },
+        {
+          "id": "career",
+          "label": "Your career"
+        },
+        {
+          "id": "house",
+          "label": "Your house"
+        },
+        {
+          "id": "health",
+          "label": "Your long-term health"
+        },
+        {
+          "id": "life",
+          "label": "Your life"
+        }
+      ]
+    }
+  ]
+}

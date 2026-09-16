@@ -1,0 +1,369 @@
+{
+  "id": "leadership",
+  "version": 2,
+  "lab": "behavior",
+  "title": "Leading a team",
+  "category": "Leadership",
+  "icon": "🗂️",
+  "summary": "Assign the work, then handle what goes wrong.",
+  "intro": "You have three people and one deadline. First you hand out the work. Then things start happening.",
+  "minutesEstimate": 5,
+  "questions": [
+    {
+      "id": "assign",
+      "type": "assign",
+      "prompt": "Who gets each task?",
+      "contexts": [
+        "pressure"
+      ],
+      "askWhy": true,
+      "scenario": "The release is due Friday.",
+      "options": [
+        {
+          "id": "james",
+          "label": "James",
+          "detail": "Best programmer, bad with deadlines",
+          "effects": {}
+        },
+        {
+          "id": "sarah",
+          "label": "Sarah",
+          "detail": "Slower, extremely reliable",
+          "effects": {}
+        },
+        {
+          "id": "mike",
+          "label": "Mike",
+          "detail": "Inexperienced, highly motivated",
+          "effects": {}
+        }
+      ],
+      "rows": [
+        {
+          "id": "core",
+          "label": "The core feature — it can't slip",
+          "effects": {
+            "james": {
+              "delegation": 0.3
+            },
+            "sarah": {
+              "delegation": -1
+            },
+            "mike": {
+              "delegation": 1
+            }
+          }
+        },
+        {
+          "id": "hard",
+          "label": "The hardest technical problem",
+          "effects": {
+            "james": {
+              "delegation": -1
+            },
+            "sarah": {
+              "delegation": 0
+            },
+            "mike": {
+              "delegation": 1
+            }
+          }
+        },
+        {
+          "id": "small",
+          "label": "A small, well-defined feature",
+          "effects": {
+            "james": {
+              "delegation": -0.5
+            },
+            "sarah": {
+              "delegation": -0.5
+            },
+            "mike": {
+              "delegation": 0.5
+            }
+          }
+        },
+        {
+          "id": "docs",
+          "label": "Documentation and testing",
+          "effects": {}
+        }
+      ]
+    },
+    {
+      "id": "sick",
+      "type": "choice",
+      "prompt": "Sarah gets sick for the week. How do you revise the plan?",
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "myself",
+          "label": "Take it on myself",
+          "effects": {
+            "ownership": 1,
+            "direction": 0.3
+          }
+        },
+        {
+          "id": "james",
+          "label": "Give it to James with daily check-ins",
+          "effects": {
+            "direction": 1,
+            "delegation": -0.5
+          }
+        },
+        {
+          "id": "mike",
+          "label": "Give it to Mike and support him",
+          "effects": {
+            "delegation": 1,
+            "support": 0.5
+          }
+        },
+        {
+          "id": "slip",
+          "label": "Ask to move the deadline",
+          "effects": {
+            "ownership": -0.5
+          }
+        }
+      ],
+      "scenario": "Sarah is unavailable. Review the assignments you made before deciding what needs covering.",
+      "variants": [
+        {
+          "questionId": "assign",
+          "optionId": "sarah",
+          "text": "You assigned the core feature to Sarah. Her absence now leaves that deadline-critical work without its original owner.",
+          "rowId": "core"
+        },
+        {
+          "questionId": "assign",
+          "optionId": "james",
+          "text": "You assigned the core feature to James. Sarah is unavailable, so consider her other assignments without automatically moving the core feature.",
+          "rowId": "core"
+        },
+        {
+          "questionId": "assign",
+          "optionId": "mike",
+          "text": "You assigned the core feature to Mike. Sarah is unavailable to help, so consider what support and coverage he needs.",
+          "rowId": "core"
+        }
+      ]
+    },
+    {
+      "id": "mistake",
+      "type": "choice",
+      "prompt": "Mike makes a major mistake that costs the team a day.",
+      "contexts": [
+        "novice"
+      ],
+      "options": [
+        {
+          "id": "take-back",
+          "label": "Take the work back",
+          "effects": {
+            "delegation": -1,
+            "support": -0.5
+          }
+        },
+        {
+          "id": "pair",
+          "label": "Pair with him to fix it",
+          "effects": {
+            "support": 1,
+            "delegation": 0.5
+          }
+        },
+        {
+          "id": "warn",
+          "label": "Give him a formal warning",
+          "effects": {
+            "support": -1
+          }
+        },
+        {
+          "id": "alone",
+          "label": "Let him fix it himself",
+          "effects": {
+            "delegation": 1,
+            "teaching": 0.5
+          }
+        }
+      ],
+      "variants": [
+        {
+          "questionId": "sick",
+          "optionId": "myself",
+          "text": "Your response to the absence was: Take it on myself. In this fictional continuation, Mike makes a mistake during a shared integration task; the team loses a day."
+        },
+        {
+          "questionId": "sick",
+          "optionId": "james",
+          "text": "Your response to the absence was: Give it to James with daily check-ins. In this fictional continuation, Mike makes a mistake during a shared integration task; the team loses a day."
+        },
+        {
+          "questionId": "sick",
+          "optionId": "mike",
+          "text": "Your response to the absence was: Give it to Mike and support him. In this fictional continuation, Mike makes a mistake during a shared integration task; the team loses a day."
+        },
+        {
+          "questionId": "sick",
+          "optionId": "slip",
+          "text": "Your response to the absence was: Ask to move the deadline. In this fictional continuation, Mike makes a mistake during a shared integration task; the team loses a day."
+        }
+      ]
+    },
+    {
+      "id": "early",
+      "type": "choice",
+      "prompt": "James has finished his current work early. How would you use the available time?",
+      "options": [
+        {
+          "id": "more",
+          "label": "Give him Mike's remaining work",
+          "effects": {
+            "delegation": -1
+          }
+        },
+        {
+          "id": "mentor",
+          "label": "Have him help Mike",
+          "effects": {
+            "delegation": 0.5,
+            "direction": -0.3
+          }
+        },
+        {
+          "id": "choose",
+          "label": "Let him pick what to do next",
+          "effects": {
+            "direction": -1
+          }
+        },
+        {
+          "id": "cleanup",
+          "label": "Point him at long-term cleanup",
+          "effects": {
+            "approach": -0.5
+          }
+        }
+      ],
+      "variants": [
+        {
+          "questionId": "mistake",
+          "optionId": "take-back",
+          "text": "After the integration mistake, you chose: Take the work back. James now has spare capacity. Reconsider who needs help in your revised plan."
+        },
+        {
+          "questionId": "mistake",
+          "optionId": "pair",
+          "text": "After the integration mistake, you chose: Pair with him to fix it. James now has spare capacity. Reconsider who needs help in your revised plan."
+        },
+        {
+          "questionId": "mistake",
+          "optionId": "warn",
+          "text": "After the integration mistake, you chose: Give him a formal warning. James now has spare capacity. Reconsider who needs help in your revised plan."
+        },
+        {
+          "questionId": "mistake",
+          "optionId": "alone",
+          "text": "After the integration mistake, you chose: Let him fix it himself. James now has spare capacity. Reconsider who needs help in your revised plan."
+        }
+      ]
+    },
+    {
+      "id": "stakes",
+      "type": "scale",
+      "prompt": "When stakes are high, how much do you trust newer people with important work?",
+      "min": 1,
+      "max": 7,
+      "minLabel": "Only proven people",
+      "maxLabel": "They still get a chance",
+      "contexts": [
+        "danger"
+      ],
+      "effects": {
+        "delegation": 1
+      }
+    },
+    {
+      "id": "usual",
+      "type": "scale",
+      "prompt": "Normally, how often do you give people work that stretches them?",
+      "min": 1,
+      "max": 7,
+      "minLabel": "Rarely",
+      "maxLabel": "Whenever I can",
+      "effects": {
+        "delegation": 1
+      }
+    },
+    {
+      "id": "leaving",
+      "type": "choice",
+      "prompt": "Your only senior engineer leaves in three months. Nobody else knows the system.",
+      "demands": {
+        "delegation": 1
+      },
+      "need": "the team's future depended on growing newer people",
+      "options": [
+        {
+          "id": "keep",
+          "label": "Keep her on critical work until her last day",
+          "effects": {
+            "delegation": -1
+          }
+        },
+        {
+          "id": "pair",
+          "label": "Pair a junior with her now, even if it slows things down",
+          "effects": {
+            "delegation": 1
+          }
+        },
+        {
+          "id": "contract",
+          "label": "Plan to hire a contractor later",
+          "effects": {
+            "delegation": -0.5
+          }
+        }
+      ]
+    },
+    {
+      "id": "medical",
+      "type": "choice",
+      "prompt": "You're shipping software for a medical device. A bug could hurt patients.",
+      "demands": {
+        "delegation": -1
+      },
+      "need": "a mistake could hurt people",
+      "options": [
+        {
+          "id": "expert",
+          "label": "Give the risky code to the most experienced person",
+          "effects": {
+            "delegation": -1
+          }
+        },
+        {
+          "id": "junior",
+          "label": "Give it to a junior with a code review",
+          "effects": {
+            "delegation": 0.5
+          }
+        },
+        {
+          "id": "anyone",
+          "label": "Give it to whoever is free",
+          "effects": {
+            "delegation": 0.5
+          }
+        }
+      ]
+    }
+  ]
+}

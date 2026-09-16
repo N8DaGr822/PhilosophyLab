@@ -1,0 +1,196 @@
+[
+  {
+    "id": "outcomes",
+    "name": "Rules vs. outcomes",
+    "lowPole": "Rules",
+    "highPole": "Outcomes",
+    "lowSummary": "you hold to lines you won't cross, even when crossing them would lead to a better result.",
+    "highSummary": "you judge actions mostly by their results, and you'll cross a line if it clearly reduces harm."
+  },
+  {
+    "id": "partiality",
+    "name": "Everyone vs. my people",
+    "lowPole": "Impartial",
+    "highPole": "Close ties",
+    "lowSummary": "you try to count everyone equally, even when that costs the people closest to you.",
+    "highSummary": "you protect the people closest to you, even at a real cost to others."
+  },
+  {
+    "id": "loyalty",
+    "name": "Principle vs. loyalty",
+    "lowPole": "Principle",
+    "highPole": "Loyalty",
+    "lowSummary": "honesty and justice come before covering for people you love.",
+    "highSummary": "you stand by your people, even when the right thing to do is less clear."
+  },
+  {
+    "id": "liberty",
+    "name": "Security vs. liberty",
+    "lowPole": "Security",
+    "highPole": "Liberty",
+    "lowSummary": "you're willing to trade personal freedom and privacy for safety.",
+    "highSummary": "you'd rather keep freedom and privacy and accept more risk."
+  },
+  {
+    "id": "fairness",
+    "name": "Need vs. merit",
+    "lowPole": "Need",
+    "highPole": "Merit",
+    "lowSummary": "you think fairness means helping those with the greatest need, or treating everyone the same.",
+    "highSummary": "you think fairness means people get what they've earned or deserve."
+  },
+  {
+    "id": "sacrifice",
+    "name": "Self vs. others",
+    "lowPole": "Self-protective",
+    "highPole": "Self-giving",
+    "lowSummary": "you guard your own life and wellbeing, and you think that's legitimate.",
+    "highSummary": "you're prepared to give up a great deal of your own life for others."
+  },
+  {
+    "id": "meaning",
+    "name": "Experience vs. reality",
+    "lowPole": "Experience",
+    "highPole": "Reality",
+    "lowSummary": "how life feels matters more to you than whether it's real.",
+    "highSummary": "a real life with real struggle matters more to you than a perfect illusion."
+  },
+  {
+    "id": "circle",
+    "name": "Narrow vs. wide moral circle",
+    "lowPole": "Human-centered",
+    "highPole": "Expansive",
+    "lowSummary": "moral concern belongs mainly to humans.",
+    "highSummary": "moral concern extends well beyond humans, to animals and possibly machines."
+  },
+  {
+    "id": "learning",
+    "name": "How you learn",
+    "lowPole": "Guided",
+    "highPole": "Hands-on",
+    "lowSummary": "you learn best from instruction, demonstration, or theory before you start.",
+    "highSummary": "you learn best by diving in and figuring it out.",
+    "lab": "behavior",
+    "lowShift": "you want more instruction up front",
+    "highShift": "you get more hands-on",
+    "lowStrength": "Learning from instruction",
+    "highStrength": "Learning by doing"
+  },
+  {
+    "id": "teaching",
+    "name": "How you teach",
+    "lowPole": "Explaining",
+    "highPole": "Discovery",
+    "lowSummary": "you teach by explaining clearly and showing the way.",
+    "highSummary": "you teach by asking questions and letting people find the answer.",
+    "lab": "behavior",
+    "lowShift": "you explain more directly",
+    "highShift": "you lean more on questions and discovery",
+    "lowStrength": "Clear explanation",
+    "highStrength": "Teaching through discovery"
+  },
+  {
+    "id": "direction",
+    "name": "How you lead",
+    "lowPole": "Collaborative",
+    "highPole": "Directive",
+    "lowSummary": "you bring people into decisions rather than making them alone.",
+    "highSummary": "you step up, decide, and tell people what to do.",
+    "lab": "behavior",
+    "lowShift": "you get more collaborative",
+    "highShift": "you get more directive",
+    "lowStrength": "Collaboration",
+    "highStrength": "Taking charge"
+  },
+  {
+    "id": "conflict",
+    "name": "How you handle conflict",
+    "lowPole": "Peacekeeping",
+    "highPole": "Confronting",
+    "lowSummary": "you keep the peace and let small things go.",
+    "highSummary": "you raise problems directly, even when it's uncomfortable.",
+    "lab": "behavior",
+    "lowShift": "you hold back and keep the peace",
+    "highShift": "you confront issues more directly",
+    "lowStrength": "Keeping the peace",
+    "highStrength": "Addressing problems head-on"
+  },
+  {
+    "id": "evidence",
+    "name": "How you decide",
+    "lowPole": "Instinct",
+    "highPole": "Evidence",
+    "lowSummary": "you trust your judgment and move quickly.",
+    "highSummary": "you look for facts before you commit.",
+    "lab": "behavior",
+    "lowShift": "you go with your gut",
+    "highShift": "you look for evidence first",
+    "lowStrength": "Quick judgment",
+    "highStrength": "Evidence seeking"
+  },
+  {
+    "id": "feedback",
+    "name": "How you take criticism",
+    "lowPole": "Standing firm",
+    "highPole": "Reflecting",
+    "lowSummary": "you stand behind your work when it's criticized.",
+    "highSummary": "you treat criticism as information and separate it from yourself.",
+    "lab": "behavior",
+    "lowShift": "you defend your work more",
+    "highShift": "you reflect more on criticism",
+    "lowStrength": "Standing behind your work",
+    "highStrength": "Learning from criticism"
+  },
+  {
+    "id": "ownership",
+    "name": "How much you take on",
+    "lowPole": "Boundaries",
+    "highPole": "Ownership",
+    "lowSummary": "you protect your time and keep to your own responsibilities.",
+    "highSummary": "you take on whatever needs doing, even when it isn't yours.",
+    "lab": "behavior",
+    "lowShift": "you hold your boundaries more firmly",
+    "highShift": "you take on more than your share",
+    "lowStrength": "Healthy boundaries",
+    "highStrength": "Ownership"
+  },
+  {
+    "id": "support",
+    "name": "Supporting people",
+    "lowPole": "Accountability",
+    "highPole": "Support",
+    "lowSummary": "you hold people to clear expectations and consequences.",
+    "highSummary": "you coach people and look for why they're struggling.",
+    "lab": "behavior",
+    "lowShift": "you hold people to account",
+    "highShift": "you lean toward coaching and support",
+    "lowStrength": "Accountability",
+    "highStrength": "Mentoring"
+  },
+  {
+    "id": "approach",
+    "name": "How you solve problems",
+    "lowPole": "Planning",
+    "highPole": "Improvising",
+    "lowSummary": "you analyze and plan before you act.",
+    "highSummary": "you experiment, try things, and adjust as you go.",
+    "lab": "behavior",
+    "lowShift": "you plan more before acting",
+    "highShift": "you experiment and improvise",
+    "lowStrength": "Careful planning",
+    "highStrength": "Creative experimentation"
+  },
+  {
+    "id": "delegation",
+    "name": "How you delegate",
+    "lowPole": "Proven people",
+    "highPole": "Growth bets",
+    "lowSummary": "you give important work to people who've already proven themselves.",
+    "highSummary": "you give people work that stretches them.",
+    "lab": "behavior",
+    "lowShift": "you give important work to proven people",
+    "highShift": "you give people more room to stretch",
+    "lowStrength": "Reliable delegation",
+    "highStrength": "Developing people"
+  }
+]

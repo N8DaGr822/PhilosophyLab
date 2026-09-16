@@ -1,0 +1,20 @@
+<nav class="lab-tabs" aria-label="Lab">
+    @foreach (var (lab, label) in Tabs)
+    {
+        <a href="@($"{Path}?lab={lab}")" class="@(lab == Current ? "is-current" : "")"
+           aria-current="@(lab == Current ? "page" : null)">@label</a>
+    }
+</nav>
+
+@code {
+    [Parameter, EditorRequired] public string Path { get; set; } = "";
+    [Parameter] public string Current { get; set; } = Labs.Philosophy;
+
+    private static readonly (string, string)[] Tabs =
+    [
+        (Labs.Philosophy, "Beliefs"),
+        (Labs.Behavior, "Behavior"),
+    ];
+
+    public static string Normalize(string? lab) => lab == Labs.Behavior ? Labs.Behavior : Labs.Philosophy;
+}

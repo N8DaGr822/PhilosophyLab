@@ -1,0 +1,24 @@
+{
+  "tests": [
+    "family-priority.json",
+    "trolley.json",
+    "sacrifice.json",
+    "loyalty.json",
+    "justice.json",
+    "lifeboat.json",
+    "privacy.json",
+    "happiness-machine.json",
+    "ai-rights.json",
+    "learning.json",
+    "teaching.json",
+    "teamwork.json",
+    "leadership.json",
+    "conflict.json",
+    "feedback.json",
+    "work.json",
+    "problem-solving.json",
+    "mentor.json",
+    "challenge.json",
+    "creativity.json"
+  ]
+}

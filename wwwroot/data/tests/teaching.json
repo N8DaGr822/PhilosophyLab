@@ -1,0 +1,728 @@
+{
+  "id": "teaching",
+  "version": 2,
+  "lab": "behavior",
+  "title": "How you teach",
+  "category": "Teaching",
+  "icon": "🧑‍🏫",
+  "summary": "Different students, same problem. Does your approach change?",
+  "intro": "You're helping people learn. The students change from question to question, and some of them need something other than your usual approach.",
+  "minutesEstimate": 6,
+  "questions": [
+    {
+      "id": "wrong-again",
+      "type": "choice",
+      "prompt": "A child keeps getting the same math problem wrong.",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "answer",
+          "label": "Show them the correct answer",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Show them the correct answer"
+          ]
+        },
+        {
+          "id": "procedure",
+          "label": "Walk them through the steps",
+          "effects": {
+            "teaching": -0.5
+          },
+          "strategies": [
+            "Walk them through the steps"
+          ]
+        },
+        {
+          "id": "questions",
+          "label": "Ask questions until they find the mistake",
+          "effects": {
+            "teaching": 1
+          },
+          "strategies": [
+            "Ask questions until they find the mistake"
+          ]
+        },
+        {
+          "id": "struggle",
+          "label": "Let them struggle a while longer",
+          "effects": {
+            "teaching": 1,
+            "support": -0.3
+          },
+          "strategies": [
+            "Let them struggle a while longer"
+          ]
+        },
+        {
+          "id": "different",
+          "label": "Explain it a completely different way",
+          "effects": {
+            "teaching": 0,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Explain it a completely different way"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "motivated",
+      "type": "choice",
+      "prompt": "An eager student asks how to solve a hard problem.",
+      "options": [
+        {
+          "id": "answer",
+          "label": "Show them the correct answer",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Show them the correct answer"
+          ]
+        },
+        {
+          "id": "procedure",
+          "label": "Walk them through the steps",
+          "effects": {
+            "teaching": -0.5
+          },
+          "strategies": [
+            "Walk them through the steps"
+          ]
+        },
+        {
+          "id": "questions",
+          "label": "Ask questions until they find the mistake",
+          "effects": {
+            "teaching": 1
+          },
+          "strategies": [
+            "Ask questions until they find the mistake"
+          ]
+        },
+        {
+          "id": "struggle",
+          "label": "Let them struggle a while longer",
+          "effects": {
+            "teaching": 1,
+            "support": -0.3
+          },
+          "strategies": [
+            "Let them struggle a while longer"
+          ]
+        },
+        {
+          "id": "different",
+          "label": "Explain it a completely different way",
+          "effects": {
+            "teaching": 0,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Explain it a completely different way"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "anxious",
+      "type": "choice",
+      "prompt": "A student is anxious and close to tears over a problem.",
+      "contexts": [
+        "emotion",
+        "novice"
+      ],
+      "options": [
+        {
+          "id": "answer",
+          "label": "Show them the correct answer",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Show them the correct answer"
+          ]
+        },
+        {
+          "id": "procedure",
+          "label": "Walk them through the steps",
+          "effects": {
+            "teaching": -0.5
+          },
+          "strategies": [
+            "Walk them through the steps"
+          ]
+        },
+        {
+          "id": "questions",
+          "label": "Ask questions until they find the mistake",
+          "effects": {
+            "teaching": 1
+          },
+          "strategies": [
+            "Ask questions until they find the mistake"
+          ]
+        },
+        {
+          "id": "struggle",
+          "label": "Let them struggle a while longer",
+          "effects": {
+            "teaching": 1,
+            "support": -0.3
+          },
+          "strategies": [
+            "Let them struggle a while longer"
+          ]
+        },
+        {
+          "id": "different",
+          "label": "Explain it a completely different way",
+          "effects": {
+            "teaching": 0,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Explain it a completely different way"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "overconfident",
+      "type": "choice",
+      "prompt": "A student is sure their wrong answer is right and isn't listening.",
+      "options": [
+        {
+          "id": "answer",
+          "label": "Show them the correct answer",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Show them the correct answer"
+          ]
+        },
+        {
+          "id": "procedure",
+          "label": "Walk them through the steps",
+          "effects": {
+            "teaching": -0.5
+          },
+          "strategies": [
+            "Walk them through the steps"
+          ]
+        },
+        {
+          "id": "questions",
+          "label": "Ask questions until they find the mistake",
+          "effects": {
+            "teaching": 1
+          },
+          "strategies": [
+            "Ask questions until they find the mistake"
+          ]
+        },
+        {
+          "id": "struggle",
+          "label": "Let them struggle a while longer",
+          "effects": {
+            "teaching": 1,
+            "support": -0.3
+          },
+          "strategies": [
+            "Let them struggle a while longer"
+          ]
+        },
+        {
+          "id": "different",
+          "label": "Explain it a completely different way",
+          "effects": {
+            "teaching": 0,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Explain it a completely different way"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "third-time",
+      "type": "choice",
+      "prompt": "You've explained it your usual way three times. They still don't get it.",
+      "contexts": [
+        "novice"
+      ],
+      "options": [
+        {
+          "id": "again",
+          "label": "Explain it again, more slowly",
+          "effects": {
+            "approach": -0.5,
+            "teaching": -0.3
+          },
+          "strategies": [
+            "Explain it again, more slowly"
+          ]
+        },
+        {
+          "id": "switch",
+          "label": "Try a completely different approach",
+          "effects": {
+            "approach": 1
+          },
+          "strategies": [
+            "Try a completely different approach"
+          ]
+        },
+        {
+          "id": "answer",
+          "label": "Give them the answer and move on",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Give them the answer and move on"
+          ]
+        },
+        {
+          "id": "break",
+          "label": "Take a break and come back to it",
+          "effects": {
+            "support": 0.5
+          },
+          "strategies": [
+            "Take a break and come back to it"
+          ]
+        }
+      ],
+      "variants": [
+        {
+          "questionId": "wrong-again",
+          "optionId": "answer",
+          "text": "You first chose: Show them the correct answer. In this fictional follow-up, using that approach three times has not helped this student explain the method."
+        },
+        {
+          "questionId": "wrong-again",
+          "optionId": "procedure",
+          "text": "You first chose: Walk them through the steps. In this fictional follow-up, using that approach three times has not helped this student explain the method."
+        },
+        {
+          "questionId": "wrong-again",
+          "optionId": "questions",
+          "text": "You first chose: Ask questions until they find the mistake. In this fictional follow-up, using that approach three times has not helped this student explain the method."
+        },
+        {
+          "questionId": "wrong-again",
+          "optionId": "struggle",
+          "text": "You first chose: Let them struggle a while longer. In this fictional follow-up, using that approach three times has not helped this student explain the method."
+        },
+        {
+          "questionId": "wrong-again",
+          "optionId": "different",
+          "text": "You first chose: Explain it a completely different way. In this fictional follow-up, using that approach three times has not helped this student explain the method."
+        }
+      ]
+    },
+    {
+      "id": "disengaged",
+      "type": "choice",
+      "prompt": "The student says this topic feels pointless and stops trying. What do you try?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "purpose",
+          "label": "Ask what matters to them and connect the task to it",
+          "strategies": [
+            "Connecting to the learner"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "small",
+          "label": "Offer one small achievable step",
+          "strategies": [
+            "Scaffolding"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "demo",
+          "label": "Demonstrate a worked example",
+          "strategies": [
+            "Demonstration"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "choice",
+          "label": "Offer a choice of two ways to practice",
+          "strategies": [
+            "Learner choice"
+          ],
+          "effects": {}
+        }
+      ],
+      "scenario": "You have time to explore the reason for disengagement."
+    },
+    {
+      "id": "persistent",
+      "type": "choice",
+      "prompt": "The student works carefully and persists, but needs more time than the group. What next?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "pace",
+          "label": "Give more time and check one step at a time",
+          "strategies": [
+            "Scaffolding"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "explain",
+          "label": "Ask them to explain their reasoning before changing the method",
+          "strategies": [
+            "Question-driven teaching"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "example",
+          "label": "Offer a different worked example",
+          "strategies": [
+            "Demonstration"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "pair",
+          "label": "Invite a supportive partner to work alongside them",
+          "strategies": [
+            "Collaboration"
+          ],
+          "effects": {}
+        }
+      ]
+    },
+    {
+      "id": "ten-minutes",
+      "type": "choice",
+      "prompt": "The test is in ten minutes and they still don't get it.",
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "answer",
+          "label": "Show them how it's done",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Show them how it's done"
+          ]
+        },
+        {
+          "id": "procedure",
+          "label": "Give them a quick procedure to follow",
+          "effects": {
+            "teaching": -0.5
+          },
+          "strategies": [
+            "Give them a quick procedure to follow"
+          ]
+        },
+        {
+          "id": "question",
+          "label": "Ask one guiding question",
+          "effects": {
+            "teaching": 0.5
+          },
+          "strategies": [
+            "Ask one guiding question"
+          ]
+        },
+        {
+          "id": "reassure",
+          "label": "Reassure them and let them try",
+          "effects": {
+            "teaching": 1,
+            "support": 0.5
+          },
+          "strategies": [
+            "Reassure them and let them try"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fundamentals",
+      "type": "choice",
+      "prompt": "A student is missing the basics, and your questions only confuse them more.",
+      "demands": {
+        "teaching": -1
+      },
+      "need": "a student needed direct, step-by-step instruction",
+      "options": [
+        {
+          "id": "answer",
+          "label": "Show them the correct answer",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Show them the correct answer"
+          ]
+        },
+        {
+          "id": "procedure",
+          "label": "Walk them through the steps",
+          "effects": {
+            "teaching": -0.5
+          },
+          "strategies": [
+            "Walk them through the steps"
+          ]
+        },
+        {
+          "id": "questions",
+          "label": "Ask questions until they find the mistake",
+          "effects": {
+            "teaching": 1
+          },
+          "strategies": [
+            "Ask questions until they find the mistake"
+          ]
+        },
+        {
+          "id": "struggle",
+          "label": "Let them struggle a while longer",
+          "effects": {
+            "teaching": 1,
+            "support": -0.3
+          },
+          "strategies": [
+            "Let them struggle a while longer"
+          ]
+        },
+        {
+          "id": "different",
+          "label": "Explain it a completely different way",
+          "effects": {
+            "teaching": 0,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Explain it a completely different way"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "careless",
+      "type": "choice",
+      "prompt": "A bright student keeps making careless mistakes and asks you to just give them the answers.",
+      "demands": {
+        "teaching": 1
+      },
+      "need": "a capable student needed to work it out on their own",
+      "options": [
+        {
+          "id": "answer",
+          "label": "Show them the correct answer",
+          "effects": {
+            "teaching": -1
+          },
+          "strategies": [
+            "Show them the correct answer"
+          ]
+        },
+        {
+          "id": "procedure",
+          "label": "Walk them through the steps",
+          "effects": {
+            "teaching": -0.5
+          },
+          "strategies": [
+            "Walk them through the steps"
+          ]
+        },
+        {
+          "id": "questions",
+          "label": "Ask questions until they find the mistake",
+          "effects": {
+            "teaching": 1
+          },
+          "strategies": [
+            "Ask questions until they find the mistake"
+          ]
+        },
+        {
+          "id": "struggle",
+          "label": "Let them struggle a while longer",
+          "effects": {
+            "teaching": 1,
+            "support": -0.3
+          },
+          "strategies": [
+            "Let them struggle a while longer"
+          ]
+        },
+        {
+          "id": "different",
+          "label": "Explain it a completely different way",
+          "effects": {
+            "teaching": 0,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Explain it a completely different way"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "purpose",
+      "type": "scale",
+      "prompt": "Teaching is mostly about…",
+      "min": 1,
+      "max": 7,
+      "minLabel": "Passing on what you know",
+      "maxLabel": "Creating conditions to discover it",
+      "effects": {
+        "teaching": 1
+      }
+    },
+    {
+      "id": "fail-why",
+      "type": "pick",
+      "pickCount": 2,
+      "prompt": "A student fails an exam. What are the two most likely reasons?",
+      "options": [
+        {
+          "id": "study",
+          "label": "They didn't study",
+          "effects": {
+            "support": -1
+          },
+          "strategies": [
+            "They didn't study"
+          ]
+        },
+        {
+          "id": "explained",
+          "label": "The teacher explained it poorly",
+          "effects": {
+            "support": 1
+          },
+          "strategies": [
+            "The teacher explained it poorly"
+          ]
+        },
+        {
+          "id": "difficult",
+          "label": "The material was too difficult",
+          "effects": {
+            "support": 0.5
+          },
+          "strategies": [
+            "The material was too difficult"
+          ]
+        },
+        {
+          "id": "prereqs",
+          "label": "They were missing prerequisites",
+          "effects": {
+            "support": 0.5
+          },
+          "strategies": [
+            "They were missing prerequisites"
+          ]
+        },
+        {
+          "id": "care",
+          "label": "They don't care",
+          "effects": {
+            "support": -1
+          },
+          "strategies": [
+            "They don't care"
+          ]
+        },
+        {
+          "id": "home",
+          "label": "Their home life got in the way",
+          "effects": {
+            "support": 1
+          },
+          "strategies": [
+            "Their home life got in the way"
+          ]
+        },
+        {
+          "id": "test",
+          "label": "The test was poorly designed",
+          "effects": {
+            "support": 0.5
+          },
+          "strategies": [
+            "The test was poorly designed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "next",
+      "type": "choice",
+      "prompt": "What should happen next?",
+      "options": [
+        {
+          "id": "tutor",
+          "label": "Tutoring, then a retake",
+          "effects": {
+            "support": 1
+          },
+          "strategies": [
+            "Tutoring, then a retake"
+          ]
+        },
+        {
+          "id": "root",
+          "label": "Work out the root cause together",
+          "effects": {
+            "support": 0.5,
+            "teaching": 0.5
+          },
+          "strategies": [
+            "Work out the root cause together"
+          ]
+        },
+        {
+          "id": "retake",
+          "label": "A retake, same as everyone",
+          "effects": {
+            "support": 0
+          },
+          "strategies": [
+            "A retake, same as everyone"
+          ]
+        },
+        {
+          "id": "accept",
+          "label": "The grade stands — it's a lesson",
+          "effects": {
+            "support": -1
+          },
+          "strategies": [
+            "The grade stands — it's a lesson"
+          ]
+        }
+      ]
+    }
+  ]
+}

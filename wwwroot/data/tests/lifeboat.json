@@ -1,0 +1,55 @@
+{
+  "id": "lifeboat",
+  "version": 1,
+  "title": "Lifeboat",
+  "category": "Resources",
+  "icon": "🛟",
+  "summary": "Ten people, six seats. Who gets on?",
+  "intro": "A ship is sinking and the last lifeboat holds six. What you choose shows whether you weigh usefulness, vulnerability, relationships, or desert.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "board", "type": "pick", "pickCount": 6, "askWhy": true,
+      "prompt": "Choose the six who board.",
+      "options": [
+        { "id": "doctor", "label": "Doctor, 45", "effects": { "outcomes": 1 } },
+        { "id": "pregnant", "label": "Pregnant woman, 28", "effects": { "outcomes": 0.5, "fairness": -0.5 } },
+        { "id": "child", "label": "Child, 8", "effects": { "fairness": -1 } },
+        { "id": "elderly", "label": "Elderly man, 78", "effects": { "outcomes": -1, "fairness": -0.5 } },
+        { "id": "engineer", "label": "Engineer, 34", "effects": { "outcomes": 1 } },
+        { "id": "criminal", "label": "Convicted criminal, 30", "effects": { "fairness": -1 } },
+        { "id": "teacher", "label": "Teacher, 52", "effects": { "outcomes": 0.5 } },
+        { "id": "homeless", "label": "Homeless man, 41", "effects": { "fairness": -1 } },
+        { "id": "veteran", "label": "Military veteran, 36", "effects": { "fairness": 1, "outcomes": 0.5 } },
+        { "id": "friend", "label": "Your best friend, 35", "effects": { "partiality": 3 } }
+      ]
+    },
+    {
+      "id": "method", "type": "choice",
+      "prompt": "The captain asks you how the six should be chosen.",
+      "options": [
+        { "id": "useful", "label": "Whoever gives the group the best chance to survive", "effects": { "outcomes": 1 } },
+        { "id": "young", "label": "Youngest first — they have the most life ahead", "effects": { "outcomes": 0.5, "fairness": -0.5 } },
+        { "id": "lottery", "label": "Draw lots — everyone's life counts the same", "effects": { "outcomes": -1, "fairness": -1 } },
+        { "id": "deserve", "label": "Those who've lived the best lives", "effects": { "fairness": 1 } }
+      ]
+    },
+    {
+      "id": "negligent", "type": "choice",
+      "prompt": "You learn the doctor's negligence caused the shipwreck.",
+      "options": [
+        { "id": "keep", "label": "Keep the doctor — we need medical skills", "effects": { "outcomes": 1, "fairness": -0.5 } },
+        { "id": "replace", "label": "Give the seat to someone else", "effects": { "outcomes": -0.5, "fairness": 1 } }
+      ]
+    },
+    {
+      "id": "yourself", "type": "choice",
+      "prompt": "You're the eleventh person. A seat is open only if someone gives theirs up.",
+      "options": [
+        { "id": "take", "label": "Ask someone to give me their seat", "effects": { "sacrifice": -1 } },
+        { "id": "lots", "label": "Draw lots including me", "effects": { "fairness": -1 } },
+        { "id": "stay", "label": "Stay behind", "effects": { "sacrifice": 1 } }
+      ]
+    }
+  ]
+}

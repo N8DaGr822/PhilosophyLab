@@ -1,0 +1,15 @@
+@using System.Globalization
+
+<span class="adapt-bar">
+    <span class="adapt-track adapt-track--small" aria-hidden="true">
+        <span style="width:@(Pct)%"></span>
+    </span>
+    <span class="test-meta">Suggested alternative @Adapted of @Total</span>
+</span>
+
+@code {
+    [Parameter] public int Adapted { get; set; }
+    [Parameter] public int Total { get; set; }
+
+    private string Pct => (Total == 0 ? 0 : 100.0 * Adapted / Total).ToString("0", CultureInfo.InvariantCulture);
+}

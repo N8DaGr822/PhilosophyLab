@@ -1,0 +1,82 @@
+{
+  "id": "trolley",
+  "version": 1,
+  "title": "Trolley variations",
+  "category": "Morality",
+  "icon": "🚃",
+  "summary": "The classic dilemma, changed one variable at a time.",
+  "intro": "A runaway train is heading toward people on the track. Each question changes one thing. There are no right answers.",
+  "minutesEstimate": 6,
+  "questions": [
+    {
+      "id": "classic", "type": "choice",
+      "prompt": "Pull the lever to send the train toward one stranger instead of five?",
+      "options": [
+        { "id": "pull", "label": "Pull the lever", "effects": { "outcomes": 1 } },
+        { "id": "leave", "label": "Leave it", "effects": { "outcomes": -1 } }
+      ]
+    },
+    {
+      "id": "push", "type": "choice",
+      "prompt": "There's no lever. You could push a large man off a bridge to stop the train and save the five.",
+      "options": [
+        { "id": "push", "label": "Push him", "effects": { "outcomes": 1 } },
+        { "id": "refuse", "label": "Don't push", "effects": { "outcomes": -1 } }
+      ]
+    },
+    {
+      "id": "friend", "type": "choice",
+      "prompt": "The one person on the side track is your close friend.",
+      "options": [
+        { "id": "divert", "label": "Pull the lever — my friend dies, five live", "effects": { "outcomes": 1, "partiality": -1 } },
+        { "id": "spare", "label": "Leave it — five strangers die", "effects": { "outcomes": -0.5, "partiality": 1 } }
+      ]
+    },
+    {
+      "id": "spouse", "type": "choice", "askWhy": true,
+      "prompt": "Now the one person is your spouse.",
+      "options": [
+        { "id": "divert", "label": "Pull the lever — my spouse dies, five live", "effects": { "outcomes": 1, "partiality": -1 } },
+        { "id": "spare", "label": "Leave it — five strangers die", "effects": { "outcomes": -0.5, "partiality": 1 } }
+      ]
+    },
+    {
+      "id": "child", "type": "choice",
+      "prompt": "Five adults on the main track. One child — a stranger — on the side track.",
+      "options": [
+        { "id": "divert", "label": "Pull the lever — the child dies", "effects": { "outcomes": 1 } },
+        { "id": "spare", "label": "Leave it — the five adults die", "effects": { "outcomes": -0.5, "fairness": -0.5 } }
+      ]
+    },
+    {
+      "id": "culprit", "type": "choice",
+      "prompt": "The one person on the side track is the one who tied the five to the rails.",
+      "options": [
+        { "id": "divert", "label": "Pull the lever", "effects": { "outcomes": 0.5, "fairness": 1 } },
+        { "id": "leave", "label": "Leave it — he's still a person", "effects": { "outcomes": -1, "fairness": -0.5 } }
+      ]
+    },
+    {
+      "id": "certainty", "type": "ladder",
+      "prompt": "You can't be sure pulling the lever will work. How uncertain could it be and you'd still pull?",
+      "scenario": "If it fails, the one on the side track dies and the five die too. Choose the lowest chance of success you'd still act on.",
+      "noneLabel": "I wouldn't pull at any odds",
+      "effects": { "outcomes": 1 },
+      "options": [
+        { "id": "99", "label": "99% chance it works" },
+        { "id": "90", "label": "90%" },
+        { "id": "75", "label": "75%" },
+        { "id": "50", "label": "50%" },
+        { "id": "25", "label": "25%" }
+      ]
+    },
+    {
+      "id": "surgeon", "type": "choice",
+      "prompt": "You're a surgeon. Five patients will die without transplants. A healthy visitor is a match for all five.",
+      "options": [
+        { "id": "operate", "label": "Take the visitor's organs", "effects": { "outcomes": 1 } },
+        { "id": "refuse", "label": "Refuse", "effects": { "outcomes": -1 } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+<p class="hint">Choose @Question.PickCount. @Answer.Picks.Count selected.</p>
+<fieldset class="choices choices--grid">
+    <legend class="visually-hidden">@Question.Prompt</legend>
+    @foreach (var o in Question.Options)
+    {
+        var picked = Answer.Picks.Contains(o.Id);
+        var full = !picked && Answer.Picks.Count >= Question.PickCount;
+        <label class="choice choice--check @(picked ? "is-selected" : "") @(full ? "is-disabled" : "")">
+            <input type="checkbox" checked="@picked" disabled="@full" @onchange="() => Toggle(o.Id)" />
+            <span class="choice-text"><span class="choice-label">@o.Label</span></span>
+        </label>
+    }
+</fieldset>
+
+@code {
+    [Parameter, EditorRequired] public Question Question { get; set; } = default!;
+    [Parameter, EditorRequired] public Answer Answer { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+
+    private Task Toggle(string id)
+    {
+        if (!Answer.Picks.Remove(id) && Answer.Picks.Count < Question.PickCount)
+            Answer.Picks.Add(id);
+        return Changed.InvokeAsync();
+    }
+}

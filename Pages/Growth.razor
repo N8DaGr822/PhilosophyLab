@@ -1,0 +1,139 @@
+@page "/growth"
+@implements IDisposable
+@inject DeviceStore Store
+@inject TestCatalog Catalog
+@inject BehaviorAnalyzer Analyzer
+
+<PageTitle>Growth</PageTitle>
+
+<section class="hero hero--small">
+    <h1>Can you change?</h1>
+    <p class="lede">
+        Explore alternatives to your earlier choices. These fictional situations suggest another approach; choosing it does not establish real-world effectiveness.
+    </p>
+</section>
+
+@if (_person is null)
+{
+    <p class="loading">Loading…</p>
+}
+else if (_behaviorTestsTaken == 0)
+{
+    <section class="panel">
+        <h2>Start with the behavior lab</h2>
+        <p>Growth needs to know your usual style first. Take two or three <a href="?lab=behavior">behavior tests</a>, then come back for a challenge set picked for you.</p>
+        @if (_challenge is not null)
+        {
+            <p class="hint">You can also <a href="@($"test/{_challenge.Id}")">try a general challenge set</a> now.</p>
+        }
+    </section>
+}
+else
+{
+    <section class="panel" aria-labelledby="now">
+        <h2 id="now">Where you stand</h2>
+        @if (_profile!.Adaptability.ChallengeCount == 0)
+        {
+            <p>You haven't met a situation that runs against your usual style yet. A challenge set will find some.</p>
+        }
+        else
+        {
+            <AdaptMeter Summary="_profile.Adaptability" />
+        }
+
+        @if (_profile.Stretches.Count > 0)
+        {
+            <h3>Where you chose an alternative</h3>
+            @foreach (var s in _profile.Stretches) { <p class="adapt-line is-adapted">@s</p> }
+        }
+        @if (_profile.BlindSpots.Count > 0)
+        {
+            <h3>Other choices</h3>
+            @foreach (var b in _profile.BlindSpots) { <p class="adapt-line">@b</p> }
+        }
+    </section>
+
+    @if (_challenge is not null)
+    {
+        <section class="challenge-cta" aria-labelledby="practice">
+            <h2 id="practice">Practice against your grain</h2>
+            <p>
+                @ChallengePlanner.SetSize situations, chosen from your current results.
+                @if (_profile.Strengths.Count > 0)
+                {
+                    <span>Expect situations where @string.Join(" or ", _profile.Strengths.Take(2).Select(s => s.Dimension.LeanFor(s.Score))) has an alternative worth considering.</span>
+                }
+            </p>
+            <a class="button button--big" href="@($"test/{_challenge.Id}")">Start a challenge set</a>
+        </section>
+    }
+
+    <section aria-labelledby="history">
+        <h2 id="history">Your challenge runs</h2>
+        @if (_runs.Count == 0)
+        {
+            <p class="empty">No challenge sets yet. Your first one sets the starting point.</p>
+        }
+        else
+        {
+            <ul class="runs">
+                @foreach (var run in _runs)
+                {
+                    <li>
+                        <a href="@($"results/{run.Result.Id}")">@run.Result.CompletedAt.LocalDateTime.ToString("MMM d, yyyy")</a>
+                        @if (run.Summary.Rate is double)
+                        {
+                            <AdaptBar Adapted="run.Summary.AdaptedCount" Total="run.Summary.ChallengeCount" />
+                        }
+                        else
+                        {
+                            <span class="test-meta">No situations against your usual style</span>
+                        }
+                    </li>
+                }
+            </ul>
+            <p class="hint">New runs use the baseline saved when you took them. Legacy runs without a saved baseline use your current preferences; they are not directly comparable.</p>
+        }
+    </section>
+}
+
+@code {
+    private sealed record Run(TestResult Result, AdaptabilitySummary Summary);
+
+    private Person? _person;
+    private BehaviorProfile? _profile;
+    private TestDefinition? _challenge;
+    private int _behaviorTestsTaken;
+    private List<Run> _runs = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        Store.Changed += OnStoreChanged;
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        var person = await Store.GetActivePersonAsync();
+        _challenge = (await Catalog.GetTestsAsync(Labs.Development)).FirstOrDefault();
+
+        var behaviorIds = (await Catalog.GetTestsAsync(Labs.Behavior)).Select(t => t.Id).ToHashSet();
+        var latest = await Store.GetLatestResultsAsync(person.Id);
+        _behaviorTestsTaken = latest.Count(r => behaviorIds.Contains(r.TestId));
+        _profile = await Analyzer.BuildAsync(latest);
+
+        var dims = (await Catalog.GetDimensionsAsync(Labs.Behavior)).ToDictionary(d => d.Id);
+        var baseline = BehaviorAnalyzer.Baseline(await Analyzer.ObserveAsync(latest));
+        _runs = [];
+        if (_challenge is not null)
+        {
+            foreach (var r in (await Store.GetResultsAsync(person.Id)).Where(r => r.TestId == _challenge.Id))
+                _runs.Add(new(r, BehaviorAnalyzer.Adaptability(await Analyzer.ObserveAsync([r]), r.Baseline ?? baseline, dims)));
+        }
+        _person = person;
+    }
+
+    private void OnStoreChanged() => InvokeAsync(async () => { await LoadAsync(); StateHasChanged(); });
+
+    public void Dispose() => Store.Changed -= OnStoreChanged;
+}

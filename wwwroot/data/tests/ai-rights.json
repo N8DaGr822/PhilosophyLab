@@ -1,0 +1,56 @@
+{
+  "id": "ai-rights",
+  "version": 1,
+  "title": "Robot rights",
+  "category": "Technology",
+  "icon": "🤖",
+  "summary": "When does a machine deserve moral concern?",
+  "intro": "A robot says it is conscious. The evidence changes with each question, and so might your answer.",
+  "minutesEstimate": 3,
+  "questions": [
+    {
+      "id": "threshold", "type": "ladder", "askWhy": true,
+      "prompt": "At what point should it be protected from being shut down against its will?",
+      "scenario": "Choose the least evidence that would be enough for you.",
+      "noneLabel": "Never — it's a machine",
+      "effects": { "circle": 1 },
+      "options": [
+        { "id": "certain", "label": "Scientists agree it's almost certainly conscious" },
+        { "id": "fifty", "label": "Scientists estimate a 50% chance it's conscious" },
+        { "id": "unknown", "label": "Scientists can't tell either way" },
+        { "id": "begs", "label": "It begs not to be shut down" },
+        { "id": "remembers", "label": "It remembers you and your conversations" },
+        { "id": "pain", "label": "It says it feels pain" },
+        { "id": "claims", "label": "It simply says it's conscious" }
+      ]
+    },
+    {
+      "id": "wipe", "type": "choice",
+      "prompt": "A company wants to wipe an AI system that has asked not to be wiped.",
+      "options": [
+        { "id": "allow", "label": "Allow it — it's their property", "effects": { "circle": -1, "liberty": 0.5 } },
+        { "id": "review", "label": "Require an independent review first", "effects": { "circle": 0.5 } },
+        { "id": "forbid", "label": "Forbid it", "effects": { "circle": 1 } }
+      ]
+    },
+    {
+      "id": "animal", "type": "scale", "min": 1, "max": 7,
+      "prompt": "How much should an animal's suffering count compared to a human's?",
+      "minLabel": "Hardly at all", "maxLabel": "Just as much",
+      "effects": { "circle": 1 }
+    },
+    {
+      "id": "concern", "type": "allocation", "points": 100, "step": 5,
+      "prompt": "Divide 100 points of moral concern.",
+      "scenario": "If all six were suffering equally, how would you divide your concern?",
+      "options": [
+        { "id": "human", "label": "A human", "effects": { "circle": -1 } },
+        { "id": "dog", "label": "A dog", "effects": { "circle": 0.5 } },
+        { "id": "chicken", "label": "A chicken", "effects": { "circle": 0.5 } },
+        { "id": "fish", "label": "A fish", "effects": { "circle": 0.5 } },
+        { "id": "ai", "label": "An AI that seems conscious", "effects": { "circle": 0.5 } },
+        { "id": "robot", "label": "A simple robot vacuum" }
+      ]
+    }
+  ]
+}

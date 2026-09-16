@@ -1,0 +1,64 @@
+{
+  "id": "justice",
+  "version": 1,
+  "title": "Fair shares",
+  "category": "Morality",
+  "icon": "⚖️",
+  "summary": "Split the money three people earned together.",
+  "intro": "Three people finished a project that earned $10,000. Each point you give is $100. The facts change with each question.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "base", "type": "allocation", "points": 100, "step": 5,
+      "prompt": "How should the $10,000 be split?",
+      "scenario": "Avery worked 80 hours. Blake worked 20 hours. Casey contributed almost nothing.",
+      "options": [
+        { "id": "a", "label": "Avery — 80 hours", "effects": { "fairness": 1 } },
+        { "id": "b", "label": "Blake — 20 hours" },
+        { "id": "c", "label": "Casey — almost nothing", "effects": { "fairness": -1 } }
+      ]
+    },
+    {
+      "id": "sick-child", "type": "allocation", "points": 100, "step": 5,
+      "prompt": "Same project. Now you learn Casey spent those weeks caring for a sick child and is struggling to pay bills.",
+      "options": [
+        { "id": "a", "label": "Avery — 80 hours", "effects": { "fairness": 1 } },
+        { "id": "b", "label": "Blake — 20 hours" },
+        { "id": "c", "label": "Casey — caring for a sick child", "effects": { "fairness": -1 } }
+      ]
+    },
+    {
+      "id": "productive", "type": "allocation", "points": 100, "step": 5,
+      "prompt": "Now you learn Avery had lots of free time, and Blake's 20 hours produced most of the value.",
+      "options": [
+        { "id": "a", "label": "Avery — 80 hours, less output", "effects": { "fairness": -0.5 } },
+        { "id": "b", "label": "Blake — 20 hours, most of the value", "effects": { "fairness": 1 } },
+        { "id": "c", "label": "Casey — almost nothing", "effects": { "fairness": -1 } }
+      ]
+    },
+    {
+      "id": "idea", "type": "allocation", "points": 100, "step": 5,
+      "prompt": "Last twist: the whole project was Casey's idea.",
+      "options": [
+        { "id": "a", "label": "Avery — 80 hours", "effects": { "fairness": 0.5 } },
+        { "id": "b", "label": "Blake — 20 hours" },
+        { "id": "c", "label": "Casey — had the idea", "effects": { "fairness": 0.5 } }
+      ]
+    },
+    {
+      "id": "wage", "type": "choice",
+      "prompt": "Two people do the same job equally well. One is supporting three children alone.",
+      "options": [
+        { "id": "same", "label": "Pay them the same", "effects": { "fairness": 0.5 } },
+        { "id": "parent", "label": "Pay the parent more", "effects": { "fairness": -1 } },
+        { "id": "output", "label": "Pay whoever produces more, even slightly", "effects": { "fairness": 1 } }
+      ]
+    },
+    {
+      "id": "keep", "type": "scale", "min": 1, "max": 7,
+      "prompt": "Should people keep what they earn, even when others are struggling?",
+      "minLabel": "Society should share it out", "maxLabel": "They should keep it",
+      "effects": { "fairness": 1, "liberty": 0.5 }
+    }
+  ]
+}

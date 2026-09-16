@@ -1,0 +1,347 @@
+{
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "lab": {
+      "enum": [
+        "philosophy",
+        "behavior",
+        "development"
+      ]
+    },
+    "dynamic": {
+      "type": "boolean"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1
+    },
+    "icon": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "intro": {
+      "type": "string",
+      "minLength": 1
+    },
+    "minutesEstimate": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          },
+          "type": {
+            "enum": [
+              "choice",
+              "pick",
+              "allocation",
+              "scale",
+              "ladder",
+              "assign"
+            ]
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "scenario": {
+            "type": "string",
+            "minLength": 1
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "detail": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "effects": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "minimum": -100,
+                    "maximum": 100
+                  }
+                },
+                "strategies": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "label"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "rows": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "detail": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "effects": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "number",
+                      "minimum": -100,
+                      "maximum": 100
+                    }
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "label",
+                "effects"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "effects": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          },
+          "contexts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]*$"
+            }
+          },
+          "demands": {
+            "type": "object",
+            "additionalProperties": {
+              "enum": [
+                -1,
+                1
+              ]
+            }
+          },
+          "need": {
+            "type": "string",
+            "minLength": 1
+          },
+          "askWhy": {
+            "type": "boolean"
+          },
+          "points": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "step": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "pickCount": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "min": {
+            "type": "integer"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "minLabel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maxLabel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "noneLabel": {
+            "type": "string",
+            "minLength": 1
+          },
+          "variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "questionId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "optionId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "rowId": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "questionId",
+                "optionId",
+                "text"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "prompt"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "scale"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "min",
+                "max",
+                "effects",
+                "minLabel",
+                "maxLabel"
+              ]
+            },
+            "else": {
+              "required": [
+                "options"
+              ],
+              "properties": {
+                "options": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "assign"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "rows"
+              ],
+              "properties": {
+                "rows": {
+                  "minItems": 1
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "pick"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "pickCount"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "type": {
+                  "const": "allocation"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "points",
+                "step"
+              ]
+            }
+          }
+        ]
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "title",
+    "category",
+    "icon",
+    "summary",
+    "intro",
+    "questions"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PhilosophyLab test definition",
+  "description": "Structural schema. CatalogValidator additionally checks unique IDs, references, bounds, weighted picks, and prior-step dependencies."
+}

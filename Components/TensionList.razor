@@ -1,0 +1,19 @@
+@if (Tensions.Count > 0)
+{
+    <section aria-labelledby="tensions">
+        <h2 id="tensions">Where your answers pull apart</h2>
+        <p class="hint">These aren't mistakes. They're the places most worth thinking about.</p>
+        @foreach (var t in Tensions)
+        {
+            <aside class="tension @(t.Lab == Labs.Cross ? "tension--cross" : "")">
+                @if (t.Lab == Labs.Cross) { <p class="tension-kind">Belief vs. behavior</p> }
+                <h3>@t.Title</h3>
+                <p>@t.Detail</p>
+            </aside>
+        }
+    </section>
+}
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<Tension> Tensions { get; set; } = [];
+}

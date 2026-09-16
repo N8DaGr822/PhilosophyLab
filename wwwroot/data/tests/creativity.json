@@ -1,0 +1,344 @@
+{
+  "id": "creativity",
+  "version": 1,
+  "lab": "behavior",
+  "title": "Creative revision",
+  "category": "Problem solving",
+  "icon": "🛠️",
+  "summary": "Build, encounter failure, and revise your approach as the constraints change.",
+  "intro": "A fictional shelter-design exercise using a tarp, rope, five sticks, duct tape, and a garbage bag. Each step follows your choices. These are possible consequences, not predictions or a creativity score. No real shelter is being built or tested.",
+  "minutesEstimate": 7,
+  "questions": [
+    {
+      "id": "design",
+      "type": "choice",
+      "prompt": "How would you begin your shelter design?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "sketch",
+          "label": "Sketch a supported frame before assembling anything",
+          "strategies": [
+            "Planning"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "prototype",
+          "label": "Build a small prototype and see what happens",
+          "strategies": [
+            "Experimentation"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "examples",
+          "label": "Look at examples of shelters with similar materials",
+          "strategies": [
+            "Research"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "partner",
+          "label": "Ask a partner to design it with me",
+          "strategies": [
+            "Collaboration"
+          ],
+          "effects": {}
+        }
+      ],
+      "scenario": "The practice site is dry and sheltered. You have time to explore."
+    },
+    {
+      "id": "failure",
+      "type": "choice",
+      "prompt": "Your first prototype collapses under a test load. What do you do next?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "modify",
+          "label": "Change one joint and test it again",
+          "strategies": [
+            "Controlled revision"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "restart",
+          "label": "Start again with a different structure",
+          "strategies": [
+            "Reframing"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "ask",
+          "label": "Ask someone to help locate the weak point",
+          "strategies": [
+            "Collaboration"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "research",
+          "label": "Compare your structure with a worked example",
+          "strategies": [
+            "Research"
+          ],
+          "effects": {}
+        }
+      ],
+      "variants": [
+        {
+          "questionId": "design",
+          "optionId": "sketch",
+          "text": "You followed your sketch. In this simulation, a joint twisted even though the overall frame looked balanced."
+        },
+        {
+          "questionId": "design",
+          "optionId": "prototype",
+          "text": "Your quick prototype exposed a twisting joint before you used all the materials."
+        },
+        {
+          "questionId": "design",
+          "optionId": "examples",
+          "text": "Your example used rigid poles; these flexible sticks twisted at a joint."
+        },
+        {
+          "questionId": "design",
+          "optionId": "partner",
+          "text": "You and your partner had different assumptions about how to brace the joint. It twisted under load."
+        }
+      ]
+    },
+    {
+      "id": "information",
+      "type": "choice",
+      "prompt": "The same joint loosens again. You learn that the tape does not adhere well to the tarp. What now?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "knot",
+          "label": "Replace the taped joint with a rope fastening and compare",
+          "strategies": [
+            "Controlled revision"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "frame",
+          "label": "Design a structure that does not depend on that joint",
+          "strategies": [
+            "Reframing"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "test",
+          "label": "Test the available materials separately before rebuilding",
+          "strategies": [
+            "Evidence seeking"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "help",
+          "label": "Ask your partner to propose another fastening",
+          "strategies": [
+            "Collaboration"
+          ],
+          "effects": {}
+        }
+      ],
+      "variants": [
+        {
+          "questionId": "failure",
+          "optionId": "modify",
+          "text": "Your local repair lasted longer, but it still loosened. The new material information changes what is worth testing."
+        },
+        {
+          "questionId": "failure",
+          "optionId": "restart",
+          "text": "Your new structure reused the same taped fastening, and it also loosened."
+        },
+        {
+          "questionId": "failure",
+          "optionId": "ask",
+          "text": "Your helper isolated the fastening as the weak point. A material test now explains why."
+        },
+        {
+          "questionId": "failure",
+          "optionId": "research",
+          "text": "The worked example assumed waterproof tape. Your available tape behaves differently."
+        }
+      ]
+    },
+    {
+      "id": "constraint",
+      "type": "choice",
+      "prompt": "One stick breaks and your available build time is halved. What would you preserve?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "minimum",
+          "label": "Reduce the design to one small covered area",
+          "strategies": [
+            "Reducing scope"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "reuse",
+          "label": "Reuse the sound parts and alter the supports",
+          "strategies": [
+            "Recombination"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "parallel",
+          "label": "Split the remaining work with a partner",
+          "strategies": [
+            "Collaboration"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "new",
+          "label": "Try a different low structure with fewer supports",
+          "strategies": [
+            "Reframing"
+          ],
+          "effects": {}
+        }
+      ],
+      "scenario": "There is no real emergency. This is a new constraint in the design exercise.",
+      "contexts": [
+        "pressure"
+      ]
+    },
+    {
+      "id": "test",
+      "type": "choice",
+      "prompt": "Your revised model stands. How would you check it?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "load",
+          "label": "Apply the same small test load and compare",
+          "strategies": [
+            "Controlled testing"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "weak",
+          "label": "Test the part most likely to fail next",
+          "strategies": [
+            "Evidence seeking"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "review",
+          "label": "Ask someone who has not seen it to review it",
+          "strategies": [
+            "Outside feedback"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "variations",
+          "label": "Build two small variants to compare",
+          "strategies": [
+            "Experimentation"
+          ],
+          "effects": {}
+        }
+      ]
+    },
+    {
+      "id": "goal",
+      "type": "choice",
+      "prompt": "You discover that the shelter is for keeping equipment dry, not for people to sit inside. What changes?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "keep",
+          "label": "Keep the design if it already meets that need",
+          "strategies": [
+            "Retaining a workable approach"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "low",
+          "label": "Lower the cover and remove unnecessary space",
+          "strategies": [
+            "Reframing"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "ask",
+          "label": "Ask how much equipment and what weather it must handle",
+          "strategies": [
+            "Question-driven exploration"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "compare",
+          "label": "Compare the present design with a smaller alternative",
+          "strategies": [
+            "Controlled testing"
+          ],
+          "effects": {}
+        }
+      ],
+      "scenario": "This new information changes the design goal, not your worth as a designer."
+    },
+    {
+      "id": "reflection",
+      "type": "choice",
+      "prompt": "Which next step would best explain your revision process?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "log",
+          "label": "Record what changed and the evidence behind it",
+          "strategies": [
+            "Reflection"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "demo",
+          "label": "Show the sequence of prototypes to someone",
+          "strategies": [
+            "Demonstration"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "another",
+          "label": "Try the same constraints with another design goal",
+          "strategies": [
+            "Experimentation"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "questions",
+          "label": "List what is still unknown and ask for feedback",
+          "strategies": [
+            "Question-driven exploration"
+          ],
+          "effects": {}
+        }
+      ],
+      "scenario": "Use the optional note to explain why you kept or changed your approach. There is no single correct path."
+    }
+  ]
+}

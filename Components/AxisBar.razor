@@ -1,0 +1,27 @@
+@using System.Globalization
+
+<div class="axis">
+    <div class="axis-head">
+        <span class="axis-name">@Dimension.Name</span>
+        <span class="axis-reading">@ProfileBuilder.Describe(Score, Dimension)</span>
+    </div>
+    <div class="axis-track" role="img"
+         aria-label="@($"{Dimension.Name}: {ProfileBuilder.Describe(Score, Dimension)}")">
+        <span class="axis-mid"></span>
+        <span class="axis-mark" style="left:@Pct(Math.Min(50, Position))%;width:@Pct(Math.Abs(Position - 50))%"></span>
+        <span class="axis-dot" style="left:@Pct(Position)%"></span>
+    </div>
+    <div class="axis-poles">
+        <span>@Dimension.LowPole</span>
+        <span>@Dimension.HighPole</span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Dimension Dimension { get; set; } = default!;
+    [Parameter] public double Score { get; set; }
+
+    private double Position => (Math.Clamp(Score, -1, 1) + 1) * 50;
+
+    private static string Pct(double v) => v.ToString("0.#", CultureInfo.InvariantCulture);
+}

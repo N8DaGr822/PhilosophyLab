@@ -1,0 +1,542 @@
+{
+  "id": "learning",
+  "version": 2,
+  "lab": "behavior",
+  "title": "How you learn",
+  "category": "Learning",
+  "icon": "📚",
+  "summary": "The same skill, taught different ways. Which do you reach for?",
+  "intro": "Each situation asks how you'd want to learn something. Pay attention to whether your answer changes when the stakes do.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "machine",
+      "type": "choice",
+      "prompt": "You're learning to repair a small engine. How do you want to start?",
+      "options": [
+        {
+          "id": "manual",
+          "label": "Read the instructions first",
+          "effects": {
+            "learning": -0.5,
+            "approach": -0.5
+          },
+          "strategies": [
+            "Guided instruction"
+          ]
+        },
+        {
+          "id": "demo",
+          "label": "Have someone show me",
+          "effects": {
+            "learning": -0.5
+          },
+          "strategies": [
+            "Demonstration"
+          ]
+        },
+        {
+          "id": "dive",
+          "label": "Start doing it and figure it out",
+          "effects": {
+            "learning": 1,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Practice"
+          ]
+        },
+        {
+          "id": "theory",
+          "label": "Understand how it works first",
+          "effects": {
+            "learning": -1,
+            "approach": -1
+          },
+          "strategies": [
+            "Theory"
+          ]
+        },
+        {
+          "id": "examples",
+          "label": "Watch a few examples",
+          "effects": {
+            "learning": -0.3
+          },
+          "strategies": [
+            "Examples"
+          ]
+        },
+        {
+          "id": "alongside",
+          "label": "Work alongside someone who knows it",
+          "effects": {
+            "learning": 0,
+            "direction": -0.3
+          },
+          "strategies": [
+            "Learning alongside someone"
+          ]
+        },
+        {
+          "id": "questions",
+          "label": "Ask questions to identify what I need to understand",
+          "effects": {},
+          "strategies": [
+            "Question-driven learning"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sequence",
+      "type": "choice",
+      "prompt": "After that first step, what would you do next?",
+      "askWhy": true,
+      "options": [
+        {
+          "id": "practice",
+          "label": "Try one repair step myself",
+          "strategies": [
+            "Practice"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "demo",
+          "label": "Watch someone demonstrate one repair step",
+          "strategies": [
+            "Demonstration"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "theory",
+          "label": "Explain why the part works before proceeding",
+          "strategies": [
+            "Theory"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "questions",
+          "label": "Ask about the part I still do not understand",
+          "strategies": [
+            "Question-driven learning"
+          ],
+          "effects": {}
+        },
+        {
+          "id": "alongside",
+          "label": "Do the next step alongside someone",
+          "strategies": [
+            "Learning alongside someone"
+          ],
+          "effects": {}
+        }
+      ],
+      "variants": [
+        {
+          "questionId": "machine",
+          "optionId": "manual",
+          "text": "You began with: Read the instructions first. The engine is switched off and this remains a low-risk practice task."
+        },
+        {
+          "questionId": "machine",
+          "optionId": "demo",
+          "text": "You began with: Have someone show me. The engine is switched off and this remains a low-risk practice task."
+        },
+        {
+          "questionId": "machine",
+          "optionId": "dive",
+          "text": "You began with: Start doing it and figure it out. The engine is switched off and this remains a low-risk practice task."
+        },
+        {
+          "questionId": "machine",
+          "optionId": "theory",
+          "text": "You began with: Understand how it works first. The engine is switched off and this remains a low-risk practice task."
+        },
+        {
+          "questionId": "machine",
+          "optionId": "examples",
+          "text": "You began with: Watch a few examples. The engine is switched off and this remains a low-risk practice task."
+        },
+        {
+          "questionId": "machine",
+          "optionId": "alongside",
+          "text": "You began with: Work alongside someone who knows it. The engine is switched off and this remains a low-risk practice task."
+        },
+        {
+          "questionId": "machine",
+          "optionId": "questions",
+          "text": "You began with: Ask questions to identify what I need to understand. The engine is switched off and this remains a low-risk practice task."
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "type": "choice",
+      "prompt": "Your workplace adopts a new app. There's no deadline.",
+      "options": [
+        {
+          "id": "manual",
+          "label": "Read the instructions first",
+          "effects": {
+            "learning": -0.5,
+            "approach": -0.5
+          },
+          "strategies": [
+            "Guided instruction"
+          ]
+        },
+        {
+          "id": "demo",
+          "label": "Have someone show me",
+          "effects": {
+            "learning": -0.5
+          },
+          "strategies": [
+            "Demonstration"
+          ]
+        },
+        {
+          "id": "dive",
+          "label": "Start doing it and figure it out",
+          "effects": {
+            "learning": 1,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Practice"
+          ]
+        },
+        {
+          "id": "theory",
+          "label": "Understand how it works first",
+          "effects": {
+            "learning": -1,
+            "approach": -1
+          },
+          "strategies": [
+            "Theory"
+          ]
+        },
+        {
+          "id": "examples",
+          "label": "Watch a few examples",
+          "effects": {
+            "learning": -0.3
+          },
+          "strategies": [
+            "Examples"
+          ]
+        },
+        {
+          "id": "alongside",
+          "label": "Work alongside someone who knows it",
+          "effects": {
+            "learning": 0,
+            "direction": -0.3
+          },
+          "strategies": [
+            "Learning alongside someone"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chainsaw",
+      "type": "choice",
+      "prompt": "You need to learn to use a chainsaw to clear a fallen tree.",
+      "askWhy": true,
+      "contexts": [
+        "danger"
+      ],
+      "options": [
+        {
+          "id": "manual",
+          "label": "Read the instructions first",
+          "effects": {
+            "learning": -0.5,
+            "approach": -0.5
+          },
+          "strategies": [
+            "Guided instruction"
+          ]
+        },
+        {
+          "id": "demo",
+          "label": "Have someone show me",
+          "effects": {
+            "learning": -0.5
+          },
+          "strategies": [
+            "Demonstration"
+          ]
+        },
+        {
+          "id": "dive",
+          "label": "Start doing it and figure it out",
+          "effects": {
+            "learning": 1,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Practice"
+          ]
+        },
+        {
+          "id": "theory",
+          "label": "Understand how it works first",
+          "effects": {
+            "learning": -1,
+            "approach": -1
+          },
+          "strategies": [
+            "Theory"
+          ]
+        },
+        {
+          "id": "examples",
+          "label": "Watch a few examples",
+          "effects": {
+            "learning": -0.3
+          },
+          "strategies": [
+            "Examples"
+          ]
+        },
+        {
+          "id": "alongside",
+          "label": "Work alongside someone who knows it",
+          "effects": {
+            "learning": 0,
+            "direction": -0.3
+          },
+          "strategies": [
+            "Learning alongside someone"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tomorrow",
+      "type": "choice",
+      "prompt": "You need to be competent with a new tool by tomorrow morning.",
+      "contexts": [
+        "pressure"
+      ],
+      "options": [
+        {
+          "id": "manual",
+          "label": "Read the instructions first",
+          "effects": {
+            "learning": -0.5,
+            "approach": -0.5
+          },
+          "strategies": [
+            "Guided instruction"
+          ]
+        },
+        {
+          "id": "demo",
+          "label": "Have someone show me",
+          "effects": {
+            "learning": -0.5
+          },
+          "strategies": [
+            "Demonstration"
+          ]
+        },
+        {
+          "id": "dive",
+          "label": "Start doing it and figure it out",
+          "effects": {
+            "learning": 1,
+            "approach": 0.5
+          },
+          "strategies": [
+            "Practice"
+          ]
+        },
+        {
+          "id": "theory",
+          "label": "Understand how it works first",
+          "effects": {
+            "learning": -1,
+            "approach": -1
+          },
+          "strategies": [
+            "Theory"
+          ]
+        },
+        {
+          "id": "examples",
+          "label": "Watch a few examples",
+          "effects": {
+            "learning": -0.3
+          },
+          "strategies": [
+            "Examples"
+          ]
+        },
+        {
+          "id": "alongside",
+          "label": "Work alongside someone who knows it",
+          "effects": {
+            "learning": 0,
+            "direction": -0.3
+          },
+          "strategies": [
+            "Learning alongside someone"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stuck",
+      "type": "choice",
+      "prompt": "You've been stuck on something new for an hour.",
+      "options": [
+        {
+          "id": "keep",
+          "label": "Keep trying different things",
+          "effects": {
+            "learning": 1,
+            "approach": 1
+          },
+          "strategies": [
+            "Trial and error"
+          ]
+        },
+        {
+          "id": "reread",
+          "label": "Go back to the instructions",
+          "effects": {
+            "learning": -0.5,
+            "approach": -0.5
+          },
+          "strategies": [
+            "Guided instruction"
+          ]
+        },
+        {
+          "id": "ask",
+          "label": "Ask someone for help",
+          "effects": {
+            "learning": -1,
+            "direction": -0.3
+          },
+          "strategies": [
+            "Question-driven learning"
+          ]
+        },
+        {
+          "id": "theory",
+          "label": "Step back and learn the underlying idea",
+          "effects": {
+            "learning": -0.5,
+            "approach": -1
+          },
+          "strategies": [
+            "Theory"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "why-first",
+      "type": "scale",
+      "prompt": "Before you try something new, how much do you want to understand why it works?",
+      "min": 1,
+      "max": 7,
+      "minLabel": "Just let me try it",
+      "maxLabel": "Explain it all first",
+      "effects": {
+        "learning": -1
+      }
+    },
+    {
+      "id": "exam",
+      "type": "choice",
+      "prompt": "You're taking a certification course. You'll be tested on exact procedures, with no retake.",
+      "demands": {
+        "learning": -1
+      },
+      "need": "a task required following exact procedures",
+      "options": [
+        {
+          "id": "study",
+          "label": "Study each procedure step by step",
+          "effects": {
+            "learning": -1
+          },
+          "strategies": [
+            "Guided instruction"
+          ]
+        },
+        {
+          "id": "mix",
+          "label": "Skim the procedures, then practice",
+          "effects": {
+            "learning": 0
+          },
+          "strategies": [
+            "Practice"
+          ]
+        },
+        {
+          "id": "practice",
+          "label": "Practice freely and learn as I go",
+          "effects": {
+            "learning": 1
+          },
+          "strategies": [
+            "Practice"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hobby",
+      "type": "choice",
+      "prompt": "You start a hobby project with no instructions and nothing at stake.",
+      "demands": {
+        "learning": 1
+      },
+      "need": "there were no instructions to follow",
+      "options": [
+        {
+          "id": "experiment",
+          "label": "Just start experimenting",
+          "effects": {
+            "learning": 1
+          },
+          "strategies": [
+            "Exploration"
+          ]
+        },
+        {
+          "id": "tutorial",
+          "label": "Find a tutorial first",
+          "effects": {
+            "learning": -0.5
+          },
+          "strategies": [
+            "Demonstration"
+          ]
+        },
+        {
+          "id": "course",
+          "label": "Wait until I can take a proper course",
+          "effects": {
+            "learning": -1
+          },
+          "strategies": [
+            "Guided instruction"
+          ]
+        }
+      ]
+    }
+  ]
+}

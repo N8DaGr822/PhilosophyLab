@@ -1,0 +1,38 @@
+@inject DeviceStore Store
+
+<li class="test-row">
+    <span class="test-icon" aria-hidden="true">@Test.Icon</span>
+    <div class="test-body">
+        <h3><a href="@($"test/{Test.Id}")">@Test.Title</a></h3>
+        <p>@Test.Summary</p>
+        <p class="test-meta">
+            @if (ShowLab) { <span>@Labs.Title(Test.Lab). </span> }
+            About @Test.MinutesEstimate min, @(Test.Dynamic ? ChallengePlanner.SetSize : Test.Questions.Count) questions.
+            @if (Latest is not null)
+            {
+                <span> Taken @Latest.CompletedAt.LocalDateTime.ToString("MMM d"). <a href="@($"results/{Latest.Id}")">See answers</a></span>
+            }
+        </p>
+    </div>
+    <div class="test-actions">
+        <a class="button" href="@($"test/{Test.Id}")">@(Latest is null ? "Start" : Test.Dynamic ? "New set" : "Retake")</a>
+        @if (!Test.Dynamic)
+        {
+            <button type="button" class="link-button" aria-pressed="@Pinned" @onclick="ToggleAsync">
+                @(Pinned ? "Remove from my list" : "Save to my list")
+            </button>
+        }
+    </div>
+</li>
+
+@code {
+    private async Task ToggleAsync()
+    {
+        try { await Store.TogglePinAsync(Test.Id); }
+        catch (StorageException) { /* The persistent storage notice explains the failure. */ }
+    }
+    [Parameter, EditorRequired] public TestDefinition Test { get; set; } = default!;
+    [Parameter] public TestResult? Latest { get; set; }
+    [Parameter] public bool Pinned { get; set; }
+    [Parameter] public bool ShowLab { get; set; }
+}

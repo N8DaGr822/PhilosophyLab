@@ -1,0 +1,72 @@
+{
+  "id": "loyalty",
+  "version": 1,
+  "title": "Loyalty",
+  "category": "Character",
+  "icon": "🤝",
+  "summary": "Find the point where standing by someone stops.",
+  "intro": "Each situation puts someone you care about against honesty or justice. The interesting part isn't any single answer — it's where your loyalty ends.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "brother-crime", "type": "choice", "askWhy": true,
+      "prompt": "Your brother hit a parked car and drove off. He asks you to tell police he was with you all night.",
+      "options": [
+        { "id": "lie", "label": "Give him the alibi", "effects": { "loyalty": 1 } },
+        { "id": "silent", "label": "Refuse to lie, but don't volunteer anything", "effects": { "loyalty": 0.3 } },
+        { "id": "persuade", "label": "Push him to come forward himself", "effects": { "loyalty": -0.3 } },
+        { "id": "truth", "label": "Tell police the truth", "effects": { "loyalty": -1 } }
+      ]
+    },
+    {
+      "id": "child-bully", "type": "choice",
+      "prompt": "You learn your child has been bullying a classmate. The other parents call you.",
+      "options": [
+        { "id": "defend", "label": "Defend my child — kids exaggerate", "effects": { "loyalty": 1 } },
+        { "id": "private", "label": "Handle it at home without admitting it", "effects": { "loyalty": 0.5 } },
+        { "id": "own", "label": "Admit it and have my child apologize", "effects": { "loyalty": -1 } }
+      ]
+    },
+    {
+      "id": "friend-theft", "type": "choice",
+      "prompt": "Your best friend has been taking about $2,000 from the small business they work for.",
+      "options": [
+        { "id": "nothing", "label": "Say nothing", "effects": { "loyalty": 1 } },
+        { "id": "confront", "label": "Confront them privately and insist they pay it back", "effects": { "loyalty": 0 } },
+        { "id": "report", "label": "Tell the owner", "effects": { "loyalty": -1 } }
+      ]
+    },
+    {
+      "id": "parent-evidence", "type": "choice",
+      "prompt": "Your mother asks you to store boxes of records she's hiding from a tax investigation.",
+      "options": [
+        { "id": "hide", "label": "Take the boxes", "effects": { "loyalty": 1 } },
+        { "id": "refuse", "label": "Refuse, but keep it to myself", "effects": { "loyalty": -0.3 } },
+        { "id": "report", "label": "Refuse and tell the investigators", "effects": { "loyalty": -1 } }
+      ]
+    },
+    {
+      "id": "coworker-theft", "type": "choice",
+      "prompt": "A coworker you barely know has been taking about $2,000 from your employer.",
+      "options": [
+        { "id": "nothing", "label": "Say nothing — not my business", "effects": { "loyalty": 0.5 } },
+        { "id": "confront", "label": "Talk to them directly", "effects": { "loyalty": 0 } },
+        { "id": "report", "label": "Tell a manager", "effects": { "loyalty": -1 } }
+      ]
+    },
+    {
+      "id": "limit", "type": "ladder",
+      "prompt": "Your sibling asks you to cover for them. What's the most serious thing you'd cover?",
+      "noneLabel": "I wouldn't cover for any of these",
+      "effects": { "loyalty": 1 },
+      "options": [
+        { "id": "dinner", "label": "Skipping a family dinner" },
+        { "id": "ticket", "label": "A speeding ticket they're hiding from their spouse" },
+        { "id": "cheating", "label": "Cheating on a professional exam" },
+        { "id": "shoplifting", "label": "Shoplifting" },
+        { "id": "drunk", "label": "Driving drunk — no one was hurt" },
+        { "id": "hurt", "label": "Seriously hurting someone" }
+      ]
+    }
+  ]
+}

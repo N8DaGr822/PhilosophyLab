@@ -1,0 +1,59 @@
+{
+  "id": "happiness-machine",
+  "version": 1,
+  "title": "The happiness machine",
+  "category": "Meaning",
+  "icon": "🌀",
+  "summary": "A perfect life that isn't real. Would you plug in?",
+  "intro": "A machine can give you a life that feels completely real: a happy marriage, great kids, wealth, adventure, perfect health. None of it would actually be happening.",
+  "minutesEstimate": 3,
+  "questions": [
+    {
+      "id": "plug-in", "type": "choice", "askWhy": true,
+      "prompt": "Do you plug in for the rest of your life?",
+      "options": [
+        { "id": "plug", "label": "Plug in", "effects": { "meaning": -1 } },
+        { "id": "stay", "label": "Stay in reality", "effects": { "meaning": 1 } }
+      ]
+    },
+    {
+      "id": "half", "type": "choice",
+      "prompt": "What if you could spend half your life in the machine and half in reality?",
+      "options": [
+        { "id": "yes", "label": "Yes, split it", "effects": { "meaning": -0.5 } },
+        { "id": "no", "label": "No, reality only", "effects": { "meaning": 1 } }
+      ]
+    },
+    {
+      "id": "loved-one", "type": "choice",
+      "prompt": "Your spouse is terminally ill and in pain. The machine could make their remaining years happy.",
+      "options": [
+        { "id": "plug", "label": "Plug them in", "effects": { "meaning": -0.5 } },
+        { "id": "ask", "label": "Let them decide", "effects": { "liberty": 0.5 } },
+        { "id": "stay", "label": "Keep them here with me", "effects": { "meaning": 1 } }
+      ]
+    },
+    {
+      "id": "memory", "type": "choice",
+      "prompt": "You could erase your most painful memory — the one that shaped who you are.",
+      "options": [
+        { "id": "erase", "label": "Erase it", "effects": { "meaning": -1 } },
+        { "id": "keep", "label": "Keep it", "effects": { "meaning": 1 } }
+      ]
+    },
+    {
+      "id": "pill", "type": "choice",
+      "prompt": "A pill gives you exactly the pride of finishing a marathon, without running one.",
+      "options": [
+        { "id": "take", "label": "Take the pill", "effects": { "meaning": -1 } },
+        { "id": "refuse", "label": "Pass", "effects": { "meaning": 1 } }
+      ]
+    },
+    {
+      "id": "truth", "type": "scale", "min": 1, "max": 7,
+      "prompt": "Would you rather believe a comforting lie or know a painful truth?",
+      "minLabel": "Comforting lie", "maxLabel": "Painful truth",
+      "effects": { "meaning": 1 }
+    }
+  ]
+}

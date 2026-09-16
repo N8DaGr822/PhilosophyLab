@@ -1,0 +1,42 @@
+<dl class="roster">
+    @foreach (var o in Question.Options)
+    {
+        <div>
+            <dt>@o.Label</dt>
+            @if (o.Detail is not null) { <dd>@o.Detail</dd> }
+        </div>
+    }
+</dl>
+
+@foreach (var row in Question.Rows)
+{
+    <fieldset class="assign-row">
+        <legend>
+            @row.Label
+            @if (row.Detail is not null) { <span class="choice-detail">@row.Detail</span> }
+        </legend>
+        <div class="segmented">
+            @foreach (var o in Question.Options)
+            {
+                var selected = Answer.Assignments.GetValueOrDefault(row.Id) == o.Id;
+                <label class="@(selected ? "is-selected" : "")">
+                    <input type="radio" name="@($"{Question.Id}-{row.Id}")" checked="@selected"
+                           @onchange="() => Assign(row.Id, o.Id)" />
+                    <span>@o.Label</span>
+                </label>
+            }
+        </div>
+    </fieldset>
+}
+
+@code {
+    [Parameter, EditorRequired] public Question Question { get; set; } = default!;
+    [Parameter, EditorRequired] public Answer Answer { get; set; } = default!;
+    [Parameter] public EventCallback Changed { get; set; }
+
+    private Task Assign(string rowId, string optionId)
+    {
+        Answer.Assignments[rowId] = optionId;
+        return Changed.InvokeAsync();
+    }
+}

@@ -1,0 +1,38 @@
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+<a class="skip-link" href="@($"{Nav.Uri.Split('#')[0]}#main")">Skip to content</a>
+<header class="topbar">
+    <a class="brand" href="">Thought Experiments</a>
+    <nav class="topnav" aria-label="Main">
+        <NavLink href="" Match="NavLinkMatch.All">Tests</NavLink>
+        <NavLink href="profile">Profile</NavLink>
+        <NavLink href="growth">Growth</NavLink>
+        <NavLink href="saved">Saved</NavLink>
+    </nav>
+    <PersonSwitcher />
+</header>
+
+<main id="main" class="page" tabindex="-1">
+    <StorageNotice />
+    <ErrorBoundary @ref="_boundary">
+        <ChildContent>@Body</ChildContent>
+        <ErrorContent>
+            <section class="panel" role="alert">
+                <h1>This page could not finish loading</h1>
+                <p>Your saved data has not been cleared. Check your connection or storage notice, then retry.</p>
+                <button class="button" @onclick="() => _boundary?.Recover()">Retry page</button>
+                <a href="saved">Backups</a>
+            </section>
+        </ErrorContent>
+    </ErrorBoundary>
+</main>
+
+<footer class="footnote">
+    Answers stay in this browser. <a href="about">Privacy and how results work</a>
+</footer>
+
+@code {
+    private ErrorBoundary? _boundary;
+    protected override void OnParametersSet() => _boundary?.Recover();
+}

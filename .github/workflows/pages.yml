@@ -14,12 +14,13 @@ jobs:
     name: Validate Release
     runs-on: ubuntu-latest
     env:
-      # Avoid the runner's preinstalled workload manifests overriding the pinned SDK's WASM pack.
-      DOTNET_INSTALL_DIR: ${{ runner.temp }}/philosophy-dotnet
       DOTNET_MULTILEVEL_LOOKUP: '0'
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1 # v5
+        env:
+          # Isolate the pinned SDK from preinstalled WebAssembly workload manifests.
+          DOTNET_INSTALL_DIR: ${{ runner.temp }}/philosophy-dotnet
         with:
           global-json-file: global.json
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6

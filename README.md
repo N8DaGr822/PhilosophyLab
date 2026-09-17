@@ -29,22 +29,27 @@ This is a reflection tool for fictional scenario choices, not a personality test
 | Beliefs lab | What do you believe? | Tests → Beliefs, Profile → Beliefs |
 | Behavior lab | What would you choose? | Tests → Behavior, Profile → Behavior |
 | Growth | Can you adapt? | Growth |
+| Compare | How do two people differ? | Compare |
 
 ## What's in it
 
-- **Beliefs lab, 9 tests**: family priority, trolley variations, sacrifice curve, loyalty, fair shares,
-  lifeboat, freedom and surveillance, the happiness machine, robot rights.
+- **Beliefs lab, 15 tests**: family priority, trolley variations, sacrifice curve, loyalty, fair shares,
+  lifeboat, freedom and surveillance, the happiness machine, robot rights, veil of ignorance, desert island,
+  the button, moral luck, Ship of Theseus, future generations.
 - **Behavior lab, 10 tests**: how you learn, how you teach, team roles, leading a team,
   conflict, feedback, priorities and ownership, problem solving, mentor or manager, creative revision.
 - **Behavior profile**: strong tendencies, situational tendencies ("you get more directive when
   time is short"), evidence counts, suggested alternatives, and preferences on 10 axes.
 - **Growth**: a personal challenge set of situations that call for the opposite of your usual style,
-  with a history of which suggested alternatives you selected.
+  a trend chart of adaptation rate across your challenge runs, and a history of which suggested
+  alternatives you selected.
+- **Compare**: two people on the same device, side by side — plain-language summaries, axes with a
+  marker per person, and (behavior lab) repeated preferences and adaptability.
 - **Belief vs. behavior checks**, e.g. choosing honesty in the beliefs lab but going along with a
   misleading client update under deadline.
 - **Test library** grouped by category, with a per-person "My list" of saved tests.
 - **Several people per device** (Saved → People), each with their own results and profile.
-- **Profile**: 8 axes, plain-language observations, and "where your answers pull apart"
+- **Profile**: 10 axes, plain-language observations, and "where your answers pull apart"
   (cross-test consistency checks).
 - **Result pages** with every answer and the optional "Why?" notes.
 - **Backup**: export to JSON, import (merges, never overwrites).
@@ -63,9 +68,9 @@ Services/
   ConsistencyRules cross-test tension checks
   AppJsonContext   source-generated JSON (trim-safe)
 Components/
-  AxisBar, PersonSwitcher
+  AxisBar, AxisCompareBar, AdaptTrend, PersonSwitcher
   Questions/       QuestionView + one input per question type
-Pages/             Home, TakeTest, ResultView, Profile, Growth, SavedResults
+Pages/             Home, TakeTest, ResultView, Profile, Growth, Compare, SavedResults
 wwwroot/data/
   dimensions.json  the axes for both labs
   contexts.json    situation tags for the behavior lab
@@ -143,8 +148,7 @@ since rules and saved results refer to them.
 ## Ideas for next steps
 
 - More connected experiments using the creative-revision sequence format.
-- Chart adaptability over time on the Growth page.
-- More tests from the first doc: veil of ignorance (with random assignment at the end), desert island,
-  $1 million, moral luck, Ship of Theseus, future generations.
-- Compare two people's profiles side by side (the data is already per-person on the device).
+- New consistency rules linking the new tests to existing ones, e.g. `future-generations`'s
+  `regulate` question against `privacy`'s liberty axis, or the `risk`/`horizon` questions in
+  `veil-of-ignorance`, `desert-island`, `million-dollars`, and `future-generations` against each other.
 - PWA manifest + service worker for offline use on tablets.

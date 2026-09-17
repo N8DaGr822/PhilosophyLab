@@ -1,0 +1,39 @@
+@using System.Globalization
+
+@if (Scored.Count >= 2)
+{
+    <div class="trend" role="img" aria-label="@AriaLabel">
+        <svg viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true">
+            <line x1="0" y1="55" x2="300" y2="55" class="trend-mid" />
+            <polyline class="trend-line" points="@PolylinePoints" />
+            @foreach (var (x, y) in Coords)
+            {
+                <circle cx="@Fmt(x)" cy="@Fmt(y)" r="4" class="trend-dot" />
+            }
+        </svg>
+        <div class="trend-ends">
+            <span>@Scored[0].Date.LocalDateTime.ToString("MMM d, yyyy")</span>
+            <span>@Scored[^1].Date.LocalDateTime.ToString("MMM d, yyyy")</span>
+        </div>
+    </div>
+    <p class="hint">Adaptation rate per challenge run, oldest to newest. Runs with no comparable situation are skipped.</p>
+}
+
+@code {
+    public sealed record TrendPoint(DateTimeOffset Date, double? Rate);
+
+    [Parameter, EditorRequired] public IReadOnlyList<TrendPoint> Points { get; set; } = [];
+
+    private List<TrendPoint> Scored => Points.Where(p => p.Rate is not null).ToList();
+
+    private List<(double X, double Y)> Coords => Scored
+        .Select((p, i) => (X: Scored.Count == 1 ? 150.0 : i * 300.0 / (Scored.Count - 1), Y: 100 - p.Rate!.Value * 90))
+        .ToList();
+
+    private string PolylinePoints => string.Join(" ", Coords.Select(c => $"{Fmt(c.X)},{Fmt(c.Y)}"));
+
+    private static string Fmt(double v) => v.ToString("0.#", CultureInfo.InvariantCulture);
+
+    private string AriaLabel => "Adaptation rate trend: " +
+        string.Join("; ", Scored.Select(p => $"{p.Date.LocalDateTime:MMM d, yyyy}: {Math.Round(p.Rate!.Value * 100)}%"));
+}

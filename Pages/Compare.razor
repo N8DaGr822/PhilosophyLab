@@ -1,0 +1,191 @@
+@page "/compare"
+@implements IDisposable
+@inject DeviceStore Store
+@inject TestCatalog Catalog
+@inject ProfileBuilder Builder
+@inject BehaviorAnalyzer Analyzer
+
+<PageTitle>Compare</PageTitle>
+
+<section class="hero hero--small">
+    <h1>Compare two profiles</h1>
+    <p class="lede">See where two people on this device lean the same way, and where they differ. Everyone's answers stay their own — this only reads what's already saved.</p>
+</section>
+
+<LabTabs Path="compare" Current="@_lab" />
+
+@if (_people is null)
+{
+    <p class="loading">Loading…</p>
+}
+else if (_people.Count < 2)
+{
+    <p class="empty">Add another person in <a href="saved#people">Saved</a> to compare profiles.</p>
+}
+else
+{
+    <div class="compare-pickers">
+        <label>
+            First person
+            <select value="@_aId" @onchange="OnAChanged">
+                @foreach (var p in _people) { <option value="@p.Id">@p.Name</option> }
+            </select>
+        </label>
+        <label>
+            Second person
+            <select value="@_bId" @onchange="OnBChanged">
+                @foreach (var p in _people) { <option value="@p.Id">@p.Name</option> }
+            </select>
+        </label>
+    </div>
+
+    @if (_aId == _bId)
+    {
+        <p class="hint">Choose two different people to compare.</p>
+    }
+    else if (_dims is not null)
+    {
+        var nameA = PersonName(_aId);
+        var nameB = PersonName(_bId);
+
+        @if (_lab == Labs.Behavior && _hasData && _behaviorA is not null && _behaviorB is not null)
+        {
+            <section class="panel" aria-labelledby="compare-adapt">
+                <h2 id="compare-adapt">Trying suggested alternatives</h2>
+                <div class="compare-columns">
+                    <div><h3>@nameA</h3><AdaptMeter Summary="_behaviorA.Adaptability" /></div>
+                    <div><h3>@nameB</h3><AdaptMeter Summary="_behaviorB.Adaptability" /></div>
+                </div>
+            </section>
+
+            <section class="panel" aria-labelledby="compare-strengths">
+                <h2 id="compare-strengths">Repeated preferences</h2>
+                <div class="compare-columns">
+                    <div>
+                        <h3>@nameA</h3>
+                        @if (_behaviorA.Strengths.Count == 0) { <p class="hint">Not enough repeated evidence yet.</p> }
+                        <ul class="tendencies">
+                            @foreach (var s in _behaviorA.Strengths) { <li><strong>@(s.Score >= 0 ? s.Dimension.HighStrength : s.Dimension.LowStrength)</strong></li> }
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>@nameB</h3>
+                        @if (_behaviorB.Strengths.Count == 0) { <p class="hint">Not enough repeated evidence yet.</p> }
+                        <ul class="tendencies">
+                            @foreach (var s in _behaviorB.Strengths) { <li><strong>@(s.Score >= 0 ? s.Dimension.HighStrength : s.Dimension.LowStrength)</strong></li> }
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" aria-labelledby="compare-axes">
+                <h2 id="compare-axes">Preferences in these scenarios</h2>
+                <p class="hint">From situations that didn't call for any particular approach.</p>
+                @foreach (var axis in BuildAxes(_dims, _behaviorA.Axes, _behaviorB.Axes))
+                {
+                    <AxisCompareBar Dimension="axis.Dimension" NameA="@nameA" NameB="@nameB" A="axis.A" B="axis.B" />
+                }
+            </section>
+        }
+        else if (_lab != Labs.Behavior && _hasData && _beliefsA is not null && _beliefsB is not null)
+        {
+            <section class="panel" aria-labelledby="compare-summary">
+                <h2 id="compare-summary">In plain words</h2>
+                <div class="compare-columns">
+                    <div>
+                        <h3>@nameA</h3>
+                        @foreach (var line in _beliefsA.Observations) { <p class="observation">@line</p> }
+                    </div>
+                    <div>
+                        <h3>@nameB</h3>
+                        @foreach (var line in _beliefsB.Observations) { <p class="observation">@line</p> }
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" aria-labelledby="compare-axes">
+                <h2 id="compare-axes">Axes</h2>
+                @foreach (var axis in BuildAxes(_dims, _beliefsA.Axes, _beliefsB.Axes))
+                {
+                    <AxisCompareBar Dimension="axis.Dimension" NameA="@nameA" NameB="@nameB" A="axis.A" B="axis.B" />
+                }
+            </section>
+        }
+        else
+        {
+            <p class="empty">Neither person has taken @(_lab == Labs.Behavior ? "behavior" : "beliefs") tests yet.</p>
+        }
+    }
+}
+
+@code {
+    private sealed record CompareAxis(Dimension Dimension, AxisReading? A, AxisReading? B);
+
+    [SupplyParameterFromQuery(Name = "lab")] public string? LabQuery { get; set; }
+
+    private string _lab = Labs.Philosophy;
+    private List<Person>? _people;
+    private string? _aId;
+    private string? _bId;
+    private bool _hasData;
+    private IReadOnlyList<Dimension>? _dims;
+    private PhilosophicalProfile? _beliefsA;
+    private PhilosophicalProfile? _beliefsB;
+    private BehaviorProfile? _behaviorA;
+    private BehaviorProfile? _behaviorB;
+
+    protected override void OnInitialized() => Store.Changed += OnStoreChanged;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _lab = LabTabs.Normalize(LabQuery);
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        var data = await Store.GetAsync();
+        _people = data.People;
+        if (_aId is null || !_people.Any(p => p.Id == _aId)) _aId = _people.ElementAtOrDefault(0)?.Id;
+        if (_bId is null || !_people.Any(p => p.Id == _bId)) _bId = _people.FirstOrDefault(p => p.Id != _aId)?.Id ?? _people.ElementAtOrDefault(1)?.Id;
+        if (_aId is null || _bId is null || _aId == _bId) return;
+
+        var tests = await Catalog.GetTestsAsync();
+        var latestA = await LatestForLabAsync(_aId, tests);
+        var latestB = await LatestForLabAsync(_bId, tests);
+        var labIds = tests.Where(t => t.Lab == _lab).Select(t => t.Id).ToHashSet();
+        _hasData = latestA.Any(r => labIds.Contains(r.TestId)) || latestB.Any(r => labIds.Contains(r.TestId));
+
+        if (_lab == Labs.Behavior)
+        {
+            _behaviorA = await Analyzer.BuildAsync(latestA);
+            _behaviorB = await Analyzer.BuildAsync(latestB);
+            _dims = await Catalog.GetDimensionsAsync(Labs.Behavior);
+        }
+        else
+        {
+            _beliefsA = await Builder.BuildAsync(latestA);
+            _beliefsB = await Builder.BuildAsync(latestB);
+            _dims = await Catalog.GetDimensionsAsync(Labs.Philosophy);
+        }
+    }
+
+    private async Task<List<TestResult>> LatestForLabAsync(string personId, IReadOnlyList<TestDefinition> all) =>
+        (await Store.GetLatestResultsAsync(personId))
+            .Where(r => ScenarioSequence.DefinitionFor(r, all.FirstOrDefault(t => t.Id == r.TestId)) is not null)
+            .ToList();
+
+    private static List<CompareAxis> BuildAxes(IReadOnlyList<Dimension> dims, IReadOnlyList<AxisReading> a, IReadOnlyList<AxisReading> b) =>
+        dims.Where(d => a.Any(x => x.Dimension.Id == d.Id) || b.Any(x => x.Dimension.Id == d.Id))
+            .Select(d => new CompareAxis(d, a.FirstOrDefault(x => x.Dimension.Id == d.Id), b.FirstOrDefault(x => x.Dimension.Id == d.Id)))
+            .ToList();
+
+    private string PersonName(string? id) => _people?.FirstOrDefault(p => p.Id == id)?.Name ?? "";
+
+    private async Task OnAChanged(ChangeEventArgs e) { _aId = e.Value?.ToString(); await LoadAsync(); }
+    private async Task OnBChanged(ChangeEventArgs e) { _bId = e.Value?.ToString(); await LoadAsync(); }
+
+    private void OnStoreChanged() => InvokeAsync(async () => { await LoadAsync(); StateHasChanged(); });
+
+    public void Dispose() => Store.Changed -= OnStoreChanged;
+}

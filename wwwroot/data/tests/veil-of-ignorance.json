@@ -1,0 +1,53 @@
+{
+  "id": "veil-of-ignorance",
+  "version": 1,
+  "title": "Veil of ignorance",
+  "category": "Justice",
+  "icon": "🎭",
+  "summary": "Design society's rules before knowing which role in it you'll get.",
+  "intro": "Before any of these rules exist, imagine you'll be assigned a random role in the society they create — rich or poor, healthy or sick, talented or not. You don't know which yet. Design the rules first.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "safety-net", "type": "scale", "min": 1, "max": 7,
+      "prompt": "How much should society guarantee the worst-off, even if it costs the best-off more?",
+      "minLabel": "Let outcomes stand as they fall", "maxLabel": "Guarantee everyone a strong floor",
+      "effects": { "risk": -1 }
+    },
+    {
+      "id": "lottery-society", "type": "choice",
+      "prompt": "Two societies. A: everyone gets a modest, guaranteed income. B: most people do very well, but 1 in 20 ends up in severe poverty with no safety net. Not knowing which role you'd get, which do you join?",
+      "options": [
+        { "id": "a", "label": "Society A — modest but guaranteed", "effects": { "risk": -1 } },
+        { "id": "b", "label": "Society B — higher average, real chance of poverty", "effects": { "risk": 1 } }
+      ]
+    },
+    {
+      "id": "insurance", "type": "choice",
+      "prompt": "You can require insurance against ending up disabled and unable to work. It costs 5% of everyone's income, including the healthy majority who will never need it.",
+      "options": [
+        { "id": "require", "label": "Require it for everyone", "effects": { "risk": -1, "fairness": -0.3 } },
+        { "id": "optional", "label": "Make it optional", "effects": { "risk": 0.5 } },
+        { "id": "skip", "label": "No mandatory insurance — let people keep the 5%", "effects": { "risk": 1 } }
+      ]
+    },
+    {
+      "id": "talent", "type": "choice",
+      "prompt": "Some people are born with talents that earn far more, through no effort of their own. Should the rules tax that luck to help those born less fortunate?",
+      "options": [
+        { "id": "tax", "label": "Yes — talent is unearned luck", "effects": { "fairness": -1 } },
+        { "id": "some", "label": "Tax it some, but let talent still pay off", "effects": { "fairness": -0.3 } },
+        { "id": "no", "label": "No — what you're born with is yours to keep", "effects": { "fairness": 1 } }
+      ]
+    },
+    {
+      "id": "reveal", "type": "choice", "askWhy": true,
+      "prompt": "The rules are set. Now your role is assigned at random — you could be anyone in this society, including its worst-off member. Do you still endorse the rules you chose?",
+      "scenario": "This is the actual test of a rule made behind the veil: would you accept it as the person who drew the worst position?",
+      "options": [
+        { "id": "yes", "label": "Yes — I'd still accept these rules", "effects": {} },
+        { "id": "no", "label": "No — I'd want to change them", "effects": {} }
+      ]
+    }
+  ]
+}

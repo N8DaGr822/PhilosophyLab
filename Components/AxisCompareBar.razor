@@ -1,0 +1,40 @@
+@using System.Globalization
+
+<div class="axis axis--compare">
+    <div class="axis-head">
+        <span class="axis-name">@Dimension.Name</span>
+    </div>
+    <div class="axis-track" role="img" aria-label="@AriaLabel">
+        <span class="axis-mid"></span>
+        @if (A is not null)
+        {
+            <span class="axis-dot axis-dot--a" style="left:@Pct(Position(A.Score))%"></span>
+        }
+        @if (B is not null)
+        {
+            <span class="axis-dot axis-dot--b" style="left:@Pct(Position(B.Score))%"></span>
+        }
+    </div>
+    <div class="axis-poles">
+        <span>@Dimension.LowPole</span>
+        <span>@Dimension.HighPole</span>
+    </div>
+    <div class="axis-compare-legend">
+        <span><span class="legend-swatch legend-swatch--a" aria-hidden="true"></span>@NameA: @Describe(A)</span>
+        <span><span class="legend-swatch legend-swatch--b" aria-hidden="true"></span>@NameB: @Describe(B)</span>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public Dimension Dimension { get; set; } = default!;
+    [Parameter, EditorRequired] public string NameA { get; set; } = "";
+    [Parameter, EditorRequired] public string NameB { get; set; } = "";
+    [Parameter] public AxisReading? A { get; set; }
+    [Parameter] public AxisReading? B { get; set; }
+
+    private static double Position(double score) => (Math.Clamp(score, -1, 1) + 1) * 50;
+    private static string Pct(double v) => v.ToString("0.#", CultureInfo.InvariantCulture);
+    private string Describe(AxisReading? a) => a is null ? "No data yet" : ProfileBuilder.Describe(a.Score, Dimension);
+
+    private string AriaLabel => $"{Dimension.Name}. {NameA}: {Describe(A)}. {NameB}: {Describe(B)}.";
+}

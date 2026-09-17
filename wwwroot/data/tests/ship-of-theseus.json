@@ -1,0 +1,60 @@
+{
+  "id": "ship-of-theseus",
+  "version": 1,
+  "title": "Ship of Theseus",
+  "category": "Identity",
+  "icon": "🚢",
+  "summary": "Replace every part of something, one piece at a time. Is it still the same thing?",
+  "intro": "A ship has every one of its planks replaced over years of repair, one at a time, until none of the original wood remains. The same puzzle applies to living things — including you.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "ship", "type": "choice",
+      "prompt": "The ship has had every plank replaced over 20 years, one at a time, always staying seaworthy. Is it the same ship?",
+      "options": [
+        { "id": "same", "label": "Yes — it never stopped being the same ship", "effects": { "meaning": 1 } },
+        { "id": "unsure", "label": "There's no fact of the matter — it's just a label we choose", "effects": {} },
+        { "id": "different", "label": "No — it's a different ship made of different material", "effects": { "meaning": -1 } }
+      ]
+    },
+    {
+      "id": "rebuilt", "type": "choice",
+      "prompt": "Someone collects every discarded original plank and reassembles them in their original arrangement, unused, in a warehouse. Which one is the 'real' ship of Theseus — the one that's been sailing, or the reassembled original planks?",
+      "options": [
+        { "id": "sailing", "label": "The one that's been sailing all along", "effects": { "meaning": 1 } },
+        { "id": "neither", "label": "Neither deserves the name more than the other", "effects": {} },
+        { "id": "warehouse", "label": "The one made of the original material", "effects": { "meaning": -1 } }
+      ]
+    },
+    {
+      "id": "cells", "type": "scale", "min": 1, "max": 7,
+      "prompt": "Almost none of the atoms in your body are the ones you were born with — they've been fully replaced over time. How much does that matter to whether you're still 'you'?",
+      "minLabel": "Not at all — I'm defined by more than atoms", "maxLabel": "It's central — physical continuity is what makes me me",
+      "effects": { "meaning": -1 }
+    },
+    {
+      "id": "teleporter", "type": "choice", "askWhy": true,
+      "prompt": "A teleporter destroys your body, scans it perfectly, and builds an identical copy elsewhere with all your memories and personality intact. Did you survive the trip?",
+      "options": [
+        { "id": "yes", "label": "Yes — that copy is me", "effects": { "meaning": -1 } },
+        { "id": "unsure", "label": "I genuinely don't know", "effects": {} },
+        { "id": "no", "label": "No — that's a copy; I died", "effects": { "meaning": 1 } }
+      ]
+    },
+    {
+      "id": "duplicate", "type": "choice",
+      "prompt": "Same teleporter, but this time it malfunctions: your original body isn't destroyed. Now there are two of you, both with equal claim to your memories and your life.",
+      "options": [
+        { "id": "both", "label": "Both are equally me", "effects": { "meaning": -0.5 } },
+        { "id": "neither", "label": "Neither is fully 'me' anymore — something changed for both", "effects": {} },
+        { "id": "original", "label": "Only the original, undestroyed body is really me", "effects": { "meaning": 1 } }
+      ]
+    },
+    {
+      "id": "upload", "type": "scale", "min": 1, "max": 7,
+      "prompt": "A brain scan uploads a perfect functional copy of your mind to a computer, thinking and remembering as 'you' — but your biological brain is destroyed in the process. How much would this feel like continuing to live, versus dying and being replaced?",
+      "minLabel": "Dying and being replaced", "maxLabel": "Continuing to live",
+      "effects": { "meaning": -1 }
+    }
+  ]
+}

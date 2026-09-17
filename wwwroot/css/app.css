@@ -10,6 +10,7 @@
     --highlight: #f3d54e;
     --rule: #c9d1de;
     --danger: #a3303a;
+    --pen-2: #a85a2b;
 
     --serif: "Iowan Old Style", Georgia, serif;
     --sans: "Segoe UI", system-ui, sans-serif;
@@ -37,6 +38,7 @@
         --highlight: #c9ad2e;
         --rule: #333d58;
         --danger: #f08a93;
+        --pen-2: #e2935f;
     }
 }
 
@@ -266,6 +268,33 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
     .axis-mark { animation: stroke .6s ease-out both; transform-origin: left; }
     @keyframes stroke { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 }
+
+/* Two-person comparison: a circle for A, a square for B, never color alone. */
+.axis-dot--a { background: var(--pen); }
+.axis-dot--b { background: var(--pen-2); border-radius: 4px; }
+.axis-compare-legend { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; font-size: var(--step--1); color: var(--ink-soft); margin-top: .35rem; }
+.legend-swatch { width: .7rem; height: .7rem; display: inline-block; margin-right: .4rem; vertical-align: -1px; }
+.legend-swatch--a { background: var(--pen); border-radius: 50%; }
+.legend-swatch--b { background: var(--pen-2); border-radius: 3px; }
+
+.compare-pickers { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; margin: 1rem 0 1.5rem; }
+.compare-pickers label { display: flex; flex-direction: column; gap: .3rem; font-weight: 700; font-size: var(--step--1); color: var(--ink-soft); }
+.compare-pickers select {
+    font: inherit; color: var(--ink); background: var(--sheet);
+    border: 1px solid var(--rule); border-radius: var(--radius-sm); padding: .5rem .6rem;
+}
+.compare-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
+.compare-columns h3 { font-family: var(--serif); }
+@media (max-width: 560px) {
+    .compare-columns { grid-template-columns: 1fr; gap: 1.5rem 0; }
+}
+
+/* Adaptability trend: a small sparkline, oldest to newest. */
+.trend svg { width: 100%; height: 6rem; display: block; }
+.trend-mid { stroke: var(--rule); stroke-width: 1; stroke-dasharray: 4 4; }
+.trend-line { fill: none; stroke: var(--pen); stroke-width: 2; }
+.trend-dot { fill: var(--pen); }
+.trend-ends { display: flex; justify-content: space-between; font-size: var(--step--1); color: var(--ink-soft); margin-top: .25rem; }
 
 .tension { border-left: 3px solid var(--pen); padding: .25rem 0 .25rem 1rem; margin: 1.25rem 0; }
 .tension h3 { font-family: var(--serif); font-size: var(--step-1); font-weight: 600; margin-bottom: .25rem; }

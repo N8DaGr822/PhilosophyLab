@@ -76,6 +76,7 @@ else
         }
         else
         {
+            <AdaptTrend Points="_trend" />
             <ul class="runs">
                 @foreach (var run in _runs)
                 {
@@ -105,6 +106,7 @@ else
     private TestDefinition? _challenge;
     private int _behaviorTestsTaken;
     private List<Run> _runs = [];
+    private List<AdaptTrend.TrendPoint> _trend = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -130,6 +132,9 @@ else
             foreach (var r in (await Store.GetResultsAsync(person.Id)).Where(r => r.TestId == _challenge.Id))
                 _runs.Add(new(r, BehaviorAnalyzer.Adaptability(await Analyzer.ObserveAsync([r]), r.Baseline ?? baseline, dims)));
         }
+        _trend = _runs.OrderBy(r => r.Result.CompletedAt)
+            .Select(r => new AdaptTrend.TrendPoint(r.Result.CompletedAt, r.Summary.Rate))
+            .ToList();
         _person = person;
     }
 

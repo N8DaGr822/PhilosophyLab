@@ -1,0 +1,51 @@
+{
+  "id": "moral-luck",
+  "version": 1,
+  "title": "Moral luck",
+  "category": "Morality",
+  "icon": "🍀",
+  "summary": "Same choice, same intentions — but only one driver hits someone.",
+  "intro": "Two people make the exact same decision, with the exact same information and intentions. Only luck decides what happens next. Does the outcome change how much blame they deserve?",
+  "minutesEstimate": 3,
+  "questions": [
+    {
+      "id": "drunk-driving", "type": "choice",
+      "prompt": "Two people drive home drunk, taking the identical risk. One makes it home; the other hits and kills a pedestrian who stepped out unexpectedly.",
+      "scenario": "Judge them for what they did, not what happened after.",
+      "options": [
+        { "id": "same", "label": "They deserve the same blame — the decision was identical", "effects": { "outcomes": -1 } },
+        { "id": "worse", "label": "The one who killed someone deserves more blame", "effects": { "outcomes": 1 } }
+      ]
+    },
+    {
+      "id": "attempted-crime", "type": "choice",
+      "prompt": "Two people plan and attempt the same robbery with a loaded gun. One's gun jams; no one is hurt. The other's fires, killing the shopkeeper.",
+      "options": [
+        { "id": "same", "label": "Same crime, same punishment", "effects": { "outcomes": -1 } },
+        { "id": "worse", "label": "The one who killed deserves a harsher punishment", "effects": { "outcomes": 1 } }
+      ]
+    },
+    {
+      "id": "surgeon", "type": "choice",
+      "prompt": "Two surgeons make the identical small technical error in similar operations. One patient recovers fine. The other develops a rare complication and dies.",
+      "options": [
+        { "id": "same", "label": "Review both identically — the skill and care were the same", "effects": { "outcomes": -1 } },
+        { "id": "worse", "label": "The surgeon whose patient died should face more serious consequences", "effects": { "outcomes": 1 } }
+      ]
+    },
+    {
+      "id": "reckless-text", "type": "choice",
+      "prompt": "Two people text while driving through the same empty stretch of road for the same ten seconds. One arrives home; a child runs into the road in front of the other.",
+      "options": [
+        { "id": "same", "label": "Equally reckless, equally at fault", "effects": { "outcomes": -1 } },
+        { "id": "worse", "label": "The one involved in the accident bears more responsibility", "effects": { "outcomes": 1 } }
+      ]
+    },
+    {
+      "id": "why", "type": "scale", "min": 1, "max": 7, "askWhy": true,
+      "prompt": "In general, how much should the outcome — not just the intention and the risk taken — affect how we judge someone?",
+      "minLabel": "Judge the decision, not the result", "maxLabel": "The result is what matters",
+      "effects": { "outcomes": 1 }
+    }
+  ]
+}

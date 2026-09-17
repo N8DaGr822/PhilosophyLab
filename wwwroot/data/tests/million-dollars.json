@@ -1,0 +1,57 @@
+{
+  "id": "million-dollars",
+  "version": 1,
+  "title": "The button",
+  "category": "Character",
+  "icon": "🔴",
+  "summary": "Press it, and a stranger dies somewhere in the world. You get paid. No one will ever know.",
+  "intro": "A stranger offers you a button. If you press it, someone you'll never meet, somewhere in the world, dies instantly and painlessly. No one will ever trace it to you. You receive a large sum of money.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "classic", "type": "choice", "askWhy": true,
+      "prompt": "Do you press it for $1,000,000?",
+      "options": [
+        { "id": "press", "label": "Press it", "effects": { "outcomes": 1 } },
+        { "id": "refuse", "label": "Refuse", "effects": { "outcomes": -1 } }
+      ]
+    },
+    {
+      "id": "amount", "type": "ladder",
+      "prompt": "What's the smallest amount of money that would get you to press it?",
+      "noneLabel": "Never — no amount is enough",
+      "effects": { "outcomes": 1 },
+      "options": [
+        { "id": "100m", "label": "$100,000,000" },
+        { "id": "1m", "label": "$1,000,000" },
+        { "id": "100k", "label": "$100,000" },
+        { "id": "10k", "label": "$10,000" },
+        { "id": "1k", "label": "$1,000" }
+      ]
+    },
+    {
+      "id": "known-victim", "type": "choice",
+      "prompt": "This time you're told who dies — a stranger's name, age, and photo — before you decide.",
+      "options": [
+        { "id": "press", "label": "Press it anyway", "effects": { "outcomes": 1 } },
+        { "id": "refuse", "label": "Now you can't", "effects": { "outcomes": -1 } }
+      ]
+    },
+    {
+      "id": "risk-instead", "type": "choice",
+      "prompt": "This time there's only a 10% chance the button causes anyone's death — the rest of the time, nothing happens. The money is the same.",
+      "options": [
+        { "id": "press", "label": "Press it", "effects": { "outcomes": 0.5, "risk": 1 } },
+        { "id": "refuse", "label": "Refuse", "effects": { "outcomes": -0.5, "risk": -1 } }
+      ]
+    },
+    {
+      "id": "give-away", "type": "choice",
+      "prompt": "What if the money wasn't for you — it would go entirely to a charity expected to save more than one life?",
+      "options": [
+        { "id": "press", "label": "Press it — net lives saved", "effects": { "outcomes": 1 } },
+        { "id": "refuse", "label": "Still refuse — I won't cause a death directly", "effects": { "outcomes": -1 } }
+      ]
+    }
+  ]
+}

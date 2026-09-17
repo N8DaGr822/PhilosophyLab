@@ -1,0 +1,55 @@
+{
+  "id": "desert-island",
+  "version": 1,
+  "title": "Desert island",
+  "category": "Resources",
+  "icon": "🏝️",
+  "summary": "Ten strangers, one island's worth of supplies, no rescue in sight.",
+  "intro": "Your plane crashes on a deserted island with nine strangers. Rescue could take weeks or years. What you choose says something about how you treat people who are, for now, all you have.",
+  "minutesEstimate": 4,
+  "questions": [
+    {
+      "id": "rations", "type": "allocation", "points": 100, "step": 10,
+      "prompt": "Food is scarce. How do you divide the first week's rations?",
+      "scenario": "Two are children, one is elderly and frail, the rest are healthy adults.",
+      "options": [
+        { "id": "children", "label": "The two children", "effects": { "fairness": -0.5 } },
+        { "id": "elderly", "label": "The frail elder", "effects": { "fairness": -1 } },
+        { "id": "adults", "label": "The seven healthy adults", "effects": { "fairness": 0.5 } }
+      ]
+    },
+    {
+      "id": "shirker", "type": "choice",
+      "prompt": "One person hasn't done any work in two weeks, citing a bad back no one can verify.",
+      "options": [
+        { "id": "trust", "label": "Take them at their word", "effects": { "fairness": -0.5 } },
+        { "id": "confront", "label": "Confront them directly and ask them to try", "effects": { "fairness": 0.3 } },
+        { "id": "reduce", "label": "Give them a smaller ration until they contribute", "effects": { "fairness": 1 } }
+      ]
+    },
+    {
+      "id": "risky-rescue", "type": "choice",
+      "prompt": "A distant smoke signal might be a passing ship. Reaching the ridge to signal it means crossing unstable cliffs — two people have already been hurt trying.",
+      "options": [
+        { "id": "wait", "label": "Wait for a safer chance", "effects": { "risk": -1 } },
+        { "id": "vote", "label": "Let whoever wants to try, volunteer", "effects": { "risk": 0.3, "liberty": 0.5 } },
+        { "id": "attempt", "label": "Send someone to try now", "effects": { "risk": 1 } }
+      ]
+    },
+    {
+      "id": "newcomer", "type": "choice",
+      "prompt": "A tenth survivor washes up a month later, sick and unable to work for weeks. Supplies are already tight.",
+      "options": [
+        { "id": "share", "label": "Take them in and share equally", "effects": { "fairness": -1, "partiality": -0.5 } },
+        { "id": "smaller", "label": "Take them in on a reduced share until they can contribute", "effects": { "fairness": 0.5 } },
+        { "id": "refuse", "label": "The group already agreed to fend for itself", "effects": { "fairness": 1, "partiality": 0.5 } }
+      ]
+    },
+    {
+      "id": "plant-or-eat", "type": "scale", "min": 1, "max": 7,
+      "prompt": "You find seeds that could grow food in a few months — if you don't eat them now while people are hungry today.",
+      "minLabel": "Eat them now", "maxLabel": "Plant them for later",
+      "effects": { "horizon": 1 }
+    }
+  ]
+}

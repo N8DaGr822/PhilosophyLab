@@ -1,0 +1,63 @@
+{
+  "id": "future-generations",
+  "version": 1,
+  "title": "Future generations",
+  "category": "Society",
+  "icon": "🌍",
+  "summary": "People who don't exist yet can't vote, complain, or say thank you. How much do you owe them?",
+  "intro": "Every choice about resources, debt, and the climate trades off between people alive today and people who will be born long after you're gone.",
+  "minutesEstimate": 5,
+  "questions": [
+    {
+      "id": "savings", "type": "scale", "min": 1, "max": 7,
+      "prompt": "How much should today's generation sacrifice — lower consumption, higher taxes — to leave more resources for people 100 years from now?",
+      "minLabel": "Focus on people alive today", "maxLabel": "Sacrifice significantly for the future",
+      "effects": { "horizon": 1 }
+    },
+    {
+      "id": "debt", "type": "choice",
+      "prompt": "A popular program would help millions today, paid for by debt that will still be owed by people not yet born.",
+      "options": [
+        { "id": "borrow", "label": "Fund it — help people who need it now", "effects": { "horizon": -1 } },
+        { "id": "smaller", "label": "Do a smaller version that doesn't require future debt", "effects": { "horizon": 0.5 } },
+        { "id": "pay-now", "label": "Pay for it now, even if that means doing less", "effects": { "horizon": 1 } }
+      ]
+    },
+    {
+      "id": "discount", "type": "choice",
+      "prompt": "A policy would prevent a disaster in 200 years that would harm millions who don't exist yet, at a real cost to people alive now.",
+      "options": [
+        { "id": "no", "label": "No — we can't sacrifice real people for hypothetical ones", "effects": { "horizon": -1 } },
+        { "id": "some", "label": "Pay some of the cost, but not at the expense of people alive today", "effects": { "horizon": 0.3 } },
+        { "id": "yes", "label": "Pay the cost now — their lives will matter just as much as ours", "effects": { "horizon": 1 } }
+      ]
+    },
+    {
+      "id": "population", "type": "scale", "min": 1, "max": 7,
+      "prompt": "Would it be better for the world to have far fewer people living excellent lives, or far more people living merely decent ones?",
+      "minLabel": "Fewer people, better lives", "maxLabel": "More people, decent lives",
+      "effects": { "outcomes": 1 }
+    },
+    {
+      "id": "regulate", "type": "choice",
+      "prompt": "A regulation would cut everyone's consumption choices today — what you can buy, how you travel — to protect the climate for future generations.",
+      "options": [
+        { "id": "voluntary", "label": "Leave it voluntary — people should choose for themselves", "effects": { "liberty": 1, "horizon": -0.5 } },
+        { "id": "incentivize", "label": "Use incentives, not mandates", "effects": { "liberty": 0.3, "horizon": 0.5 } },
+        { "id": "mandate", "label": "Mandate it for everyone", "effects": { "liberty": -1, "horizon": 1 } }
+      ]
+    },
+    {
+      "id": "extinction", "type": "ladder", "askWhy": true,
+      "prompt": "How small a benefit today would justify a policy that adds even a tiny chance of contributing to human extinction centuries from now?",
+      "noneLabel": "No benefit justifies any added extinction risk",
+      "effects": { "risk": 1 },
+      "options": [
+        { "id": "immense", "label": "Only an immense, civilization-transforming benefit" },
+        { "id": "huge", "label": "A very large benefit" },
+        { "id": "moderate", "label": "A solid, meaningful benefit" },
+        { "id": "small", "label": "Even a modest, everyday-scale benefit" }
+      ]
+    }
+  ]
+}

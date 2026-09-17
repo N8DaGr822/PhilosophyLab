@@ -64,6 +64,22 @@
     "highSummary": "moral concern extends well beyond humans, to animals and possibly machines."
   },
   {
+    "id": "risk",
+    "name": "Safety vs. upside",
+    "lowPole": "Safety",
+    "highPole": "Upside",
+    "lowSummary": "you protect against the worst case, even when the odds favor a gamble.",
+    "highSummary": "you'll accept a worse worst case for a better result on average."
+  },
+  {
+    "id": "horizon",
+    "name": "Present vs. future",
+    "lowPole": "Present",
+    "highPole": "Future",
+    "lowSummary": "you weigh people alive today more heavily than people who don't exist yet.",
+    "highSummary": "you're willing to sacrifice real, present benefits for people who aren't born yet."
+  },
+  {
     "id": "learning",
     "name": "How you learn",
     "lowPole": "Guided",
